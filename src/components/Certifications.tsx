@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Award, ExternalLink } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { certifications } from "@/lib/data";
@@ -19,11 +18,7 @@ export function Certifications() {
       </div>
 
       <div className="relative mt-14 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-        <motion.div
-          className="flex shrink-0 gap-5 pr-5"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 34, repeat: Infinity, ease: "linear" }}
-        >
+        <div className="animate-marquee flex w-max shrink-0 gap-5 pr-5 hover:[animation-play-state:paused]">
           {loopItems.map((cert, index) => (
             <a
               key={`${cert.name}-${index}`}
@@ -52,7 +47,7 @@ export function Certifications() {
               </div>
             </a>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

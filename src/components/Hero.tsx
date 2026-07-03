@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
 import { HeroVisual } from "@/components/HeroVisual";
-import { profile, projects, stats } from "@/lib/data";
+import { profile, stats } from "@/lib/data";
 
 export function Hero() {
   return (
@@ -31,11 +31,11 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-6 max-w-2xl font-display text-4xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-5xl md:text-6xl"
+            className="mt-6 max-w-xl font-display text-4xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-5xl"
           >
-            Building fast, thoughtful
+            Building fast,
             <br />
-            <span className="text-gradient">product experiences.</span>
+            <span className="text-gradient">thoughtful products.</span>
           </motion.h1>
 
           <motion.p
@@ -103,35 +103,9 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.45 }}
-            className="mt-8 flex flex-wrap items-center gap-3"
-          >
-            <span className="text-xs font-medium tracking-wide text-muted uppercase">
-              Currently building
-            </span>
-            {projects.map((project) => (
-              <a
-                key={project.slug}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1.5 rounded-full border border-border bg-white/5 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-white/10"
-              >
-                <span
-                  className={`h-1.5 w-1.5 rounded-full bg-gradient-to-r ${project.accent}`}
-                />
-                {project.name}
-                <ArrowUpRight className="h-3 w-3 text-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
-              </a>
-            ))}
-          </motion.div>
-
-          <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
+            transition={{ duration: 0.7, delay: 0.45 }}
             className="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-8 sm:grid-cols-4 sm:pt-10"
           >
             {stats.map((stat) => (
