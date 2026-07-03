@@ -1,11 +1,43 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { Award, ExternalLink } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { certifications } from "@/lib/data";
 
+/** How long the marquee stays paused after touch ends so taps can register. */
+const TOUCH_RESUME_DELAY_MS = 700;
+
 export function Certifications() {
   const loopItems = [...certifications, ...certifications];
+  const [paused, setPaused] = useState(false);
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const pauseMarquee = () => {
+    if (resumeTimerRef.current) {
+      clearTimeout(resumeTimerRef.current);
+      resumeTimerRef.current = null;
+    }
+    setPaused(true);
+  };
+
+  const scheduleResume = (delay = TOUCH_RESUME_DELAY_MS) => {
+    if (resumeTimerRef.current) {
+      clearTimeout(resumeTimerRef.current);
+    }
+    resumeTimerRef.current = setTimeout(() => {
+      setPaused(false);
+      resumeTimerRef.current = null;
+    }, delay);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimerRef.current) {
+        clearTimeout(resumeTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section id="certifications" className="relative py-28 sm:py-36">
@@ -17,8 +49,27 @@ export function Certifications() {
         />
       </div>
 
-      <div className="relative mt-14 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-        <div className="animate-marquee flex w-max shrink-0 gap-5 pr-5 hover:[animation-play-state:paused]">
+      <div
+        className="relative mt-14 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+        onPointerDown={pauseMarquee}
+        onPointerUp={() => scheduleResume()}
+        onPointerCancel={() => scheduleResume(300)}
+        onPointerLeave={(event) => {
+          // Touch taps lift off the track right away — let scheduleResume handle those.
+          if (event.pointerType === "touch") return;
+
+          if (resumeTimerRef.current) {
+            clearTimeout(resumeTimerRef.current);
+            resumeTimerRef.current = null;
+          }
+          setPaused(false);
+        }}
+      >
+        <div
+          className={`animate-marquee flex w-max shrink-0 gap-5 pr-5 hover:[animation-play-state:paused] active:[animation-play-state:paused] ${
+            paused ? "[animation-play-state:paused]" : ""
+          }`}
+        >
           {loopItems.map((cert, index) => (
             <a
               key={`${cert.name}-${index}`}
