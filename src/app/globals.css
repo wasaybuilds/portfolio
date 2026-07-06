@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #06060a;
-  --background-soft: #0a0a12;
-  --foreground: #f4f4f8;
-  --muted: #9a9ab0;
-  --border: rgba(255, 255, 255, 0.08);
-  --accent: #7c5cff;
-  --accent-2: #22d3ee;
-  --accent-3: #f472b6;
+  --background: #080a0f;
+  --background-soft: #0e1118;
+  --foreground: #f2f2f7;
+  --muted: #868699;
+  --border: rgba(255, 255, 255, 0.07);
+  --accent: #f97316;
+  --accent-2: #38bdf8;
+  --accent-3: #fb923c;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-soft: var(--background-soft);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
@@ -24,7 +25,6 @@
   --animate-marquee: marquee 32s linear infinite;
   --animate-blob: blob 18s ease-in-out infinite;
   --animate-float: float 6s ease-in-out infinite;
-  --animate-gradient: gradient-shift 6s ease-in-out infinite;
   --animate-spin-slow: spin 14s linear infinite;
 }
 
@@ -62,17 +62,16 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent-3) 100%);
-  background-size: 200% auto;
+  background: linear-gradient(95deg, var(--accent) 0%, var(--accent-2) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: gradient-shift 6s ease-in-out infinite;
 }
 
 .card-glass {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
   border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
 
@@ -113,16 +112,7 @@ body {
   }
 }
 
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 .section-heading-line {
-  background: linear-gradient(90deg, var(--accent), transparent);
+  background: var(--accent);
+  opacity: 0.7;
 }

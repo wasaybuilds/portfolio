@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Braces, Cloud, Database, Server, Sparkles } from "lucide-react";
+import { Braces, Cloud, Server, Sparkles, Terminal } from "lucide-react";
 import { profile } from "@/lib/data";
 
 const floatingBadges = [
@@ -24,8 +24,8 @@ const floatingBadges = [
     delay: 0.7,
   },
   {
-    icon: Database,
-    label: "SaaS",
+    icon: Terminal,
+    label: "Python",
     className: "-right-6 bottom-8 sm:-right-10 sm:bottom-12",
     delay: 2.1,
   },
@@ -60,7 +60,7 @@ export function HeroVisual() {
 
         <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-1.5 text-xs text-muted">
           <Sparkles className="h-3.5 w-3.5 text-accent-2" />
-          Building AI-powered SaaS products
+          Performance-focused full stack engineer
         </div>
       </motion.div>
 
