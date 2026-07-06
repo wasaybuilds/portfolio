@@ -44,10 +44,10 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
           >
-            I&apos;m <span className="text-foreground">{profile.name}</span> — a{" "}
-            {profile.role.toLowerCase()} who turns messy ideas into clean, fast,
-            and useful web products. Currently shipping AI-powered SaaS
-            platforms at scale.
+            I&apos;m <span className="text-foreground">Wasay</span> — a{" "}
+            {profile.role.toLowerCase()} who builds performant, production-ready
+            products end to end. Strong in React, Node.js, and Python — with a
+            track record of shipping and owning real systems.
           </motion.p>
 
           <motion.div

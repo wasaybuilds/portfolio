@@ -1,23 +1,23 @@
 export const profile = {
   name: "Abdul Wasay",
-  role: "Product Lead & Full Stack Engineer",
-  tagline: "React · Next.js · Node.js · AWS — SaaS, CMS & API Architecture",
+  role: "Senior Full Stack Engineer",
+  tagline: "React · Node.js · Python · TypeScript — Performance-Focused Full Stack & API Architecture",
   location: "Lahore, Punjab, Pakistan",
   email: "wasaya670@gmail.com",
   github: "https://github.com/wasayhatzs",
   linkedin: "https://www.linkedin.com/in/abdul-wasay01/",
   resumeUrl: "https://www.linkedin.com/in/abdul-wasay01/",
   about: [
-    "Abdul Wasay is a Product Lead and Full Stack Engineer who loves turning messy ideas into clean, fast, and useful web experiences. He manages product teams and cross-functional squads, guiding work from early discovery and user research through roadmap decisions and shipped features.",
-    "He mixes hands-on engineering — React, Next.js, TypeScript, Node.js, and AWS — with practical product sense, so products not only look good, they actually solve problems for real people. He's the kind of engineer who rolls up his sleeves in code reviews, mentors junior engineers, and designs systems that make teammates' lives easier.",
-    "Abdul cares about performance, accessibility, and simple interfaces that people enjoy using — with deep experience building SaaS products end to end, across Webflow, WordPress, Shopify, Framer, Bubble.io, and API-driven architectures, focused on measurable outcomes: faster load times, smoother launches, and better user engagement.",
+    "Wasay is a Senior Full Stack Engineer with 3+ years building and shipping production-grade web and SaaS products — from complex React/Next.js frontends through to Node.js backends, REST and GraphQL APIs, and cloud infrastructure on AWS. He takes complete ownership of product lifecycles, not just individual tickets.",
+    "He's the kind of engineer who stays close to the code while keeping the bigger picture in mind — leveraging AI tools like GitHub Copilot to accelerate delivery, conducting structured code reviews to enforce architectural standards, and mentoring junior engineers to grow the team's overall capability.",
+    "Wasay is obsessed with performance and correctness: optimising render cycles on the frontend, designing efficient data pipelines on the backend, and deploying on Linux-based infrastructure. Whether it's a fast-moving SaaS startup or a product that demands real-time reliability, he ships things that actually work.",
   ],
 };
 
 export const stats = [
   { label: "Years of Experience", value: "3+" },
   { label: "Products Shipped", value: "10+" },
-  { label: "SaaS Platforms Built", value: "2" },
+  { label: "Products Built", value: "4+" },
   { label: "Certifications", value: "10+" },
 ];
 
@@ -210,6 +210,7 @@ export const skills: { category: string; items: string[] }[] = [
     category: "DevOps & Architecture",
     items: [
       "AWS",
+      "Linux",
       "Docker",
       "CI/CD Pipelines",
       "GitHub Actions",
@@ -242,9 +243,11 @@ export const skills: { category: string; items: string[] }[] = [
     items: [
       "Product Strategy",
       "API Architecture",
-      "User Research",
-      "Roadmap Planning",
+      "Code Reviews",
+      "Mentoring Engineers",
       "Agile / Scrum",
+      "GitHub Copilot",
+      "AI-Assisted Development",
       "Cross-functional Leadership",
     ],
   },
