@@ -14,7 +14,7 @@ export function Experience() {
         />
 
         <div className="relative mt-16">
-          <div className="absolute top-0 bottom-0 left-[19px] w-px bg-gradient-to-b from-accent via-border to-transparent sm:left-6" />
+          <div className="absolute top-0 bottom-0 left-[19px] w-px bg-border sm:left-6" />
 
           <div className="flex flex-col gap-10">
             {experiences.map((exp, index) => (

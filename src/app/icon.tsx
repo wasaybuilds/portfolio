@@ -13,7 +13,7 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#06060a",
+          background: "#080a0f",
           borderRadius: 8,
           fontFamily: "sans-serif",
         }}
@@ -24,11 +24,11 @@ export default function Icon() {
             fontSize: 18,
             fontWeight: 700,
             letterSpacing: -1,
-            color: "#f4f4f8",
+            color: "#f2f2f7",
           }}
         >
           AW
-          <span style={{ color: "#7c5cff" }}>.</span>
+          <span style={{ color: "#f97316" }}>.</span>
         </div>
       </div>
     ),

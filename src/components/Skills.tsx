@@ -24,7 +24,7 @@ export function Skills() {
             return (
               <RevealItem key={group.category} className="min-w-0">
                 <div className="group h-full min-w-0 rounded-2xl card-glass p-6 transition-colors hover:border-accent/40">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-accent-2/20 text-accent-2">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="mt-5 font-display text-base font-semibold text-foreground">

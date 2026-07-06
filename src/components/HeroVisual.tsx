@@ -34,7 +34,7 @@ const floatingBadges = [
 export function HeroVisual() {
   return (
     <div className="relative mx-auto hidden aspect-square w-full max-w-sm lg:block xl:max-w-md">
-      <div className="absolute inset-10 rounded-full bg-gradient-to-br from-accent/30 via-accent-2/20 to-accent-3/25 opacity-70 blur-3xl" />
+      <div className="absolute inset-10 rounded-full bg-accent/15 opacity-60 blur-3xl" />
 
       <div className="absolute inset-6 rounded-full border border-dashed border-white/10 animate-spin-slow" />
 
@@ -44,7 +44,7 @@ export function HeroVisual() {
         transition={{ duration: 0.8, delay: 0.35, ease: [0.21, 0.47, 0.32, 0.98] }}
         className="relative z-10 flex h-full flex-col items-center justify-center rounded-[2rem] card-glass p-10 text-center shadow-2xl shadow-black/40"
       >
-        <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-accent via-accent-2 to-accent-3 p-[2px]">
+        <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-accent p-[2px]">
           <div className="flex h-full w-full items-center justify-center rounded-full bg-background-soft font-display text-2xl font-bold text-foreground">
             AW
           </div>

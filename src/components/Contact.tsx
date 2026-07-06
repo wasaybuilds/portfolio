@@ -9,20 +9,13 @@ export function Contact() {
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl card-glass px-6 py-16 text-center sm:px-16 sm:py-24">
-            <div
-              className="absolute inset-0 -z-10 opacity-40"
-              style={{
-                background:
-                  "radial-gradient(circle at 50% 0%, rgba(124,92,255,0.25), transparent 60%)",
-              }}
-            />
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-1.5 text-sm text-muted">
               Available for new opportunities
             </span>
 
             <h2 className="mx-auto mt-6 max-w-2xl font-display text-3xl font-semibold text-foreground sm:text-5xl">
               Let&apos;s build something{" "}
-              <span className="text-gradient">people actually use.</span>
+              <span className="text-accent">people actually use.</span>
             </h2>
 
             <p className="mx-auto mt-5 max-w-xl text-base text-muted sm:text-lg">
