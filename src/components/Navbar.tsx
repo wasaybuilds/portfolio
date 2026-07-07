@@ -2,13 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
-import { navLinks, profile } from "@/lib/data";
+import { Menu, X } from "lucide-react";
+import { navLinks } from "@/lib/data";
 
+/**
+ * Minimal sticky navbar.
+ *
+ * – Transparent on top; becomes a floating glass pill once the user scrolls.
+ * – Active link is tracked via IntersectionObserver.
+ * – Mobile: hamburger menu with slide-down overlay.
+ */
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string>("#about");
+  const [active, setActive] = useState<string>("#work");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -25,9 +32,7 @@ export function Navbar() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActive(`#${entry.target.id}`);
-          }
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
         });
       },
       { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
@@ -43,19 +48,21 @@ export function Navbar() {
         scrolled ? "py-3" : "py-5"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-16">
         <div
-          className={`flex w-full items-center justify-between rounded-2xl px-4 py-3 transition-all duration-300 ${
+          className={`flex w-full items-center justify-between rounded-2xl px-5 py-3 transition-all duration-300 ${
             scrolled ? "card-glass shadow-lg shadow-black/20" : "bg-transparent"
           }`}
         >
+          {/* Logo mark */}
           <a
             href="#hero"
-            className="font-display text-lg font-semibold tracking-tight text-foreground"
+            className="font-display text-lg font-bold tracking-tight text-foreground"
           >
             AW<span className="text-accent">.</span>
           </a>
 
+          {/* Desktop nav */}
           <nav className="hidden items-center gap-1 md:flex">
             {navLinks.map((link) => (
               <a
@@ -79,18 +86,7 @@ export function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 md:flex">
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 rounded-full border border-border bg-white/5 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-white/10"
-            >
-              Let&apos;s Talk
-              <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-          </div>
-
+          {/* Mobile hamburger */}
           <button
             className="flex h-9 w-9 items-center justify-center rounded-full border border-border md:hidden"
             onClick={() => setOpen((v) => !v)}
@@ -101,6 +97,7 @@ export function Navbar() {
         </div>
       </div>
 
+      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -121,16 +118,6 @@ export function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setOpen(false)}
-                className="mt-2 flex items-center justify-center gap-1.5 rounded-xl bg-white/10 px-4 py-3 text-sm font-medium text-foreground"
-              >
-                Let&apos;s Talk
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </a>
             </nav>
           </motion.div>
         )}

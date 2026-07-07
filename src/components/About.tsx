@@ -1,73 +1,92 @@
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Reveal } from "@/components/ui/Reveal";
 import { education, profile } from "@/lib/data";
-import { GraduationCap, Sparkles } from "lucide-react";
 
-const focusAreas = [
-  {
-    title: "Product-Minded Engineering",
-    description:
-      "I don't just build what's specced — I dig into the why, so what ships actually moves the metric.",
-  },
-  {
-    title: "Performance & Accessibility",
-    description:
-      "Fast load times and inclusive interfaces aren't optional extras — they're baked into how I build.",
-  },
-  {
-    title: "Cross-Functional Leadership",
-    description:
-      "From discovery to roadmap to shipped feature — I bridge design, engineering, and business goals.",
-  },
-];
-
+/**
+ * About section — editorial two-column layout.
+ *
+ * Left: A large pull-quote that captures Wasay's engineering philosophy
+ * in one punchy sentence, rendered at display scale.
+ *
+ * Right: Full bio paragraphs + education card.
+ */
 export function About() {
   return (
-    <section id="about" className="relative px-6 py-28 sm:py-36">
-      <div className="mx-auto max-w-6xl">
-        <SectionHeading
-          eyebrow="About Me"
-          title="A full stack engineer with a product brain."
-        />
+    <section id="about" className="relative px-6 py-24 sm:py-32 sm:px-10 lg:px-16">
+      <div className="mx-auto max-w-7xl">
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-5">
-          <Reveal className="lg:col-span-3" direction="right">
-            <div className="space-y-5 text-base leading-relaxed text-muted sm:text-lg">
+        {/* ---------- Section label ---------- */}
+        <Reveal>
+          <div className="mb-14 flex items-center gap-4">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+              About
+            </span>
+            <div className="h-px flex-1 bg-border" />
+          </div>
+        </Reveal>
+
+        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20 xl:grid-cols-[1.1fr_0.9fr]">
+
+          {/* ---------- Left — pull-quote + philosophy ---------- */}
+          <Reveal direction="right">
+            <blockquote className="font-display text-display-md text-foreground leading-snug">
+              Full ownership.
+              <br />
+              <span className="text-accent">Front to back,</span>
+              <br />
+              idea to production.
+            </blockquote>
+
+            <div className="mt-8 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
               {profile.about.map((paragraph, index) => (
-                <p key={index} className={index === 0 ? "text-foreground" : ""}>
+                <p key={index} className={index === 0 ? "text-foreground/90" : ""}>
                   {paragraph}
                 </p>
               ))}
             </div>
+          </Reveal>
 
-            <div className="mt-10 flex items-center gap-4 rounded-2xl card-glass p-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
-                <GraduationCap className="h-6 w-6" />
-              </div>
-              <div>
-                <div className="font-medium text-foreground">{education.school}</div>
-                <div className="text-sm text-muted">
+          {/* ---------- Right — facts + education ---------- */}
+          <Reveal direction="left" delay={0.1}>
+            <div className="flex flex-col gap-6">
+
+              {/* Three capabilities */}
+              {[
+                {
+                  label: "Product-minded",
+                  desc: "I don't just build what's specced — I dig into the why so what ships actually moves the metric.",
+                },
+                {
+                  label: "Performance-obsessed",
+                  desc: "Render cycles on the frontend, efficient pipelines on the backend — correctness isn't optional.",
+                },
+                {
+                  label: "Team multiplier",
+                  desc: "Code reviews, architectural guidance, and mentoring junior engineers to grow the team's capability.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="group rounded-2xl card-glass p-5 transition-colors hover:border-accent/30"
+                >
+                  <div className="mb-1.5 text-sm font-semibold text-foreground">
+                    {item.label}
+                  </div>
+                  <div className="text-sm text-muted">{item.desc}</div>
+                </div>
+              ))}
+
+              {/* Education */}
+              <div className="rounded-2xl card-glass p-5">
+                <div className="text-xs font-semibold uppercase tracking-wider text-accent">
+                  Education
+                </div>
+                <div className="mt-3 font-medium text-foreground">{education.school}</div>
+                <div className="mt-0.5 text-sm text-muted">
                   {education.degree} · {education.period}
                 </div>
               </div>
             </div>
           </Reveal>
-
-          <RevealGroup className="grid gap-4 lg:col-span-2" stagger={0.12}>
-            {focusAreas.map((area) => (
-              <RevealItem key={area.title} direction="left">
-                <div className="group h-full rounded-2xl card-glass p-6 transition-colors hover:border-accent/40">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-accent-2">
-                    <Sparkles className="h-4 w-4" />
-                  </div>
-                  <h3 className="mt-4 font-display text-lg font-semibold text-foreground">
-                    {area.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted">{area.description}</p>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
         </div>
       </div>
     </section>

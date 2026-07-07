@@ -1,50 +1,57 @@
-import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Reveal } from "@/components/ui/Reveal";
 import { skills } from "@/lib/data";
-import { CodeXml, Database, Cloud, PenTool, Layers, Rocket } from "lucide-react";
 
-const icons = [CodeXml, Database, Cloud, PenTool, Layers, Rocket];
-
+/**
+ * Stack section — editorial inline-text layout.
+ *
+ * Each skill category is rendered as a horizontal row: the category name in
+ * orange acts as a heading, followed by the skill items separated by dots.
+ * This reads as a senior engineer's competency profile rather than a
+ * chip-cloud of buzzwords.
+ */
 export function Skills() {
   return (
-    <section id="skills" className="relative px-6 py-28 sm:py-36">
-      <div className="mx-auto max-w-6xl">
-        <SectionHeading
-          eyebrow="Toolbox"
-          title="Skills & technologies I work with."
-          description="Full stack range — from pixel-perfect frontends to backend architecture, databases, and shipping pipelines."
-        />
+    <section id="stack" className="relative px-6 py-24 sm:py-32 sm:px-10 lg:px-16">
+      <div className="mx-auto max-w-7xl">
 
-        <RevealGroup
-          className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-          stagger={0.1}
-        >
-          {skills.map((group, index) => {
-            const Icon = icons[index % icons.length];
-            return (
-              <RevealItem key={group.category} className="min-w-0">
-                <div className="group h-full min-w-0 rounded-2xl card-glass p-6 transition-colors hover:border-accent/40">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="mt-5 font-display text-base font-semibold text-foreground">
-                    {group.category}
-                  </h3>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {group.items.map((item) => (
-                      <span
-                        key={item}
-                        className="max-w-full rounded-full border border-border bg-white/5 px-3 py-1 text-xs break-words text-muted transition-colors group-hover:text-foreground"
-                      >
+        {/* ---------- Section label ---------- */}
+        <Reveal>
+          <div className="mb-14 flex items-center gap-4">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+              Stack
+            </span>
+            <div className="h-px flex-1 bg-border" />
+          </div>
+        </Reveal>
+
+        {/* ---------- Category rows ---------- */}
+        <div className="flex flex-col divide-y divide-border">
+          {skills.map((group, index) => (
+            <Reveal key={group.category} delay={index * 0.07}>
+              <div className="group flex flex-col gap-3 py-6 sm:flex-row sm:items-baseline sm:gap-8 lg:gap-12">
+                {/* Category label */}
+                <span className="w-full shrink-0 font-display text-sm font-semibold text-accent sm:w-44 lg:w-52">
+                  {group.category}
+                </span>
+
+                {/* Skills inline */}
+                <p className="flex flex-wrap gap-x-3 gap-y-1 text-sm leading-relaxed text-muted sm:text-base">
+                  {group.items.map((item, i) => (
+                    <span key={item} className="flex items-center gap-3">
+                      <span className="transition-colors group-hover:text-foreground">
                         {item}
                       </span>
-                    ))}
-                  </div>
-                </div>
-              </RevealItem>
-            );
-          })}
-        </RevealGroup>
+                      {/* Separator dot — hidden after the last item */}
+                      {i < group.items.length - 1 && (
+                        <span className="opacity-25">·</span>
+                      )}
+                    </span>
+                  ))}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

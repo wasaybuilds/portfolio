@@ -17,8 +17,35 @@ export const profile = {
 export const stats = [
   { label: "Years of Experience", value: "3+" },
   { label: "Products Shipped", value: "10+" },
-  { label: "Products Built", value: "3" },
+  { label: "Products Built", value: "4+" },
   { label: "Certifications", value: "10+" },
+];
+
+/**
+ * Proof metrics — large, headline-worthy numbers shown in the Proof section.
+ * Each item includes a value (displayed huge), a label, and an optional note.
+ */
+export const proof = [
+  {
+    value: "3+",
+    label: "Years in production",
+    note: "Writing and shipping real code for real users",
+  },
+  {
+    value: "4+",
+    label: "Products built & live",
+    note: "DealerIQ, Befer, and more — end to end",
+  },
+  {
+    value: "370%",
+    label: "ROI on Befer",
+    note: "Documented results from clients using the product",
+  },
+  {
+    value: "1,000+",
+    label: "AI calls / day",
+    note: "DealerIQ's AI agents processed at peak",
+  },
 ];
 
 export type Experience = {
@@ -254,9 +281,9 @@ export const skills: { category: string; items: string[] }[] = [
 ];
 
 export const navLinks = [
+  { href: "#work", label: "Work" },
   { href: "#about", label: "About" },
   { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#skills", label: "Skills" },
+  { href: "#stack", label: "Stack" },
   { href: "#contact", label: "Contact" },
 ];
