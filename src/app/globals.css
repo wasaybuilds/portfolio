@@ -72,9 +72,9 @@ body {
  * the max-w-5xl container on most monitors.
  */
 .text-hero {
-  font-size: clamp(4rem, 22vw, 18rem);
-  line-height: 0.88;
-  letter-spacing: -0.05em;
+  font-size: clamp(5rem, 28vw, 24rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
   font-weight: 800;
 }
 
