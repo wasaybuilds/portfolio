@@ -16,7 +16,7 @@ export const profile = {
 
 export const stats = [
   { label: "Years of Experience", value: "3+" },
-  { label: "Products Shipped", value: "10+" },
+  { label: "Client Sites Built", value: "8+" },
   { label: "Products Built", value: "4+" },
   { label: "Certifications", value: "10+" },
 ];
@@ -277,6 +277,68 @@ export const skills: { category: string; items: string[] }[] = [
       "AI-Assisted Development",
       "Cross-functional Leadership",
     ],
+  },
+];
+
+/**
+ * CMS / client builds — sites shipped on WordPress, Shopify, or Webflow
+ * as part of agency or freelance work.
+ */
+export type ClientSite = {
+  name: string;
+  url: string;
+  category: string;
+  platform: "WordPress" | "Shopify" | "Webflow";
+};
+
+export const clientWork: ClientSite[] = [
+  {
+    name: "AmityVet",
+    url: "https://amityvet.com",
+    category: "Veterinary Clinic",
+    platform: "WordPress",
+  },
+  {
+    name: "Die By Fashion Italy",
+    url: "https://diebyfashionitaly.com",
+    category: "Fashion & Apparel",
+    platform: "Shopify",
+  },
+  {
+    name: "Right On Detail",
+    url: "https://www.rightondetail.com",
+    category: "Auto Detailing",
+    platform: "Webflow",
+  },
+  {
+    name: "DJ Cutt Entertainment",
+    url: "https://www.djcuttentertainment.com",
+    category: "Entertainment & Events",
+    platform: "Webflow",
+  },
+  {
+    name: "The Car Trackers",
+    url: "https://thecartrackers.com",
+    category: "Automotive Services",
+    platform: "WordPress",
+  },
+  {
+    name: "Ohh.me",
+    url: "https://ohh.me",
+    category: "Creative Portfolio",
+    platform: "Webflow",
+  },
+  {
+    name: "The True Driven",
+    url: "https://www.thetruedriven.com",
+    category: "Automotive Lifestyle",
+    platform: "WordPress",
+  },
+  {
+    name: "Outback Accounting",
+    url: "https://outbackaccounting.com.au",
+    category: "Accounting Firm",
+    platform: "Webflow",
   },
 ];
 
