@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
+import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { profile } from "@/lib/data";
 
@@ -15,15 +16,11 @@ export function Contact() {
     <section id="contact" className="relative px-5 sm:px-8 py-14 sm:py-24">
       <div className="mx-auto max-w-5xl">
 
-        {/* ---------- Section label ---------- */}
-        <Reveal>
-          <div className="mb-8 flex items-center gap-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              Contact
-            </span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-        </Reveal>
+        <EditorialSectionHeader
+          index="09"
+          label="Contact"
+          title="Ready for the next serious build."
+        />
 
         {/* ---------- Headline ---------- */}
         <Reveal>
@@ -41,13 +38,12 @@ export function Contact() {
 
         {/* ---------- Sub-copy + links ---------- */}
         <Reveal delay={0.15}>
-          <p className="mt-8 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-            Whether you need a Full Stack Engineer, a Product-minded builder, or
-            someone to turn your idea into a polished, production-ready product —
-            I&apos;d love to hear from you.
+          <p className="mt-6 max-w-md text-base leading-relaxed text-muted">
+            Senior full-stack help for serious products, SaaS builds, and
+            production systems.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-4">
             {/* Primary CTA */}
             <a
               href={`mailto:${profile.email}`}

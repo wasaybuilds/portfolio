@@ -1,5 +1,6 @@
 import { ArrowUpRight, Star, GitFork } from "lucide-react";
 import { GithubIcon } from "@/components/icons/BrandIcons";
+import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { profile } from "@/lib/data";
 
 const GH_USER = "wasayhatzs";
@@ -56,16 +57,6 @@ async function getGitHubData() {
   }
 }
 
-/** Language → colour pill mapping for the most common languages. */
-const LANG_COLOUR: Record<string, string> = {
-  TypeScript: "bg-sky-400/15 text-sky-300",
-  JavaScript: "bg-yellow-400/15 text-yellow-300",
-  Python:     "bg-blue-400/15 text-blue-300",
-  CSS:        "bg-purple-400/15 text-purple-300",
-  HTML:       "bg-orange-400/15 text-orange-300",
-  Shell:      "bg-emerald-400/15 text-emerald-300",
-};
-
 export async function GitHubActivity() {
   const data = await getGitHubData();
 
@@ -73,22 +64,22 @@ export async function GitHubActivity() {
     <section className="relative px-5 sm:px-8 py-14 sm:py-20">
       <div className="mx-auto max-w-5xl">
 
-        {/* ---------- Section label ---------- */}
-        <div className="mb-8 flex items-center gap-4">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-            GitHub
-          </span>
-          <div className="h-px flex-1 bg-border" />
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-foreground"
-          >
-            <GithubIcon className="h-3.5 w-3.5" />
-            @{GH_USER}
-          </a>
-        </div>
+        <EditorialSectionHeader
+          index="07"
+          label="GitHub"
+          title="A public pulse of recent engineering work."
+          meta={
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 transition-colors hover:text-foreground"
+            >
+              <GithubIcon className="h-3.5 w-3.5" />
+              @{GH_USER}
+            </a>
+          }
+        />
 
         {/* ---------- Contribution heatmap ---------- */}
         {/*
@@ -96,8 +87,8 @@ export async function GitHubActivity() {
           GitHub's public data — no token required for public profiles.
           The orange tint is applied with a CSS filter to match the palette.
         */}
-        <div className="overflow-hidden rounded-2xl card-glass p-5 sm:p-6">
-          <p className="mb-4 text-xs font-medium text-muted uppercase tracking-wider">
+        <div className="overflow-hidden border border-border bg-background-soft p-5 sm:p-6">
+          <p className="mb-4 text-xs font-medium uppercase tracking-wider text-accent">
             Contribution activity · last year
           </p>
           <div className="overflow-x-auto">
@@ -140,36 +131,32 @@ export async function GitHubActivity() {
 
         {/* ---------- Recent repos ---------- */}
         {data && data.repos.length > 0 && (
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="mt-8 divide-y divide-border border-y border-border">
             {data.repos.map((repo) => (
               <a
                 key={repo.name}
                 href={repo.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col justify-between gap-3 rounded-2xl card-glass p-5 transition-colors hover:border-accent/30"
+                className="group grid gap-4 py-5 transition-colors hover:bg-background-soft sm:grid-cols-[1fr_auto] sm:px-4"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
-                    <span className="font-display text-sm font-semibold text-foreground transition-colors group-hover:text-accent">
+                    <span className="font-display text-xl font-semibold text-foreground transition-colors group-hover:text-accent">
                       {repo.name}
                     </span>
-                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent sm:hidden" />
                   </div>
                   {repo.description && (
-                    <p className="mt-1.5 text-xs leading-relaxed text-muted line-clamp-2">
+                    <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-muted line-clamp-1">
                       {repo.description}
                     </p>
                   )}
                 </div>
 
-                <div className="flex items-center gap-3 text-xs text-muted">
+                <div className="flex items-center gap-4 text-xs text-muted sm:justify-end">
                   {repo.language && (
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${
-                        LANG_COLOUR[repo.language] ?? "bg-white/5 text-muted"
-                      }`}
-                    >
+                    <span className="font-medium text-foreground/80">
                       {repo.language}
                     </span>
                   )}
@@ -185,6 +172,7 @@ export async function GitHubActivity() {
                       {repo.forks_count}
                     </span>
                   )}
+                  <ArrowUpRight className="hidden h-4 w-4 text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent sm:block" />
                 </div>
               </a>
             ))}
@@ -193,7 +181,7 @@ export async function GitHubActivity() {
 
         {/* Fallback when API is unavailable */}
         {!data && (
-          <div className="mt-4 rounded-2xl card-glass p-5 text-sm text-muted">
+          <div className="mt-4 border border-border bg-background-soft p-5 text-sm text-muted">
             GitHub data temporarily unavailable — view profile at{" "}
             <a
               href={profile.github}

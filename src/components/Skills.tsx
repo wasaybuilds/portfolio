@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { skills } from "@/lib/data";
 
@@ -23,15 +24,11 @@ export function Skills() {
     <section id="stack" className="relative px-5 sm:px-8 py-14 sm:py-20">
       <div className="mx-auto max-w-5xl">
 
-        {/* ---------- Section label ---------- */}
-        <Reveal>
-          <div className="mb-8 flex items-center gap-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              Stack
-            </span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-        </Reveal>
+        <EditorialSectionHeader
+          index="05"
+          label="Stack"
+          title="The tools change. The judgement matters."
+        />
 
         {/* ---------- Category rows ---------- */}
         <div className="flex flex-col divide-y divide-border">

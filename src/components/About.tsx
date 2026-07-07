@@ -1,5 +1,6 @@
+import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
-import { education, profile } from "@/lib/data";
+import { education } from "@/lib/data";
 
 /**
  * About section — editorial two-column layout.
@@ -7,24 +8,20 @@ import { education, profile } from "@/lib/data";
  * Left: A large pull-quote that captures Wasay's engineering philosophy
  * in one punchy sentence, rendered at display scale.
  *
- * Right: Full bio paragraphs + education card.
+ * Right: compact principles + education.
  */
 export function About() {
   return (
     <section id="about" className="relative px-5 sm:px-8 py-14 sm:py-20">
       <div className="mx-auto max-w-5xl">
 
-        {/* ---------- Section label ---------- */}
-        <Reveal>
-          <div className="mb-8 flex items-center gap-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              About
-            </span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-        </Reveal>
+        <EditorialSectionHeader
+          index="03"
+          label="About"
+          title="I build like the product has to survive real users."
+        />
 
-        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20 xl:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
 
           {/* ---------- Left — pull-quote + philosophy ---------- */}
           <Reveal direction="right">
@@ -36,13 +33,10 @@ export function About() {
               idea to production.
             </blockquote>
 
-            <div className="mt-8 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
-              {profile.about.map((paragraph, index) => (
-                <p key={index} className={index === 0 ? "text-foreground/90" : ""}>
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted">
+              I stay close to the code, the user, and the outcome. Less noise,
+              more shipped product.
+            </p>
           </Reveal>
 
           {/* ---------- Right — capabilities + education ---------- */}
@@ -55,15 +49,15 @@ export function About() {
               {[
                 {
                   label: "Product-minded",
-                  desc: "I don't just build what's specced — I dig into the why so what ships actually moves the metric.",
+                  desc: "I care about the metric behind the feature.",
                 },
                 {
                   label: "Performance-obsessed",
-                  desc: "Render cycles on the frontend, efficient pipelines on the backend — correctness isn't optional.",
+                  desc: "Fast UI, efficient APIs, clean deployment paths.",
                 },
                 {
                   label: "Team multiplier",
-                  desc: "Code reviews, architectural guidance, and mentoring junior engineers to grow the team's capability.",
+                  desc: "Reviews and mentoring without leaving the code.",
                 },
               ].map((item) => (
                 <div key={item.label} className="group py-5">

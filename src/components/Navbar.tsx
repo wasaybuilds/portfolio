@@ -12,7 +12,7 @@ import { navLinks } from "@/lib/data";
  *   on the bar itself) so it reads as a continuous header like the reference.
  * – Content sections below still use max-w-5xl, so the nav feeling wider is
  *   intentional — it anchors the top of the page.
- * – Transparent on top; becomes a glass bar once the user scrolls.
+ * – Transparent on top; becomes a restrained bordered bar once the user scrolls.
  * – Active link tracked via IntersectionObserver.
  */
 export function Navbar() {
@@ -115,7 +115,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.2 }}
-            className="mx-4 mt-2 rounded-2xl card-glass p-4 md:hidden"
+            className="mx-4 mt-2 border border-border bg-background-soft p-4 md:hidden"
           >
             <nav className="flex flex-col gap-1">
               {navLinks.map((link) => (

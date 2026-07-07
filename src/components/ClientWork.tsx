@@ -1,16 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
+import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
-import { clientWork, type ClientSite } from "@/lib/data";
-
-/**
- * Platform badge colour map.
- * WordPress → blue-grey, Shopify → emerald, Webflow → indigo.
- */
-const platformStyle: Record<ClientSite["platform"], string> = {
-  WordPress: "bg-sky-900/40 text-sky-300 border-sky-700/40",
-  Shopify:   "bg-emerald-900/40 text-emerald-300 border-emerald-700/40",
-  Webflow:   "bg-indigo-900/40 text-indigo-300 border-indigo-700/40",
-};
+import { clientWork } from "@/lib/data";
 
 /**
  * ClientWork section — CMS & freelance builds shown as an editorial list.
@@ -24,16 +15,12 @@ export function ClientWork() {
     <section id="client-work" className="relative px-5 sm:px-8 py-14 sm:py-20">
       <div className="mx-auto max-w-5xl">
 
-        {/* ---------- Section label ---------- */}
-        <Reveal>
-          <div className="mb-8 flex items-center gap-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              Client Builds
-            </span>
-            <div className="h-px flex-1 bg-border" />
-            <span className="text-xs text-muted">{clientWork.length} sites</span>
-          </div>
-        </Reveal>
+        <EditorialSectionHeader
+          index="02"
+          label="Client Builds"
+          title="Fast client sites, shipped with taste."
+          meta={`${clientWork.length} sites`}
+        />
 
         {/* ---------- Site list ---------- */}
         <div>
@@ -59,9 +46,7 @@ export function ClientWork() {
                 </div>
 
                 {/* Platform badge */}
-                <span
-                  className={`hidden shrink-0 rounded-full border px-3 py-0.5 text-xs font-medium sm:block ${platformStyle[site.platform]}`}
-                >
+                <span className="hidden shrink-0 rounded-full border border-border px-3 py-0.5 text-xs font-medium text-muted transition-colors group-hover:border-accent/30 group-hover:text-foreground sm:block">
                   {site.platform}
                 </span>
 

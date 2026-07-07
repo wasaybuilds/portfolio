@@ -1,3 +1,4 @@
+import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { experiences } from "@/lib/data";
 
@@ -13,15 +14,11 @@ export function Experience() {
     <section id="experience" className="relative px-5 sm:px-8 py-14 sm:py-20">
       <div className="mx-auto max-w-5xl">
 
-        {/* ---------- Section label ---------- */}
-        <Reveal>
-          <div className="mb-8 flex items-center gap-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              Experience
-            </span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-        </Reveal>
+        <EditorialSectionHeader
+          index="04"
+          label="Experience"
+          title="One company. Multiple products. Real ownership."
+        />
 
         <div className="flex flex-col divide-y divide-border">
           {experiences.map((exp, index) => (
@@ -51,7 +48,7 @@ export function Experience() {
                         href={exp.companyUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-sm font-medium text-accent-2 hover:underline"
+                        className="inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline"
                       >
                         {exp.company}
                       </a>

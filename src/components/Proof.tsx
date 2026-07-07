@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
+import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { proof } from "@/lib/data";
 
 /**
@@ -89,31 +90,29 @@ export function Proof() {
     <section className="relative px-5 sm:px-8 py-14 sm:py-20">
       <div className="mx-auto max-w-5xl">
 
-        {/* ---------- Section label ---------- */}
-        <Reveal>
-          <div className="mb-8 flex items-center gap-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              By the numbers
-            </span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-        </Reveal>
+        <EditorialSectionHeader
+          index="06"
+          label="Proof"
+          title="Numbers that make the work harder to ignore."
+        />
 
         {/* ---------- Metric grid ---------- */}
         <RevealGroup
-          className="grid gap-px border border-border sm:grid-cols-2 lg:grid-cols-4"
+          className="grid gap-px border-y border-border bg-border sm:grid-cols-2 lg:grid-cols-4"
           stagger={0.08}
         >
           {proof.map((item) => (
             <RevealItem key={item.label}>
-              <div className="group flex flex-col gap-3 bg-background p-8 transition-colors duration-300 hover:bg-background-soft lg:p-10">
+              <div className="group flex min-h-48 flex-col justify-between bg-background p-5 transition-colors duration-300 hover:bg-background-soft sm:p-6">
                 {/* Big number — counts up on scroll */}
-                <div className="font-display text-5xl font-bold text-foreground transition-colors duration-300 group-hover:text-accent sm:text-6xl">
+                <div className="font-display text-5xl font-bold leading-none tracking-[-0.08em] text-foreground transition-colors duration-300 group-hover:text-accent sm:text-6xl">
                   <CountUp value={item.value} />
                 </div>
 
-                <div className="font-medium text-foreground">{item.label}</div>
-                <div className="text-sm leading-snug text-muted">{item.note}</div>
+                <div>
+                  <div className="font-medium text-foreground">{item.label}</div>
+                  <div className="mt-1.5 text-xs leading-snug text-muted">{item.note}</div>
+                </div>
               </div>
             </RevealItem>
           ))}

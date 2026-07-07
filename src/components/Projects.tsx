@@ -1,194 +1,193 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { projects } from "@/lib/data";
 
 /**
- * Projects section — editorial numbered list + sticky preview panel.
+ * Projects section — premium editorial case-study index.
  *
  * Interactions:
- * – Hovering a row swaps the preview panel to that project's screenshot.
- * – The panel tracks the cursor's Y position with a spring-damped tilt so
- *   it feels alive without being distracting.
- * – On mobile the preview panel is hidden; rows link directly.
+ * - Hovering/focusing a row swaps the sticky preview.
+ * - Each row carries its own proof points so mobile still feels complete.
+ * - No cursor-tracking or 3D effects; the creativity comes from layout,
+ *   typography, and disciplined interaction.
  */
 export function Projects() {
   const [active, setActive] = useState<string>(projects[0]?.slug ?? "");
   const activeProject = projects.find((p) => p.slug === active) ?? projects[0];
 
-  /* ── Cursor-tilt tracking on the preview panel ── */
-  const panelRef = useRef<HTMLDivElement>(null);
-  const rawY = useMotionValue(0);
-  const springY = useSpring(rawY, { stiffness: 120, damping: 18 });
-  /* Map cursor Y (0–1 within the panel) to a ±5° tilt */
-  const rotateX = useTransform(springY, [0, 1], [5, -5]);
-
-  const handlePanelMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = panelRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    rawY.set((e.clientY - rect.top) / rect.height);
-  };
-
-  const handlePanelMouseLeave = () => rawY.set(0.5);
-
   return (
     <section id="work" className="relative px-5 sm:px-8 py-14 sm:py-20">
       <div className="mx-auto max-w-5xl">
 
-        {/* ---------- Section label ---------- */}
-        <Reveal>
-          <div className="mb-8 flex items-center gap-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              Work
-            </span>
-            <div className="h-px flex-1 bg-border" />
-            <span className="text-xs text-muted">{projects.length} projects</span>
-          </div>
-        </Reveal>
+        <EditorialSectionHeader
+          index="01"
+          label="Work"
+          title="Products that made it past the idea stage."
+          meta={`${projects.length} projects`}
+        />
 
-        <div className="grid gap-0 lg:grid-cols-[1fr_420px] lg:gap-16 xl:grid-cols-[1fr_480px]">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_420px]">
 
-          {/* ── Left — project list ── */}
-          <div>
+          {/* ── Left — editorial case-study list ── */}
+          <div className="space-y-4">
             {projects.map((project, index) => (
               <Reveal key={project.slug} delay={index * 0.06}>
                 <a
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="work-row group flex items-center gap-5 py-8"
+                  className={`group relative block overflow-hidden rounded-4xl border border-border p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:bg-background-soft/55 sm:p-6 ${
+                    active === project.slug
+                      ? "border-accent/30 bg-background-soft/45"
+                      : "bg-background/35"
+                  }`}
                   onMouseEnter={() => setActive(project.slug)}
                   onFocus={() => setActive(project.slug)}
                 >
-                  {/* Index */}
-                  <span className="w-8 shrink-0 font-display text-sm font-semibold tabular-nums text-muted transition-colors group-hover:text-accent">
-                    0{index + 1}
-                  </span>
+                  <div className="absolute left-0 top-6 h-10 w-1 rounded-r-full bg-accent/0 transition-colors group-hover:bg-accent/80" />
 
-                  {/* Name + tagline */}
-                  <div className="flex flex-1 flex-col">
-                    <span className="font-display text-2xl font-bold text-foreground transition-colors group-hover:text-accent sm:text-3xl">
-                      {project.name}
-                    </span>
-                    <span className="mt-0.5 text-sm text-muted">{project.tagline}</span>
-                  </div>
-
-                  {/* Tags + arrow */}
-                  <div className="hidden flex-col items-end gap-2 sm:flex">
-                    <div className="flex items-center gap-1.5">
-                      {project.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-border px-2.5 py-0.5 text-[11px] text-muted transition-colors group-hover:border-accent/30 group-hover:text-foreground"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                  <div className="grid gap-5 sm:grid-cols-[4rem_1fr]">
+                    {/* Index */}
+                    <div className="flex items-start justify-between sm:block">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted transition-colors group-hover:text-accent">
+                        Case
+                      </span>
+                      <span className="mt-1 block font-display text-3xl font-semibold leading-none tracking-tighter text-foreground/20 transition-colors group-hover:text-accent/40">
+                        0{index + 1}
+                      </span>
                     </div>
-                    <ArrowUpRight className="h-5 w-5 text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+
+                    {/* Main case-study copy */}
+                    <div className="min-w-0">
+                      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                        {project.role}
+                      </div>
+                      <div className="mt-2 flex items-start justify-between gap-4">
+                        <h3 className="font-display text-3xl font-semibold leading-none tracking-tighter text-foreground transition-colors group-hover:text-accent sm:text-4xl">
+                          {project.name}
+                        </h3>
+                        <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent lg:hidden" />
+                      </div>
+                      <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
+                        {project.tagline}
+                      </p>
+
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {project.tags.slice(0, 4).map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full border border-border px-3 py-1 text-[11px] font-medium text-muted transition-colors group-hover:border-accent/30 group-hover:text-foreground"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Proof points stay inline so the row breathes instead of forming boxes. */}
+                      <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 border-t border-border pt-4">
+                        {project.highlights.slice(0, 2).map((highlight) => (
+                          <div key={highlight.label} className="min-w-24">
+                            <div className="font-display text-lg font-semibold leading-none text-foreground">
+                              {highlight.value}
+                            </div>
+                            <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-muted">
+                              {highlight.label}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </a>
               </Reveal>
             ))}
-
-            {/* Metric strip — mobile only */}
-            {activeProject && (
-              <Reveal delay={0.15}>
-                <div className="mt-8 grid grid-cols-3 gap-4 rounded-2xl card-glass p-5 lg:hidden">
-                  {activeProject.highlights.map((h) => (
-                    <div key={h.label}>
-                      <div className="font-display text-xl font-bold text-foreground">
-                        {h.value}
-                      </div>
-                      <div className="mt-0.5 text-[11px] text-muted">{h.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </Reveal>
-            )}
           </div>
 
-          {/* ── Right — sticky tilt-preview panel (desktop only) ── */}
+          {/* ── Right — sticky product preview (desktop only) ── */}
           <div className="hidden lg:block">
             <div className="sticky top-28">
-              <motion.div
-                ref={panelRef}
-                onMouseMove={handlePanelMouseMove}
-                onMouseLeave={handlePanelMouseLeave}
-                style={{ rotateX, transformPerspective: 800 }}
-                className="origin-center"
-              >
-                <AnimatePresence mode="wait">
-                  {activeProject && (
-                    <motion.div
-                      key={activeProject.slug}
-                      initial={{ opacity: 0, y: 20, scale: 0.97 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -20, scale: 0.97 }}
-                      transition={{ duration: 0.28, ease: "easeInOut" }}
-                      className="overflow-hidden rounded-2xl card-glass"
-                    >
-                      {/* Screenshot */}
-                      <div className="relative overflow-hidden bg-black/30">
-                        <div
-                          className={`absolute inset-0 -z-10 bg-gradient-to-br ${activeProject.accent} opacity-10`}
-                        />
+              <AnimatePresence mode="wait">
+                {activeProject && (
+                  <motion.div
+                    key={activeProject.slug}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    className="relative"
+                  >
+                    <div className="absolute -inset-3 rotate-2 rounded-[2.25rem] border border-accent/15" />
+
+                    <div className="relative overflow-hidden rounded-4xl border border-border bg-background-soft shadow-2xl shadow-black/20">
+                      <div className="flex items-center justify-between border-b border-border px-4 py-3">
+                        <div className="flex items-center gap-1.5">
+                          <span className="h-2 w-2 rounded-full bg-accent/70" />
+                          <span className="h-2 w-2 rounded-full bg-white/20" />
+                          <span className="h-2 w-2 rounded-full bg-white/10" />
+                        </div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted">
+                          Live Product
+                        </p>
+                      </div>
+
+                      <div className="relative overflow-hidden bg-background">
                         <Image
                           src={activeProject.image}
                           alt={activeProject.name}
                           width={960}
                           height={600}
-                          className="h-52 w-full object-cover object-top transition-transform duration-700 hover:scale-105"
+                          className="h-60 w-full object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
                         />
                       </div>
 
-                      {/* Details */}
-                      <div className="p-6">
+                      <div className="border-t border-border p-5">
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <div className="font-display text-lg font-bold text-foreground">
+                            <div className="font-display text-xl font-semibold tracking-[-0.03em] text-foreground">
                               {activeProject.name}
                             </div>
-                            <div className="mt-0.5 text-sm text-muted">
-                              {activeProject.role}
+                            <div className="mt-1 text-sm text-muted">
+                              {activeProject.tagline}
                             </div>
                           </div>
                           <a
                             href={activeProject.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent text-white transition-transform hover:scale-110"
+                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-accent/50 hover:text-accent"
                             aria-label={`Visit ${activeProject.name}`}
                           >
                             <ArrowUpRight className="h-4 w-4" />
                           </a>
                         </div>
 
-                        <p className="mt-4 text-sm leading-relaxed text-muted">
-                          {activeProject.description}
-                        </p>
-
-                        <div className="mt-5 grid grid-cols-3 gap-3 border-t border-border pt-5">
-                          {activeProject.highlights.map((h) => (
-                            <div key={h.label}>
-                              <div className="font-display text-xl font-bold text-foreground">
-                                {h.value}
-                              </div>
-                              <div className="mt-0.5 text-[11px] leading-snug text-muted">
-                                {h.label}
-                              </div>
-                            </div>
-                          ))}
+                        <div className="mt-5 border-t border-border pt-5">
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+                            Key systems
+                          </p>
+                          <ul className="mt-3 space-y-2">
+                            {activeProject.features.slice(0, 2).map((feature) => (
+                              <li
+                                key={feature}
+                                className="grid grid-cols-[0.75rem_1fr] gap-2 text-sm leading-snug text-muted"
+                              >
+                                <span className="mt-2 h-1 w-1 rounded-full bg-accent" />
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>

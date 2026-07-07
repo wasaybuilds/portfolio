@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ExternalLink } from "lucide-react";
+import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { certifications } from "@/lib/data";
 
 /** How long the marquee stays paused after touch ends so taps can register. */
@@ -41,17 +42,16 @@ export function Certifications() {
   return (
     <section id="certifications" className="relative py-14 sm:py-20">
       <div className="mx-auto max-w-5xl px-5 sm:px-8">
-        <div className="mb-8 flex items-center gap-4">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-            Credentials
-          </span>
-          <div className="h-px flex-1 bg-border" />
-          <span className="text-xs text-muted">{certifications.length} certs</span>
-        </div>
+        <EditorialSectionHeader
+          index="08"
+          label="Credentials"
+          title="Signals of continuous learning."
+          meta={`${certifications.length} certs`}
+        />
       </div>
 
       <div
-        className="relative mt-2 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+        className="relative mt-2 flex overflow-hidden border-y border-border mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
         onPointerDown={pauseMarquee}
         onPointerUp={() => scheduleResume()}
         onPointerCancel={() => scheduleResume(300)}
@@ -73,16 +73,16 @@ export function Certifications() {
         >
           {loopItems.map((cert, index) => (
             /*
-             * Flat card: border + background-soft instead of card-glass
-             * backdrop-blur. Consistent with the page's editorial language.
+             * Editorial ticker item: a vertical rule and text, not a badge card.
+             * This keeps credentials present without making them louder than work.
              */
             <a
               key={`${cert.name}-${index}`}
               href={cert.url ?? "#"}
               target={cert.url ? "_blank" : undefined}
               rel={cert.url ? "noopener noreferrer" : undefined}
-              className={`flex w-72 shrink-0 flex-col justify-between border border-border bg-background-soft p-6 transition-colors ${
-                cert.url ? "hover:border-accent/40" : ""
+              className={`flex w-80 shrink-0 flex-col justify-between border-l border-border px-8 py-6 transition-colors ${
+                cert.url ? "hover:bg-background-soft" : ""
               }`}
             >
               <div className="flex items-start justify-between">
