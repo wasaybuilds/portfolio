@@ -4,8 +4,8 @@ import { profile, navLinks } from "@/lib/data";
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-border px-5 sm:px-8 py-10">
-      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-6 sm:flex-row">
+    <footer className="relative border-t border-border px-5 py-6 sm:px-8 sm:py-10">
+      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 sm:flex-row sm:gap-6">
         <div className="flex flex-col items-center gap-1 sm:items-start">
           <span className="font-display text-lg font-semibold text-foreground">
             {profile.name}
@@ -54,7 +54,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto mt-8 max-w-5xl border-t border-border pt-6 text-center text-xs text-muted">
+      <div className="mx-auto mt-4 max-w-5xl border-t border-border pt-4 text-center text-xs text-muted sm:mt-6 sm:pt-5">
         © {new Date().getFullYear()} {profile.name}. Crafted with Next.js &amp;
         Tailwind CSS.
       </div>

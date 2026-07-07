@@ -23,7 +23,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex flex-col overflow-hidden px-5 pb-10 pt-24 sm:min-h-screen sm:px-8 sm:pb-10 sm:pt-28"
+      className="relative flex flex-col overflow-hidden px-5 pb-8 pt-24 sm:min-h-screen sm:px-8 sm:pb-10 sm:pt-28"
     >
       {/* Status */}
       <motion.div
@@ -44,8 +44,8 @@ export function Hero() {
       </motion.div>
 
       {/* Name — full viewport on desktop, compact on mobile */}
-      <div className="mt-8 overflow-hidden sm:mt-0 sm:flex sm:flex-1 sm:flex-col sm:justify-center sm:py-6">
-        <div className="hidden overflow-hidden sm:block">
+      <div className="mt-6 overflow-hidden sm:mt-0 sm:flex sm:flex-1 sm:flex-col sm:justify-center sm:py-6">
+        <div className="overflow-hidden">
           <motion.h1
             initial={{ y: "110%" }}
             animate={{ y: 0 }}

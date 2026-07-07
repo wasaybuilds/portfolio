@@ -6,7 +6,7 @@ import { profile } from "@/lib/data";
 
 export function Contact() {
   return (
-    <section id="contact" className="relative px-5 py-12 sm:px-8 sm:py-20">
+    <section id="contact" className="relative px-5 py-10 pb-8 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-5xl">
         <EditorialSectionHeader
           index="09"

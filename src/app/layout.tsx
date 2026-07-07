@@ -64,9 +64,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${sora.variable} h-full antialiased dark`}
+      className={`${spaceGrotesk.variable} ${sora.variable} antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent selection:text-white">
+      <body className="bg-background text-foreground selection:bg-accent selection:text-white">
         {children}
       </body>
     </html>

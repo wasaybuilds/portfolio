@@ -20,12 +20,12 @@ import { Skills } from "@/components/Skills";
  */
 export default function Home() {
   return (
-    <div className="relative flex flex-1 flex-col overflow-hidden">
+    <div className="relative flex flex-col">
       <ScrollProgress />
       <BackgroundFX />
       <CursorGlow />
       <Navbar />
-      <main className="flex-1">
+      <main>
         <Hero />
         <Projects />
         <ClientWork />
