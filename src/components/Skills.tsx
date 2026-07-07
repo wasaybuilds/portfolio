@@ -1,85 +1,34 @@
-"use client";
-
-import { useState } from "react";
-import { motion } from "framer-motion";
 import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { skills } from "@/lib/data";
 
 /**
- * Stack section — inline-text layout with per-skill hover highlights.
- *
- * Each technology word is individually interactive: hovering it lights it
- * up in the accent colour and dims its siblings, creating a subtle spotlight
- * that rewards curiosity without requiring a click.
+ * Stack section — four pillars in a compact grid.
+ * Tells the story of how Wasay works: build, ship, polish, lead.
  */
 export function Skills() {
-  /**
-   * Track which (category, item) the cursor is over.
-   * `null` when nothing is hovered — all items at full opacity.
-   */
-  const [hovered, setHovered] = useState<{ cat: string; item: string } | null>(null);
-
   return (
-    <section id="stack" className="relative px-5 sm:px-8 py-14 sm:py-20">
+    <section id="stack" className="relative px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-5xl">
-
         <EditorialSectionHeader
           index="05"
           label="Stack"
-          title="The tools change. The judgement matters."
+          title="What I reach for."
         />
 
-        {/* ---------- Category rows ---------- */}
-        <div className="flex flex-col divide-y divide-border">
-          {skills.map((group, gIndex) => {
-            const catHovered = hovered?.cat === group.category;
-
-            return (
-              <Reveal key={group.category} delay={gIndex * 0.06}>
-                <div className="flex flex-col gap-3 py-5 sm:flex-row sm:items-baseline sm:gap-8 lg:gap-12">
-
-                  {/* Category label */}
-                  <span className="w-full shrink-0 font-display text-sm font-semibold text-accent sm:w-44 lg:w-52">
-                    {group.category}
-                  </span>
-
-                  {/* Skills — individually hoverable */}
-                  <div className="flex flex-wrap gap-x-3 gap-y-1.5">
-                    {group.items.map((item, iIndex) => {
-                      const isHighlighted = hovered === null || (catHovered && hovered.item === item);
-                      const isDimmed = hovered !== null && !isHighlighted;
-
-                      return (
-                        <span key={item} className="flex items-center gap-3">
-                          <motion.span
-                            onMouseEnter={() => setHovered({ cat: group.category, item })}
-                            onMouseLeave={() => setHovered(null)}
-                            animate={{
-                              color: isHighlighted
-                                ? hovered?.item === item
-                                  ? "var(--accent)"
-                                  : "var(--foreground)"
-                                : "var(--muted)",
-                              opacity: isDimmed ? 0.35 : 1,
-                            }}
-                            transition={{ duration: 0.15 }}
-                            className="cursor-default select-none text-sm text-muted sm:text-base"
-                          >
-                            {item}
-                          </motion.span>
-                          {/* Separator dot */}
-                          {iIndex < group.items.length - 1 && (
-                            <span className="opacity-20 select-none">·</span>
-                          )}
-                        </span>
-                      );
-                    })}
-                  </div>
+        <div className="grid gap-px border border-border bg-border sm:grid-cols-2">
+          {skills.map((group, index) => (
+            <Reveal key={group.category} delay={index * 0.05}>
+              <div className="group bg-background p-5 transition-colors hover:bg-background-soft sm:p-6">
+                <div className="font-display text-2xl font-semibold tracking-tighter text-foreground transition-colors group-hover:text-accent">
+                  {group.category}
                 </div>
-              </Reveal>
-            );
-          })}
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  {group.items.join(" · ")}
+                </p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

@@ -26,26 +26,10 @@ export const stats = [
  * Each item includes a value (displayed huge), a label, and an optional note.
  */
 export const proof = [
-  {
-    value: "3+",
-    label: "Years in production",
-    note: "Writing and shipping real code for real users",
-  },
-  {
-    value: "4+",
-    label: "Products built & live",
-    note: "DealerIQ, Befer, and more — end to end",
-  },
-  {
-    value: "370%",
-    label: "ROI on Befer",
-    note: "Documented results from clients using the product",
-  },
-  {
-    value: "1,000+",
-    label: "AI calls / day",
-    note: "DealerIQ's AI agents processed at peak",
-  },
+  { value: "3+", label: "Years shipping", note: "Production code" },
+  { value: "4+", label: "Products live", note: "End to end" },
+  { value: "370%", label: "ROI on Befer", note: "Client results" },
+  { value: "1,000+", label: "AI calls / day", note: "DealerIQ peak" },
 ];
 
 export type Experience = {
@@ -67,7 +51,7 @@ export const experiences: Experience[] = [
     location: "Lahore, Pakistan",
     current: true,
     description:
-      "Leading product operations across squads — bridging strategy and execution so processes, data, and tooling support faster decisions and better outcomes across the entire product lifecycle. Partner closely with cross-functional teams to make sure we're building the right things, the right way.",
+      "Leading product operations — strategy, tooling, and delivery across squads at Hatzs Dimensions.",
   },
   {
     role: "Full Stack Engineer",
@@ -76,7 +60,7 @@ export const experiences: Experience[] = [
     period: "Sep 2023 — Jun 2025",
     location: "Lahore, Pakistan",
     description:
-      "Shipped production web and SaaS products end to end — from React/Next.js frontends and Node.js/AWS backends to CMS builds across Webflow, WordPress, Shopify, Framer, and Bubble.io. Pioneered the frontend architecture for Befer, an AI CRM product, building it from the ground up as its founding engineer.",
+      "Full-stack engineer shipping SaaS and CMS products. Pioneered Befer from zero as founding engineer.",
   },
 ];
 
@@ -207,76 +191,20 @@ export const certifications: Certification[] = [
 
 export const skills: { category: string; items: string[] }[] = [
   {
-    category: "Languages & Frameworks",
-    items: [
-      "TypeScript",
-      "JavaScript",
-      "React",
-      "Next.js",
-      "Node.js",
-      "Express.js",
-      "NestJS",
-      "REST APIs",
-      "GraphQL",
-      "Python",
-    ],
+    category: "Build",
+    items: ["React", "Next.js", "TypeScript", "Node.js", "Python"],
   },
   {
-    category: "Backend & Databases",
-    items: [
-      "PostgreSQL",
-      "MongoDB",
-      "MySQL",
-      "Redis",
-      "Prisma",
-      "Firebase",
-      "Supabase",
-    ],
+    category: "Ship",
+    items: ["AWS", "Docker", "Linux", "CI/CD", "PostgreSQL"],
   },
   {
-    category: "DevOps & Architecture",
-    items: [
-      "AWS",
-      "Linux",
-      "Docker",
-      "CI/CD Pipelines",
-      "GitHub Actions",
-      "Turborepo",
-      "Monorepos",
-      "Microservices",
-      "Vercel",
-      "SaaS Architecture",
-    ],
+    category: "Polish",
+    items: ["Tailwind", "Framer Motion", "Webflow", "Shopify", "WordPress"],
   },
   {
-    category: "Styling & UI",
-    items: [
-      "Tailwind CSS",
-      "Framer Motion",
-      "shadcn/ui",
-      "Radix UI",
-      "Sass / CSS3",
-      "Responsive Design",
-      "Design Systems",
-      "Accessibility",
-    ],
-  },
-  {
-    category: "Platforms & CMS",
-    items: ["Webflow", "WordPress", "Shopify", "Framer", "Bubble.io", "Headless CMS"],
-  },
-  {
-    category: "Product & Leadership",
-    items: [
-      "Product Strategy",
-      "API Architecture",
-      "Code Reviews",
-      "Mentoring Engineers",
-      "Agile / Scrum",
-      "GitHub Copilot",
-      "AI-Assisted Development",
-      "Cross-functional Leadership",
-    ],
+    category: "Lead",
+    items: ["API design", "Code reviews", "Mentoring", "AI-assisted dev"],
   },
 ];
 

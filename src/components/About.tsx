@@ -12,13 +12,13 @@ import { education } from "@/lib/data";
  */
 export function About() {
   return (
-    <section id="about" className="relative px-5 sm:px-8 py-14 sm:py-20">
+    <section id="about" className="relative px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
           index="03"
           label="About"
-          title="I build like the product has to survive real users."
+          title="How I think."
         />
 
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
@@ -28,14 +28,11 @@ export function About() {
             <blockquote className="font-display text-display-md text-foreground leading-snug">
               Full ownership.
               <br />
-              <span className="text-accent">Front to back,</span>
-              <br />
-              idea to production.
+              <span className="text-accent">Idea to production.</span>
             </blockquote>
 
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted">
-              I stay close to the code, the user, and the outcome. Less noise,
-              more shipped product.
+            <p className="mt-4 max-w-sm text-sm text-muted">
+              Close to the code, the user, and what actually ships.
             </p>
           </Reveal>
 
@@ -47,24 +44,15 @@ export function About() {
           <Reveal delay={0.1}>
             <div className="flex flex-col divide-y divide-border">
               {[
-                {
-                  label: "Product-minded",
-                  desc: "I care about the metric behind the feature.",
-                },
-                {
-                  label: "Performance-obsessed",
-                  desc: "Fast UI, efficient APIs, clean deployment paths.",
-                },
-                {
-                  label: "Team multiplier",
-                  desc: "Reviews and mentoring without leaving the code.",
-                },
+                { label: "Product-minded", desc: "Metrics over tickets." },
+                { label: "Performance-first", desc: "Fast UI, clean APIs." },
+                { label: "Team multiplier", desc: "Reviews and mentoring." },
               ].map((item) => (
-                <div key={item.label} className="group py-5">
-                  <div className="mb-1.5 text-sm font-semibold text-foreground transition-colors group-hover:text-accent">
+                <div key={item.label} className="group flex flex-wrap items-baseline gap-x-2 py-4">
+                  <span className="text-sm font-semibold text-foreground transition-colors group-hover:text-accent">
                     {item.label}
-                  </div>
-                  <div className="text-sm leading-relaxed text-muted">{item.desc}</div>
+                  </span>
+                  <span className="text-sm text-muted">— {item.desc}</span>
                 </div>
               ))}
 

@@ -40,12 +40,12 @@ export function Certifications() {
   }, []);
 
   return (
-    <section id="certifications" className="relative py-14 sm:py-20">
+    <section id="certifications" className="relative py-12 sm:py-16">
       <div className="mx-auto max-w-5xl px-5 sm:px-8">
         <EditorialSectionHeader
           index="08"
           label="Credentials"
-          title="Signals of continuous learning."
+          title="Always learning."
           meta={`${certifications.length} certs`}
         />
       </div>

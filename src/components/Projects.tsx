@@ -22,13 +22,13 @@ export function Projects() {
   const activeProject = projects.find((p) => p.slug === active) ?? projects[0];
 
   return (
-    <section id="work" className="relative px-5 sm:px-8 py-14 sm:py-20">
+    <section id="work" className="relative px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
           index="01"
           label="Work"
-          title="Products that made it past the idea stage."
+          title="What I've shipped."
           meta={`${projects.length} projects`}
         />
 
@@ -42,7 +42,7 @@ export function Projects() {
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group relative block overflow-hidden rounded-4xl border border-border p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:bg-background-soft/55 sm:p-6 ${
+                  className={`group relative block overflow-hidden rounded-3xl border border-border p-4 transition-all duration-300 hover:border-accent/30 hover:bg-background-soft/55 sm:rounded-4xl sm:p-6 ${
                     active === project.slug
                       ? "border-accent/30 bg-background-soft/45"
                       : "bg-background/35"
@@ -50,53 +50,38 @@ export function Projects() {
                   onMouseEnter={() => setActive(project.slug)}
                   onFocus={() => setActive(project.slug)}
                 >
-                  <div className="absolute left-0 top-6 h-10 w-1 rounded-r-full bg-accent/0 transition-colors group-hover:bg-accent/80" />
+                  <div className="grid gap-4 sm:grid-cols-[3rem_1fr] sm:gap-5">
+                    <span className="font-display text-2xl font-semibold leading-none tracking-tighter text-foreground/20 transition-colors group-hover:text-accent/40 sm:text-3xl">
+                      0{index + 1}
+                    </span>
 
-                  <div className="grid gap-5 sm:grid-cols-[4rem_1fr]">
-                    {/* Index */}
-                    <div className="flex items-start justify-between sm:block">
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted transition-colors group-hover:text-accent">
-                        Case
-                      </span>
-                      <span className="mt-1 block font-display text-3xl font-semibold leading-none tracking-tighter text-foreground/20 transition-colors group-hover:text-accent/40">
-                        0{index + 1}
-                      </span>
-                    </div>
-
-                    {/* Main case-study copy */}
                     <div className="min-w-0">
-                      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-                        {project.role}
-                      </div>
-                      <div className="mt-2 flex items-start justify-between gap-4">
-                        <h3 className="font-display text-3xl font-semibold leading-none tracking-tighter text-foreground transition-colors group-hover:text-accent sm:text-4xl">
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="font-display text-2xl font-semibold leading-none tracking-tighter text-foreground transition-colors group-hover:text-accent sm:text-3xl">
                           {project.name}
                         </h3>
-                        <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent lg:hidden" />
+                        <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent lg:hidden" />
                       </div>
-                      <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
-                        {project.tagline}
-                      </p>
+                      <p className="mt-2 text-sm text-muted">{project.tagline}</p>
 
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {project.tags.slice(0, 4).map((tag) => (
+                      <div className="mt-4 hidden flex-wrap gap-2 sm:flex">
+                        {project.tags.slice(0, 3).map((tag) => (
                           <span
                             key={tag}
-                            className="rounded-full border border-border px-3 py-1 text-[11px] font-medium text-muted transition-colors group-hover:border-accent/30 group-hover:text-foreground"
+                            className="rounded-full border border-border px-2.5 py-0.5 text-[11px] text-muted"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
 
-                      {/* Proof points stay inline so the row breathes instead of forming boxes. */}
-                      <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 border-t border-border pt-4">
+                      <div className="mt-4 hidden gap-5 border-t border-border pt-3 sm:flex">
                         {project.highlights.slice(0, 2).map((highlight) => (
-                          <div key={highlight.label} className="min-w-24">
-                            <div className="font-display text-lg font-semibold leading-none text-foreground">
+                          <div key={highlight.label}>
+                            <div className="font-display text-base font-semibold text-foreground">
                               {highlight.value}
                             </div>
-                            <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-muted">
+                            <div className="mt-0.5 text-[10px] uppercase tracking-wider text-muted">
                               {highlight.label}
                             </div>
                           </div>

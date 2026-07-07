@@ -64,10 +64,17 @@ body {
  * relying on images, 3D, or heavy animation.
  */
 .text-hero {
-  font-size: clamp(5rem, 28vw, 24rem);
-  line-height: 0.85;
+  font-size: clamp(3.25rem, 14vw, 24rem);
+  line-height: 0.9;
   letter-spacing: -0.04em;
   font-weight: 800;
+}
+
+@media (min-width: 640px) {
+  .text-hero {
+    font-size: clamp(4.5rem, 22vw, 24rem);
+    line-height: 0.85;
+  }
 }
 
 .text-display-lg {

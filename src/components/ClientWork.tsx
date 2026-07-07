@@ -12,13 +12,13 @@ import { clientWork } from "@/lib/data";
  */
 export function ClientWork() {
   return (
-    <section id="client-work" className="relative px-5 sm:px-8 py-14 sm:py-20">
+    <section id="client-work" className="relative px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
           index="02"
           label="Client Builds"
-          title="Fast client sites, shipped with taste."
+          title="Beyond the products."
           meta={`${clientWork.length} sites`}
         />
 

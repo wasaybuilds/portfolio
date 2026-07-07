@@ -15,13 +15,8 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { Skills } from "@/components/Skills";
 
 /**
- * New section order for the editorial v2 design:
- *
- * Hero → Work (projects) → About → Experience → Stack (skills) →
- * Proof (metrics) → Certifications → Contact → Footer
- *
- * The sequence tells a story: here's who I am → here's what I've built →
- * here's my background → here's what I can do → here's the proof.
+ * Page story: who → what shipped → client breadth → how I think →
+ * where I built → what I use → proof → still active → credentials → contact.
  */
 export default function Home() {
   return (

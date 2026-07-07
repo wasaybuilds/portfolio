@@ -87,13 +87,13 @@ function CountUp({
  */
 export function Proof() {
   return (
-    <section className="relative px-5 sm:px-8 py-14 sm:py-20">
+    <section className="relative px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
           index="06"
           label="Proof"
-          title="Numbers that make the work harder to ignore."
+          title="The proof."
         />
 
         {/* ---------- Metric grid ---------- */}
@@ -103,9 +103,8 @@ export function Proof() {
         >
           {proof.map((item) => (
             <RevealItem key={item.label}>
-              <div className="group flex min-h-48 flex-col justify-between bg-background p-5 transition-colors duration-300 hover:bg-background-soft sm:p-6">
-                {/* Big number — counts up on scroll */}
-                <div className="font-display text-5xl font-bold leading-none tracking-[-0.08em] text-foreground transition-colors duration-300 group-hover:text-accent sm:text-6xl">
+              <div className="group flex min-h-36 flex-col justify-between bg-background p-4 transition-colors duration-300 hover:bg-background-soft sm:min-h-40 sm:p-5">
+                <div className="font-display text-4xl font-bold leading-none tracking-tighter text-foreground transition-colors duration-300 group-hover:text-accent sm:text-5xl">
                   <CountUp value={item.value} />
                 </div>
 

@@ -3,52 +3,34 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
-import { profile, stats } from "@/lib/data";
+import { profile } from "@/lib/data";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/**
- * Tech ticker — the technologies that scroll continuously beneath the name,
- * giving the hero perpetual motion without being distracting.
- */
 const TICKER_ITEMS = [
   "React", "Next.js", "TypeScript", "Node.js", "Python",
-  "AWS", "Docker", "PostgreSQL", "GraphQL", "NestJS",
-  "Framer Motion", "Prisma", "Redis", "Linux", "CI/CD",
-  "Tailwind CSS", "REST APIs", "Webflow", "Shopify", "Monorepos",
+  "AWS", "PostgreSQL", "NestJS", "Linux", "CI/CD",
 ];
 
-/**
- * Work category counts shown in the strip below the ticker —
- * inspired by the reference portfolio's category navigation.
- */
-const CATEGORIES = [
-  { label: "SaaS Products",   count: "2",   href: "#work" },
-  { label: "Client Builds",   count: "8+",  href: "#client-work" },
-  { label: "Experience",      count: "3+ yrs", href: "#experience" },
-  { label: "Certifications",  count: "10+", href: "#certifications" },
+/** Story anchors — where the scroll goes next, not a second metrics block. */
+const STORY_LINKS = [
+  { label: "Work", href: "#work" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function Hero() {
   return (
-    /*
-     * Three-zone layout using flex-col:
-     *   1. Status strip   — sticks near the top
-     *   2. flex-1 + Name  — grows to fill all remaining vertical space
-     *   3. Ticker + Bio   — always sits at the bottom
-     * This prevents the "empty space" that happens when all content is
-     * centered as a single block (justify-center) or pushed to one end.
-     */
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col overflow-hidden pt-28 pb-10"
+      className="relative flex flex-col overflow-hidden px-5 pb-10 pt-24 sm:min-h-screen sm:px-8 sm:pb-10 sm:pt-28"
     >
-      {/* ── Zone 1: Status strip ── */}
+      {/* Status */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: EASE }}
-        className="flex flex-wrap items-center gap-3 px-5 sm:px-8"
+        className="flex flex-wrap items-center gap-3"
       >
         <span className="flex items-center gap-2 text-xs text-muted">
           <span className="relative flex h-2 w-2">
@@ -59,23 +41,16 @@ export function Hero() {
         </span>
         <span className="opacity-20 select-none">·</span>
         <span className="text-xs text-muted">{profile.location}</span>
-        <span className="opacity-20 select-none">·</span>
-        <span className="text-xs text-muted">2026</span>
       </motion.div>
 
-      {/* ── Zone 2: Name — flex-1 so it eats all the middle space ── */}
-      {/*
-       * The wrapper grows to fill whatever height remains between the status
-       * strip and the bottom zone. The name is then flex-centered inside it,
-       * so it always sits in the true vertical middle of the viewport.
-       */}
-      <div className="flex flex-1 flex-col justify-center overflow-hidden py-6">
-        <div className="overflow-hidden">
+      {/* Name — full viewport on desktop, compact on mobile */}
+      <div className="mt-8 overflow-hidden sm:mt-0 sm:flex sm:flex-1 sm:flex-col sm:justify-center sm:py-6">
+        <div className="hidden overflow-hidden sm:block">
           <motion.h1
             initial={{ y: "110%" }}
             animate={{ y: 0 }}
             transition={{ duration: 0.9, delay: 0.05, ease: EASE }}
-            className="font-display text-hero font-extrabold leading-none text-foreground/15 select-none px-5 sm:px-8"
+            className="font-display text-hero font-extrabold leading-none text-foreground/15 select-none"
             aria-hidden="true"
           >
             Abdul
@@ -86,19 +61,34 @@ export function Hero() {
             initial={{ y: "110%" }}
             animate={{ y: 0 }}
             transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
-            className="font-display text-hero font-extrabold leading-none text-foreground px-5 sm:px-8"
+            className="font-display text-hero font-extrabold leading-none text-foreground"
           >
             Wasay<span className="text-accent">.</span>
           </motion.h1>
         </div>
       </div>
 
-      {/* ── Zone 3a: Tech ticker ── */}
+      {/* Role + one-line story */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.25, ease: EASE }}
+        className="mt-6 max-w-md sm:mt-0"
+      >
+        <p className="font-display text-lg font-semibold text-foreground sm:text-xl">
+          {profile.role}
+        </p>
+        <p className="mt-2 text-sm leading-relaxed text-muted">
+          {profile.tagline}
+        </p>
+      </motion.div>
+
+      {/* Ticker */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.35 }}
-        className="relative flex overflow-hidden border-y border-border py-3 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+        className="relative -mx-5 mt-8 flex overflow-hidden border-y border-border py-3 mask-[linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] sm:mx-0"
       >
         <div className="animate-marquee-fast flex w-max shrink-0 gap-8 pr-8">
           {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
@@ -113,73 +103,57 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* ── Zone 3b: Bio + CTAs + category counts ── */}
+      {/* CTAs + story links */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
-        className="mt-6 grid gap-6 px-5 sm:px-8 sm:grid-cols-[1fr_auto]"
+        transition={{ duration: 0.6, delay: 0.45, ease: EASE }}
+        className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
       >
-        {/* Left — role + bio + CTAs */}
-        <div>
-          <p className="font-display text-base font-semibold text-foreground sm:text-lg">
-            {profile.role}
-          </p>
-          <p className="mt-1 max-w-sm text-sm leading-relaxed text-muted">
-            Building production-grade SaaS from the ground up — React,
-            Node.js, Python. Full ownership, front to back.
-          </p>
-
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            <a
-              href="#work"
-              className="group inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition-all hover:scale-[1.03] hover:bg-accent/90"
-            >
-              View Work
-              <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-            <a
-              href={`mailto:${profile.email}`}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-5 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
-            >
-              Say Hello
-            </a>
-            <a
-              href={profile.github}
-              target="_blank" rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground"
-            >
-              <GithubIcon className="h-4 w-4" />
-            </a>
-            <a
-              href={profile.linkedin}
-              target="_blank" rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground"
-            >
-              <LinkedinIcon className="h-4 w-4" />
-            </a>
-          </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href="#work"
+            className="group inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition-all hover:scale-[1.03] hover:bg-accent/90"
+          >
+            View Work
+            <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+          <a
+            href={`mailto:${profile.email}`}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-5 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
+          >
+            Say Hello
+          </a>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground"
+          >
+            <GithubIcon className="h-4 w-4" />
+          </a>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground"
+          >
+            <LinkedinIcon className="h-4 w-4" />
+          </a>
         </div>
 
-        {/* Right — category count strip */}
-        <div className="grid grid-cols-2 gap-px border border-border sm:grid-cols-1">
-          {CATEGORIES.map(({ label, count, href }) => (
-            <a
-              key={label}
-              href={href}
-              className="group flex items-center justify-between gap-6 bg-background px-4 py-3 text-xs transition-colors hover:bg-background-soft"
-            >
-              <span className="text-muted transition-colors group-hover:text-foreground">
+        <nav className="flex items-center gap-3 text-xs text-muted">
+          {STORY_LINKS.map(({ label, href }, i) => (
+            <span key={label} className="flex items-center gap-3">
+              {i > 0 ? <span className="opacity-20">·</span> : null}
+              <a href={href} className="transition-colors hover:text-accent">
                 {label}
-              </span>
-              <span className="font-display font-bold text-foreground tabular-nums">
-                {count}
-              </span>
-            </a>
+              </a>
+            </span>
           ))}
-        </div>
+        </nav>
       </motion.div>
     </section>
   );

@@ -51,7 +51,7 @@ async function getGitHubData() {
     const user: GitHubUser = await userRes.json();
     const repos: GitHubRepo[] = await reposRes.json();
 
-    return { user, repos: repos.filter((r) => !r.fork).slice(0, 4) };
+    return { user, repos: repos.filter((r) => !r.fork).slice(0, 3) };
   } catch {
     return null;
   }
@@ -61,13 +61,13 @@ export async function GitHubActivity() {
   const data = await getGitHubData();
 
   return (
-    <section className="relative px-5 sm:px-8 py-14 sm:py-20">
+    <section className="relative px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
           index="07"
           label="GitHub"
-          title="A public pulse of recent engineering work."
+          title="Still shipping."
           meta={
             <a
               href={profile.github}

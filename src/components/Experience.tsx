@@ -11,19 +11,19 @@ import { experiences } from "@/lib/data";
  */
 export function Experience() {
   return (
-    <section id="experience" className="relative px-5 sm:px-8 py-14 sm:py-20">
+    <section id="experience" className="relative px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
           index="04"
           label="Experience"
-          title="One company. Multiple products. Real ownership."
+          title="Where I've built."
         />
 
         <div className="flex flex-col divide-y divide-border">
           {experiences.map((exp, index) => (
             <Reveal key={exp.role + exp.period} delay={index * 0.07}>
-              <div className="group grid gap-4 py-8 sm:grid-cols-[160px_1fr] sm:gap-8 lg:grid-cols-[200px_1fr_340px] lg:gap-12">
+              <div className="group grid gap-3 py-6 sm:grid-cols-[140px_1fr] sm:gap-8 lg:grid-cols-[160px_1fr_280px] lg:gap-10">
 
                 {/* Period + location */}
                 <div className="flex flex-row items-center gap-3 sm:flex-col sm:items-start sm:gap-1.5">
