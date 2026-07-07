@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Award, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { certifications } from "@/lib/data";
 
 /** How long the marquee stays paused after touch ends so taps can register. */
@@ -72,30 +72,32 @@ export function Certifications() {
           }`}
         >
           {loopItems.map((cert, index) => (
+            /*
+             * Flat card: border + background-soft instead of card-glass
+             * backdrop-blur. Consistent with the page's editorial language.
+             */
             <a
               key={`${cert.name}-${index}`}
               href={cert.url ?? "#"}
               target={cert.url ? "_blank" : undefined}
               rel={cert.url ? "noopener noreferrer" : undefined}
-              className={`flex w-72 shrink-0 flex-col justify-between rounded-2xl card-glass p-6 transition-colors ${
+              className={`flex w-72 shrink-0 flex-col justify-between border border-border bg-background-soft p-6 transition-colors ${
                 cert.url ? "hover:border-accent/40" : ""
               }`}
             >
               <div className="flex items-start justify-between">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-accent">
-                  <Award className="h-4 w-4" />
-                </div>
+                <span className="text-xs font-semibold uppercase tracking-wider text-accent">
+                  {cert.issuer}
+                </span>
                 {cert.url && (
-                  <ExternalLink className="h-4 w-4 text-muted" />
+                  <ExternalLink className="h-3.5 w-3.5 text-muted" />
                 )}
               </div>
               <div className="mt-6">
                 <h3 className="font-display text-base leading-snug font-semibold text-foreground">
                   {cert.name}
                 </h3>
-                <p className="mt-2 text-sm text-muted">
-                  {cert.issuer} · {cert.date}
-                </p>
+                <p className="mt-2 text-xs text-muted">{cert.date}</p>
               </div>
             </a>
           ))}

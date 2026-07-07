@@ -45,11 +45,13 @@ export function About() {
             </div>
           </Reveal>
 
-          {/* ---------- Right — facts + education ---------- */}
+          {/* ---------- Right — capabilities + education ---------- */}
+          {/*
+           * Flat divider-row layout: same visual language as Experience and
+           * Skills. No glassmorphism cards — just clean horizontal rules.
+           */}
           <Reveal direction="left" delay={0.1}>
-            <div className="flex flex-col gap-6">
-
-              {/* Three capabilities */}
+            <div className="flex flex-col divide-y divide-border">
               {[
                 {
                   label: "Product-minded",
@@ -64,23 +66,20 @@ export function About() {
                   desc: "Code reviews, architectural guidance, and mentoring junior engineers to grow the team's capability.",
                 },
               ].map((item) => (
-                <div
-                  key={item.label}
-                  className="group rounded-2xl card-glass p-5 transition-colors hover:border-accent/30"
-                >
-                  <div className="mb-1.5 text-sm font-semibold text-foreground">
+                <div key={item.label} className="group py-5">
+                  <div className="mb-1.5 text-sm font-semibold text-foreground transition-colors group-hover:text-accent">
                     {item.label}
                   </div>
-                  <div className="text-sm text-muted">{item.desc}</div>
+                  <div className="text-sm leading-relaxed text-muted">{item.desc}</div>
                 </div>
               ))}
 
-              {/* Education */}
-              <div className="rounded-2xl card-glass p-5">
+              {/* Education — flat row, same language */}
+              <div className="py-5">
                 <div className="text-xs font-semibold uppercase tracking-wider text-accent">
                   Education
                 </div>
-                <div className="mt-3 font-medium text-foreground">{education.school}</div>
+                <div className="mt-2 font-medium text-foreground">{education.school}</div>
                 <div className="mt-0.5 text-sm text-muted">
                   {education.degree} · {education.period}
                 </div>
