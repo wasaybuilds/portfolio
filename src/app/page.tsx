@@ -9,6 +9,7 @@ import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
 import { Projects } from "@/components/Projects";
 import { Proof } from "@/components/Proof";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { Skills } from "@/components/Skills";
 
 /**
@@ -23,6 +24,7 @@ import { Skills } from "@/components/Skills";
 export default function Home() {
   return (
     <div className="relative flex flex-1 flex-col overflow-hidden">
+      <ScrollProgress />
       <BackgroundFX />
       <CursorGlow />
       <Navbar />

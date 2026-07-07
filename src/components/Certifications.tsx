@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Award, ExternalLink } from "lucide-react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { certifications } from "@/lib/data";
 
 /** How long the marquee stays paused after touch ends so taps can register. */
@@ -40,17 +39,19 @@ export function Certifications() {
   }, []);
 
   return (
-    <section id="certifications" className="relative py-28 sm:py-36">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading
-          eyebrow="Credentials"
-          title="Certifications & continuous learning."
-          description="Formal recognition from Meta, HackerRank, and Webflow backing up the hands-on experience."
-        />
+    <section id="certifications" className="relative py-14 sm:py-20">
+      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+        <div className="mb-8 flex items-center gap-4">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+            Credentials
+          </span>
+          <div className="h-px flex-1 bg-border" />
+          <span className="text-xs text-muted">{certifications.length} certs</span>
+        </div>
       </div>
 
       <div
-        className="relative mt-14 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+        className="relative mt-2 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
         onPointerDown={pauseMarquee}
         onPointerUp={() => scheduleResume()}
         onPointerCancel={() => scheduleResume(300)}

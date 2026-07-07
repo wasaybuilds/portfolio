@@ -23,7 +23,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 pt-32 pb-16 sm:px-10 lg:px-16"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 pt-28 pb-10 sm:px-10 lg:px-16"
     >
       {/* ---------- Status badge ---------- */}
       <motion.div
@@ -122,7 +122,7 @@ export function Hero() {
       {/* ---------- Stats bar ---------- */}
       <motion.div
         {...fadeUp(0.65)}
-        className="mt-14 grid grid-cols-2 gap-6 border-t border-border pt-10 sm:grid-cols-4"
+        className="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-8 sm:grid-cols-4"
       >
         {stats.map((stat) => (
           <div key={stat.label}>
