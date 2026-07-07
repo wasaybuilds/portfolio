@@ -33,7 +33,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col justify-end overflow-hidden pb-14 pt-28"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden pb-14 pt-28"
     >
       {/* ── Status row ── */}
       <div className="mx-auto w-full max-w-5xl px-5 sm:px-8">
@@ -71,7 +71,7 @@ export function Hero() {
           className="px-5 sm:px-8"
         >
           <h1
-            className="font-display text-hero font-extrabold leading-none text-muted/25 select-none"
+            className="font-display text-hero font-extrabold leading-none text-foreground/20 select-none"
             aria-hidden="true"
           >
             Abdul
