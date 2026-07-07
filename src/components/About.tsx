@@ -24,7 +24,7 @@ export function About() {
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
 
           {/* ---------- Left — pull-quote + philosophy ---------- */}
-          <Reveal direction="right">
+          <Reveal>
             <blockquote className="font-display text-display-md text-foreground leading-snug">
               Full ownership.
               <br />
@@ -44,7 +44,7 @@ export function About() {
            * Flat divider-row layout: same visual language as Experience and
            * Skills. No glassmorphism cards — just clean horizontal rules.
            */}
-          <Reveal direction="left" delay={0.1}>
+          <Reveal delay={0.1}>
             <div className="flex flex-col divide-y divide-border">
               {[
                 {
