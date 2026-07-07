@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
 import { ClientWork } from "@/components/ClientWork";
+import { GitHubActivity } from "@/components/GitHubActivity";
 import { Projects } from "@/components/Projects";
 import { Proof } from "@/components/Proof";
 import { ScrollProgress } from "@/components/ScrollProgress";
@@ -37,6 +38,7 @@ export default function Home() {
         <Experience />
         <Skills />
         <Proof />
+        <GitHubActivity />
         <Certifications />
         <Contact />
       </main>

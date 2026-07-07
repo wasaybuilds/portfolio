@@ -23,6 +23,7 @@
   --font-sans: var(--font-space-grotesk);
   --font-display: var(--font-sora);
   --animate-marquee: marquee 32s linear infinite;
+  --animate-marquee-fast: marquee 14s linear infinite;
   --animate-blob: blob 18s ease-in-out infinite;
   --animate-float: float 6s ease-in-out infinite;
   --animate-spin-slow: spin 14s linear infinite;
@@ -63,8 +64,20 @@ body {
 
 /* --------------------------------------------------------------------------
    Display type — fluid scale from mobile to wide desktop
-   Clamp: min | preferred (viewport-based) | max
    -------------------------------------------------------------------------- */
+
+/**
+ * Hero fill — scales the name so it visually dominates the screen.
+ * The viewport-based value (22vw) makes "WASAY" / "ABDUL" roughly fill
+ * the max-w-5xl container on most monitors.
+ */
+.text-hero {
+  font-size: clamp(4rem, 22vw, 18rem);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+}
+
 .text-display-xl {
   font-size: clamp(3.5rem, 10vw, 9rem);
   line-height: 0.95;

@@ -1,205 +1,181 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
 import { profile, stats } from "@/lib/data";
 
-/** Typed bezier ease shared across entrance animations. */
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Staggered fade-up for supporting text / CTAs. */
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, delay, ease: EASE },
-});
+/**
+ * Tech ticker — the technologies that scroll continuously beneath the name,
+ * giving the hero perpetual motion without being distracting.
+ */
+const TICKER_ITEMS = [
+  "React", "Next.js", "TypeScript", "Node.js", "Python",
+  "AWS", "Docker", "PostgreSQL", "GraphQL", "NestJS",
+  "Framer Motion", "Prisma", "Redis", "Linux", "CI/CD",
+  "Tailwind CSS", "REST APIs", "Webflow", "Shopify", "Monorepos",
+];
 
 /**
- * Hero — two-column layout on desktop:
- *  Left  : "Full Stack | Senior Engineer" pills → massive name → role + CTAs → stats
- *  Right : profile photo card with name, role, and availability badge
- *
- * Drop your photo at `public/profile.jpg` and it will appear in the card.
- * The card falls back to the "AW" initials avatar if the file is missing.
+ * Work category counts shown in the strip below the ticker —
+ * inspired by the reference portfolio's category navigation.
  */
-export function Hero() {
-  const [imgError, setImgError] = useState(false);
+const CATEGORIES = [
+  { label: "SaaS Products",   count: "2",   href: "#work" },
+  { label: "Client Builds",   count: "8+",  href: "#client-work" },
+  { label: "Experience",      count: "3+ yrs", href: "#experience" },
+  { label: "Certifications",  count: "10+", href: "#certifications" },
+];
 
+export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-5 sm:px-8 pt-28 pb-10"
+      className="relative flex min-h-screen flex-col justify-end overflow-hidden pb-14 pt-28"
     >
-      <div className="mx-auto w-full max-w-5xl">
-
-        {/* ── "Minimal | Creative" style pill labels ── */}
+      {/* ── Status row ── */}
+      <div className="mx-auto w-full max-w-5xl px-5 sm:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: EASE }}
-          className="mb-8 flex items-center gap-2"
+          className="mb-6 flex flex-wrap items-center gap-3"
         >
-          <span className="rounded-full border border-border bg-white/5 px-4 py-1.5 text-xs font-semibold text-foreground">
-            Full Stack
+          <span className="flex items-center gap-2 text-xs text-muted">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            Open to work
           </span>
-          <span className="text-muted opacity-40">·</span>
-          <span className="rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent">
-            Senior Engineer
-          </span>
-          <span className="text-muted opacity-40">·</span>
-          <span className="flex items-center gap-1.5 rounded-full border border-border bg-white/5 px-3 py-1.5 text-xs text-muted">
-            <MapPin className="h-3 w-3" />
-            {profile.location.split(",")[0]}
-          </span>
+          <span className="opacity-20 select-none">·</span>
+          <span className="text-xs text-muted">{profile.location}</span>
+          <span className="opacity-20 select-none">·</span>
+          <span className="text-xs text-muted">2026</span>
         </motion.div>
+      </div>
 
-        {/* ── Main content grid ── */}
-        <div className="grid items-start gap-10 lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_320px]">
+      {/* ── HERO NAME — fills the viewport ── */}
+      {/*
+        "WASAY" at 22vw makes the 5-character name dominate the screen the
+        same way the reference uses the full name. "Abdul" sits above it in
+        the same scale, pushed back with a lighter weight to create hierarchy.
+      */}
+      <div className="w-full overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: "100%" }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.05, ease: EASE }}
+          className="px-5 sm:px-8"
+        >
+          <h1
+            className="font-display text-hero font-extrabold leading-none text-muted/25 select-none"
+            aria-hidden="true"
+          >
+            Abdul
+          </h1>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: "100%" }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.12, ease: EASE }}
+          className="px-5 sm:px-8"
+        >
+          <h1 className="font-display text-hero font-extrabold leading-none text-foreground">
+            Wasay<span className="text-accent">.</span>
+          </h1>
+        </motion.div>
+      </div>
 
-          {/* Left column */}
+      {/* ── Tech ticker ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        className="relative mt-6 flex overflow-hidden border-y border-border py-3 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+      >
+        <div className="animate-marquee-fast flex w-max shrink-0 gap-8 pr-8">
+          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
+            <span key={i} className="flex items-center gap-8 text-xs font-medium tracking-widest text-muted uppercase whitespace-nowrap">
+              {item}
+              <span className="h-1 w-1 rounded-full bg-accent/50" />
+            </span>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* ── Bottom strip: bio + category counts + CTAs ── */}
+      <div className="mx-auto mt-8 w-full max-w-5xl px-5 sm:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
+          className="grid gap-8 sm:grid-cols-[1fr_auto]"
+        >
+          {/* Left — role + bio */}
           <div>
-            {/* Massive name */}
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ opacity: 0, y: "105%" }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.05, ease: EASE }}
-                className="font-display text-display-xl text-foreground"
-              >
-                Abdul
-              </motion.h1>
-            </div>
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ opacity: 0, y: "105%" }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
-                className="font-display text-display-xl text-accent"
-              >
-                Wasay.
-              </motion.h1>
-            </div>
+            <p className="font-display text-lg font-semibold text-foreground sm:text-xl">
+              {profile.role}
+            </p>
+            <p className="mt-1.5 max-w-md text-sm leading-relaxed text-muted">
+              Building production-grade SaaS from the ground up — React,
+              Node.js, Python. Full ownership, front to back.
+            </p>
 
-            {/* Role + tagline */}
-            <motion.div
-              {...fadeUp(0.35)}
-              className="mt-6 flex flex-col gap-1"
-            >
-              <span className="font-display text-lg font-semibold text-foreground sm:text-xl">
-                {profile.role}
-              </span>
-              <span className="max-w-md text-sm leading-relaxed text-muted sm:text-base">
-                Building performant, production-ready products end to end —
-                React, Node.js, Python and everything in between.
-              </span>
-            </motion.div>
-
-            {/* CTA row */}
-            <motion.div
-              {...fadeUp(0.45)}
-              className="mt-7 flex flex-wrap items-center gap-3"
-            >
+            {/* CTAs */}
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               <a
                 href="#work"
-                className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition-all hover:scale-[1.03] hover:bg-accent/90"
+                className="group inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition-all hover:scale-[1.03] hover:bg-accent/90"
               >
                 View Work
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href={`mailto:${profile.email}`}
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
               >
                 Say Hello
               </a>
-              <div className="ml-1 flex items-center gap-2">
-                <a
-                  href={profile.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground"
-                >
-                  <GithubIcon className="h-4 w-4" />
-                </a>
-                <a
-                  href={profile.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground"
-                >
-                  <LinkedinIcon className="h-4 w-4" />
-                </a>
-              </div>
-            </motion.div>
-
-            {/* Stats bar */}
-            <motion.div
-              {...fadeUp(0.55)}
-              className="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-8 sm:grid-cols-4"
-            >
-              {stats.map((stat) => (
-                <div key={stat.label}>
-                  <div className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-                    {stat.value}
-                  </div>
-                  <div className="mt-1 text-xs text-muted sm:text-sm">{stat.label}</div>
-                </div>
-              ))}
-            </motion.div>
+              <a
+                href={profile.github}
+                target="_blank" rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground"
+              >
+                <GithubIcon className="h-4 w-4" />
+              </a>
+              <a
+                href={profile.linkedin}
+                target="_blank" rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground"
+              >
+                <LinkedinIcon className="h-4 w-4" />
+              </a>
+            </div>
           </div>
 
-          {/* ── Right column — profile photo card ── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
-            className="hidden lg:block"
-          >
-            <div className="overflow-hidden rounded-3xl card-glass p-1">
-              {/* Photo — place your image at public/profile.jpg */}
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.25rem] bg-background-soft">
-                {!imgError ? (
-                  <Image
-                    src="/profile.jpg"
-                    alt={profile.name}
-                    fill
-                    className="object-cover object-top"
-                    onError={() => setImgError(true)}
-                    priority
-                  />
-                ) : (
-                  /* Fallback initials avatar */
-                  <div className="flex h-full w-full items-center justify-center">
-                    <span className="font-display text-5xl font-bold text-muted/30">AW</span>
-                  </div>
-                )}
-
-                {/* Availability badge pinned to bottom-left of photo */}
-                <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full border border-border/60 bg-background/80 px-3 py-1.5 backdrop-blur-md">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                  </span>
-                  <span className="text-xs font-medium text-foreground">Available</span>
-                </div>
-              </div>
-
-              {/* Name + role strip below photo */}
-              <div className="px-4 py-4">
-                <div className="font-display text-base font-bold text-foreground">
-                  {profile.name}
-                </div>
-                <div className="mt-0.5 text-sm text-muted">{profile.role}</div>
-              </div>
-            </div>
-          </motion.div>
-
-        </div>
+          {/* Right — category count strip (like reference's "Products 7 | Projects 8 | …") */}
+          <div className="grid grid-cols-2 gap-px border border-border sm:grid-cols-1">
+            {CATEGORIES.map(({ label, count, href }) => (
+              <a
+                key={label}
+                href={href}
+                className="group flex items-center justify-between gap-4 bg-background px-4 py-3 text-xs transition-colors hover:bg-background-soft"
+              >
+                <span className="text-muted transition-colors group-hover:text-foreground">
+                  {label}
+                </span>
+                <span className="font-display font-bold text-foreground tabular-nums">
+                  {count}
+                </span>
+              </a>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
