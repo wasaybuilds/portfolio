@@ -48,7 +48,7 @@ export function Navbar() {
         scrolled ? "py-3" : "py-5"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-16">
+      <div className="mx-auto flex max-w-5xl items-center justify-between px-5 sm:px-8">
         <div
           className={`flex w-full items-center justify-between rounded-2xl px-5 py-3 transition-all duration-300 ${
             scrolled ? "card-glass shadow-lg shadow-black/20" : "bg-transparent"
@@ -105,7 +105,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.2 }}
-            className="mx-6 mt-2 rounded-2xl card-glass p-4 md:hidden"
+            className="mx-5 mt-2 rounded-2xl card-glass p-4 md:hidden"
           >
             <nav className="flex flex-col gap-1">
               {navLinks.map((link) => (

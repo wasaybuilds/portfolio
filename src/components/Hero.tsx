@@ -23,8 +23,10 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 pt-28 pb-10 sm:px-10 lg:px-16"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-5 sm:px-8 pt-28 pb-10"
     >
+      <div className="mx-auto w-full max-w-5xl">
+
       {/* ---------- Status badge ---------- */}
       <motion.div
         {...fadeUp(0)}
@@ -133,6 +135,8 @@ export function Hero() {
           </div>
         ))}
       </motion.div>
+
+      </div>{/* /max-w-5xl */}
     </section>
   );
 }

@@ -40,7 +40,7 @@ export function Certifications() {
 
   return (
     <section id="certifications" className="relative py-14 sm:py-20">
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+      <div className="mx-auto max-w-5xl px-5 sm:px-8">
         <div className="mb-8 flex items-center gap-4">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             Credentials

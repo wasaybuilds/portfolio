@@ -10,8 +10,8 @@ import { experiences } from "@/lib/data";
  */
 export function Experience() {
   return (
-    <section id="experience" className="relative px-6 py-14 sm:py-20 sm:px-10 lg:px-16">
-      <div className="mx-auto max-w-7xl">
+    <section id="experience" className="relative px-5 sm:px-8 py-14 sm:py-20">
+      <div className="mx-auto max-w-5xl">
 
         {/* ---------- Section label ---------- */}
         <Reveal>
