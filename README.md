@@ -1,5 +1,5 @@
 # Abdul Wasay —  Portfolio    
-
+ 
 A modern, fluid, and fully responsive  personal portfolio built with Next.js, TypeScript, Tailwind CSS, and Framer Motion. Showcases experience,  skills, certifications, and two flagship AI products ([DealerIQ](https://www.dealeriq.ai) and [Befer](https://befer.co)).
  
 ## Tech Stack
