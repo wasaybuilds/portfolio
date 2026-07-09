@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { navLinks } from "@/lib/data";
+import { motion } from "framer-motion";
+import { Download, Share2 } from "lucide-react";
+import { navLinks, profile } from "@/lib/data";
 
 /**
  * Full-width sticky navbar.
@@ -13,12 +13,13 @@ import { navLinks } from "@/lib/data";
  * – Content sections below still use max-w-5xl, so the nav feeling wider is
  *   intentional — it anchors the top of the page.
  * – Transparent on top; becomes a restrained bordered bar once the user scrolls.
- * – Active link tracked via IntersectionObserver.
+ * – Active link tracked via IntersectionObserver on desktop.
+ * – Mobile keeps logo + share/download only — scroll is the primary navigation.
  */
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("#work");
+  const [shareLabel, setShareLabel] = useState("Share");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -45,18 +46,41 @@ export function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  /** Native share sheet on mobile; clipboard fallback elsewhere. */
+  const handleShare = async () => {
+    const url = window.location.href;
+    const shareData = {
+      title: `${profile.name} — ${profile.role}`,
+      text: profile.tagline,
+      url,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+
+      await navigator.clipboard.writeText(url);
+      setShareLabel("Copied!");
+      window.setTimeout(() => setShareLabel("Share"), 2000);
+    } catch {
+      // User dismissed the share sheet — no feedback needed.
+    }
+  };
+
+  const actionButtonClass =
+    "inline-flex items-center gap-1.5 rounded-full border border-border bg-white/5 px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-white/10";
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "py-3 border-b border-border bg-background/80 backdrop-blur-xl"
-          : "py-5 bg-transparent"
+          ? "border-b border-border bg-background/80 py-3 backdrop-blur-xl"
+          : "bg-transparent py-5"
       }`}
     >
-      {/* Full-width bar — no max-width so it spans edge to edge */}
       <div className="flex items-center justify-between px-6 sm:px-10 lg:px-16">
-
-        {/* Logo */}
         <a
           href="#hero"
           className="font-display text-lg font-bold tracking-tight text-foreground"
@@ -64,7 +88,6 @@ export function Navbar() {
           AW<span className="text-accent">.</span>
         </a>
 
-        {/* Desktop nav */}
         <nav className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
             <a
@@ -88,50 +111,45 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Available status — desktop */}
         <div className="hidden items-center gap-2 md:flex">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-          </span>
-          <span className="text-xs text-muted">Available</span>
+          <button
+            type="button"
+            onClick={handleShare}
+            className={actionButtonClass}
+            aria-label="Share portfolio"
+          >
+            <Share2 className="h-3.5 w-3.5" />
+            {shareLabel}
+          </button>
+          <a
+            href={profile.resumeUrl}
+            download={profile.resumeFilename}
+            className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-accent/20 transition-all hover:bg-accent/90"
+          >
+            <Download className="h-3.5 w-3.5" />
+            Download CV
+          </a>
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-border md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
-            className="mx-4 mt-2 border border-border bg-background-soft p-4 md:hidden"
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            type="button"
+            onClick={handleShare}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted transition-colors hover:text-foreground"
+            aria-label="Share portfolio"
           >
-            <nav className="flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl px-4 py-3 text-sm font-medium text-muted transition-colors hover:bg-white/5 hover:text-foreground"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <Share2 className="h-4 w-4" />
+          </button>
+          <a
+            href={profile.resumeUrl}
+            download={profile.resumeFilename}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted transition-colors hover:text-foreground"
+            aria-label="Download CV"
+          >
+            <Download className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
     </header>
   );
 }

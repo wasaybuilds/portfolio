@@ -6,7 +6,8 @@ export const profile = {
   email: "wasaya670@gmail.com",
   github: "https://github.com/wasayhatzs",
   linkedin: "https://www.linkedin.com/in/abdul-wasay01/",
-  resumeUrl: "https://www.linkedin.com/in/abdul-wasay01/",
+  resumeUrl: "/Abdul_Wasay_Full_Stack_Engineer.pdf",
+  resumeFilename: "Abdul_Wasay_Full_Stack_Engineer.pdf",
   about: [
     "Wasay is a Senior Full Stack Engineer with 3+ years building and shipping production-grade web and SaaS products — from complex React/Next.js frontends through to Node.js backends, REST and GraphQL APIs, and cloud infrastructure on AWS. He takes complete ownership of product lifecycles, not just individual tickets.",
     "He's the kind of engineer who stays close to the code while keeping the bigger picture in mind — leveraging AI tools like GitHub Copilot to accelerate delivery, conducting structured code reviews to enforce architectural standards, and mentoring junior engineers to grow the team's overall capability.",
