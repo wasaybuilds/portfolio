@@ -3,7 +3,7 @@ import { GithubIcon } from "@/components/icons/BrandIcons";
 import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { profile } from "@/lib/data";
 
-const GH_USER = "wasayhatzs";
+const GH_USER = "wasaybuilds";
 
 type GitHubUser = {
   public_repos: number;

@@ -79,7 +79,13 @@ export type Project = {
   tagline: string;
   description: string;
   role: string;
-  image: string;
+  /** Live products use a screenshot; open-source repos use a code-card preview instead. */
+  kind?: "live" | "repo";
+  image?: string;
+  /** Shown in the repo preview (e.g. wasaybuilds/intent-engine). */
+  repoFullName?: string;
+  /** Language breakdown for the repo card (percentages should sum ~100). */
+  languages?: { name: string; percent: number; color: string }[];
   tags: string[];
   highlights: { label: string; value: string }[];
   features: string[];
@@ -132,6 +138,58 @@ export const projects: Project[] = [
       "Native mobile app for scheduling, invoicing & instant payments",
     ],
     accent: "from-fuchsia-400 to-violet-600",
+  },
+  {
+    slug: "intent-engine",
+    name: "Intent Engine",
+    url: "https://github.com/wasaybuilds/intent-engine",
+    tagline: "Open-Source B2B Lead Generation by Niche & Location",
+    description:
+      "Intent Engine is a self-hosted B2B lead generation tool for sales teams, agencies, and founders — scraping Google Maps by niche and city, extracting decision makers from company sites with LLM enrichment, and generating 3-step AI cold email sequences with Hunter.io/Apollo fallbacks, CSV export, and CRM webhooks.",
+    role: "Creator & Maintainer — open source",
+    kind: "repo",
+    repoFullName: "wasaybuilds/intent-engine",
+    languages: [
+      { name: "Python", percent: 65, color: "#3572A5" },
+      { name: "TypeScript", percent: 32, color: "#3178C6" },
+      { name: "CSS", percent: 3, color: "#563D7C" },
+    ],
+    tags: ["FastAPI", "Next.js", "Playwright", "Celery", "LLM"],
+    highlights: [
+      { label: "License", value: "MIT" },
+      { label: "Stack", value: "Full stack" },
+      { label: "Outreach", value: "3-step AI emails" },
+    ],
+    features: [
+      "Google Maps discovery via Playwright with proxy rotation and stealth evasion",
+      "LLM extraction of CEOs, titles, tech stack, and intent signals from public pages",
+      "Background scrape jobs on Celery + Redis with Clerk auth and per-user history",
+      "CSV export and CRM webhook delivery for Zapier, Make, and custom stacks",
+    ],
+    accent: "from-emerald-400 to-teal-600",
+  },
+  {
+    slug: "horology-api",
+    name: "Horology API",
+    url: "https://horology-api.vercel.app",
+    tagline: "Your GitHub Activity, Wound into a 3D Mechanical Watch",
+    description:
+      "The Horology API turns any public GitHub profile into a fully interactive 3D luxury timepiece — mapping commits, languages, stars, and activity into living watch complications. Enter a handle, wind the mainspring, and inspect a mechanical movement built with React Three Fiber.",
+    role: "Creator — open source",
+    image: "/projects/horology-api.png",
+    tags: ["Next.js", "React Three Fiber", "Three.js", "Zustand", "GitHub API"],
+    highlights: [
+      { label: "Visual", value: "3D mechanical" },
+      { label: "Data source", value: "GitHub API" },
+      { label: "Live demo", value: "Vercel" },
+    ],
+    features: [
+      "GitHub stats mapped to balance beat, power reserve, caliber code, and rank",
+      "Interactive 3D watch with drag-to-inspect, lume toggle, PNG export, and share",
+      "Command bar UX with real-time winding animation and horologist rank system",
+      "In-app docs covering the full pipeline from API fetch to complication mapping",
+    ],
+    accent: "from-amber-400 to-orange-600",
   },
 ];
 
