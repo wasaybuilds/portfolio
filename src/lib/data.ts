@@ -4,7 +4,7 @@ export const profile = {
   tagline: "React · Node.js · Python · TypeScript — Performance-Focused Full Stack & API Architecture",
   location: "Lahore, Punjab, Pakistan",
   email: "wasaya670@gmail.com",
-  github: "https://github.com/wasayhatzs",
+  github: "https://github.com/wasaybuilds",
   linkedin: "https://www.linkedin.com/in/abdul-wasay01/",
   resumeUrl: "/Abdul_Wasay_Full_Stack_Engineer.pdf",
   resumeFilename: "Abdul_Wasay_Full_Stack_Engineer.pdf",
@@ -79,6 +79,11 @@ export type Project = {
   tagline: string;
   description: string;
   role: string;
+  /**
+   * saas — production AI products (DealerIQ, Befer).
+   * lab — personal / for-fun experiments shown as interactive playgrounds.
+   */
+  category: "saas" | "lab";
   /** Live products use a screenshot; open-source repos use a code-card preview instead. */
   kind?: "live" | "repo";
   image?: string;
@@ -86,6 +91,8 @@ export type Project = {
   repoFullName?: string;
   /** Language breakdown for the repo card (percentages should sum ~100). */
   languages?: { name: string; percent: number; color: string }[];
+  /** Short interactive-step labels for lab project playgrounds. */
+  playSteps?: string[];
   tags: string[];
   highlights: { label: string; value: string }[];
   features: string[];
@@ -101,6 +108,8 @@ export const projects: Project[] = [
     description:
       "DealerIQ is an all-in-one AI CRM built for modern car dealerships — unifying AI-driven calls, texts, and shared memory across a live-agent workflow so no lead ever falls through the cracks. It ships with pre-built AI roles (Receptionist, Sales, Service, Buying Agent) that handle inbound and outbound conversations end-to-end.",
     role: "Full Stack Engineering",
+    category: "saas",
+    kind: "live",
     image: "/projects/dealeriq.png",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "AI Agents", "CRM"],
     highlights: [
@@ -124,6 +133,8 @@ export const projects: Project[] = [
     description:
       "Befer is a cutting-edge CRM built for blue-collar business owners — plumbers, electricians, cleaners, and more — featuring AI-driven insights, an AI calling agent that turns calls into sales, image recognition, and SMS automation. As the pioneer engineer, I designed and built the entire product end to end, from frontend to backend.",
     role: "Pioneer Full Stack Engineer — built the entire product",
+    category: "saas",
+    kind: "live",
     image: "/projects/befer.png",
     tags: ["Next.js", "TypeScript", "AI Calling", "QuickBooks API", "Zapier"],
     highlights: [
@@ -143,10 +154,11 @@ export const projects: Project[] = [
     slug: "intent-engine",
     name: "Intent Engine",
     url: "https://github.com/wasaybuilds/intent-engine",
-    tagline: "Open-Source B2B Lead Generation by Niche & Location",
+    tagline: "Weekend experiment — niche + city → enriched B2B leads",
     description:
-      "Intent Engine is a self-hosted B2B lead generation tool for sales teams, agencies, and founders — scraping Google Maps by niche and city, extracting decision makers from company sites with LLM enrichment, and generating 3-step AI cold email sequences with Hunter.io/Apollo fallbacks, CSV export, and CRM webhooks.",
-    role: "Creator & Maintainer — open source",
+      "A for-fun full-stack lab: scrape Google Maps by niche and city, enrich decision makers with an LLM, and spit out 3-step cold email sequences. Built to learn Playwright stealth, Celery jobs, and agentic outreach — not as a SaaS product.",
+    role: "Side project — open source",
+    category: "lab",
     kind: "repo",
     repoFullName: "wasaybuilds/intent-engine",
     languages: [
@@ -154,11 +166,12 @@ export const projects: Project[] = [
       { name: "TypeScript", percent: 32, color: "#3178C6" },
       { name: "CSS", percent: 3, color: "#563D7C" },
     ],
+    playSteps: ["Maps scrape", "LLM enrich", "AI emails"],
     tags: ["FastAPI", "Next.js", "Playwright", "Celery", "LLM"],
     highlights: [
       { label: "License", value: "MIT" },
-      { label: "Stack", value: "Full stack" },
-      { label: "Outreach", value: "3-step AI emails" },
+      { label: "Vibe", value: "For fun" },
+      { label: "Outreach", value: "3-step AI" },
     ],
     features: [
       "Google Maps discovery via Playwright with proxy rotation and stealth evasion",
@@ -172,16 +185,19 @@ export const projects: Project[] = [
     slug: "horology-api",
     name: "Horology API",
     url: "https://horology-api.vercel.app",
-    tagline: "Your GitHub Activity, Wound into a 3D Mechanical Watch",
+    tagline: "Playground — wind a 3D watch from any GitHub profile",
     description:
-      "The Horology API turns any public GitHub profile into a fully interactive 3D luxury timepiece — mapping commits, languages, stars, and activity into living watch complications. Enter a handle, wind the mainspring, and inspect a mechanical movement built with React Three Fiber.",
-    role: "Creator — open source",
+      "A pure craft project: map commits, languages, and stars onto a living mechanical watch in the browser. Drag to inspect, toggle lume, export a PNG — built with React Three Fiber just to see how far a weird idea could go.",
+    role: "Side project — interactive demo",
+    category: "lab",
+    kind: "live",
     image: "/projects/horology-api.png",
+    playSteps: ["Enter handle", "Wind spring", "Inspect 3D"],
     tags: ["Next.js", "React Three Fiber", "Three.js", "Zustand", "GitHub API"],
     highlights: [
       { label: "Visual", value: "3D mechanical" },
-      { label: "Data source", value: "GitHub API" },
-      { label: "Live demo", value: "Vercel" },
+      { label: "Vibe", value: "For fun" },
+      { label: "Demo", value: "Live" },
     ],
     features: [
       "GitHub stats mapped to balance beat, power reserve, caliber code, and rank",
@@ -192,6 +208,12 @@ export const projects: Project[] = [
     accent: "from-amber-400 to-orange-600",
   },
 ];
+
+/** Production AI SaaS products featured in the Work section. */
+export const saasProjects = projects.filter((p) => p.category === "saas");
+
+/** For-fun / lab experiments with interactive playground cards. */
+export const labProjects = projects.filter((p) => p.category === "lab");
 
 export type Certification = {
   name: string;
