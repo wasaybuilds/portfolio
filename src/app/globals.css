@@ -18,6 +18,7 @@
   --color-accent: var(--accent);
   --font-sans: var(--font-space-grotesk);
   --font-display: var(--font-sora);
+  --font-serif: var(--font-instrument-serif);
   --animate-marquee: marquee 32s linear infinite;
   --animate-marquee-fast: marquee 14s linear infinite;
 }

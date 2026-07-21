@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
+import { useIntroDone } from "@/components/IntroLoader";
 import { profile } from "@/lib/data";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -20,6 +21,12 @@ const STORY_LINKS = [
 ];
 
 export function Hero() {
+  /*
+   * Entrance animations hold until the intro curtain starts lifting, so the
+   * name reveal happens *as* the curtain exposes it — not hidden behind it.
+   */
+  const introDone = useIntroDone();
+
   return (
     <section
       id="hero"
@@ -28,7 +35,7 @@ export function Hero() {
       {/* Status */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={introDone ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
         transition={{ duration: 0.5, ease: EASE }}
         className="shrink-0"
       >
@@ -50,7 +57,7 @@ export function Hero() {
         <div className="overflow-hidden">
           <motion.h1
             initial={{ y: "110%" }}
-            animate={{ y: 0 }}
+            animate={introDone ? { y: 0 } : { y: "110%" }}
             transition={{ duration: 0.9, delay: 0.05, ease: EASE }}
             className="font-display text-hero font-extrabold leading-none text-foreground/15 select-none"
             aria-hidden="true"
@@ -61,7 +68,7 @@ export function Hero() {
         <div className="overflow-hidden">
           <motion.h1
             initial={{ y: "110%" }}
-            animate={{ y: 0 }}
+            animate={introDone ? { y: 0 } : { y: "110%" }}
             transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
             className="font-display text-hero font-extrabold leading-none text-foreground"
           >
@@ -71,7 +78,7 @@ export function Hero() {
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={introDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{ duration: 0.6, delay: 0.25, ease: EASE }}
           className="mt-3 max-w-md sm:mt-5"
         >
@@ -88,7 +95,7 @@ export function Hero() {
       <div className="shrink-0">
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={introDone ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8, delay: 0.35 }}
           className="relative -mx-5 flex overflow-hidden border-y border-border py-2 mask-[linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] sm:mx-0 sm:py-3"
         >
@@ -107,7 +114,7 @@ export function Hero() {
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={introDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{ duration: 0.6, delay: 0.45, ease: EASE }}
           className="mt-4 flex flex-col gap-3 sm:mt-6 sm:flex-row sm:items-end sm:justify-between sm:gap-5"
         >
