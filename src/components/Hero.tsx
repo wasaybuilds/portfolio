@@ -42,8 +42,8 @@ export function Hero() {
         <div className="flex flex-wrap items-center gap-3">
           <span className="flex items-center gap-2 text-xs text-muted">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-status" />
             </span>
             Open to work (and good problems)
           </span>
@@ -121,14 +121,14 @@ export function Hero() {
           <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
             <a
               href="#work"
-              className="group inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition-all hover:scale-[1.03] hover:bg-accent/90 sm:px-5 sm:py-2"
+              className="group inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition-all hover:scale-[1.03] hover:bg-accent/90 sm:px-5 sm:py-2"
             >
               View Work
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
             <a
               href={`mailto:${profile.email}`}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-white/10 sm:px-5 sm:py-2"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-foreground/10 sm:px-5 sm:py-2"
             >
               Say Hello
             </a>
@@ -137,7 +137,7 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground sm:flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border bg-foreground/5 text-muted transition-colors hover:text-foreground sm:flex"
             >
               <GithubIcon className="h-4 w-4" />
             </a>
@@ -146,7 +146,7 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border bg-white/5 text-muted transition-colors hover:text-foreground sm:flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border bg-foreground/5 text-muted transition-colors hover:text-foreground sm:flex"
             >
               <LinkedinIcon className="h-4 w-4" />
             </a>

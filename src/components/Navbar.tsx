@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Download, Share2 } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { navLinks, profile } from "@/lib/data";
 
 /**
@@ -70,7 +71,7 @@ export function Navbar() {
   };
 
   const actionButtonClass =
-    "inline-flex items-center gap-1.5 rounded-full border border-border bg-white/5 px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-white/10";
+    "inline-flex items-center gap-1.5 rounded-full border border-border bg-foreground/5 px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-foreground/10";
 
   return (
     <header
@@ -102,7 +103,7 @@ export function Navbar() {
               {active === link.href && (
                 <motion.span
                   layoutId="nav-pill"
-                  className="absolute inset-0 rounded-full bg-white/8"
+                  className="absolute inset-0 rounded-full bg-foreground/8"
                   transition={{ type: "spring", duration: 0.5 }}
                 />
               )}
@@ -112,6 +113,7 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          <ThemeToggle />
           <button
             type="button"
             onClick={handleShare}
@@ -124,7 +126,7 @@ export function Navbar() {
           <a
             href={profile.resumeUrl}
             download={profile.resumeFilename}
-            className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-accent/20 transition-all hover:bg-accent/90"
+            className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3.5 py-1.5 text-xs font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition-all hover:bg-accent/90"
           >
             <Download className="h-3.5 w-3.5" />
             Download CV
@@ -132,6 +134,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
           <button
             type="button"
             onClick={handleShare}

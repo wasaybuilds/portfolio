@@ -3,7 +3,7 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 
 /**
- * Thin orange progress bar pinned to the very top of the viewport.
+ * Thin accent progress bar pinned to the very top of the viewport.
  * Grows from left to right as the user scrolls the page.
  * Uses a spring so it feels slightly elastic — not mechanical.
  */

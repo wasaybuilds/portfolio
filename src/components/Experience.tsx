@@ -30,8 +30,8 @@ export function Experience() {
                 <div className="flex flex-row items-center gap-3 sm:flex-col sm:items-start sm:gap-1.5">
                   <span className="text-sm text-muted">{exp.period}</span>
                   {exp.current && (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-status/10 px-2.5 py-0.5 text-[11px] font-medium text-status">
+                      <span className="h-1.5 w-1.5 rounded-full bg-status" />
                       Current
                     </span>
                   )}

@@ -1,5 +1,6 @@
 import { ArrowUpRight, Star, GitFork } from "lucide-react";
 import { GithubIcon } from "@/components/icons/BrandIcons";
+import { GitHubChart } from "@/components/GitHubChart";
 import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
 import { profile } from "@/lib/data";
 
@@ -86,20 +87,14 @@ export async function GitHubActivity() {
         {/*
           ghchart.rshah.org generates a contribution SVG directly from
           GitHub's public data — no token required for public profiles.
-          The orange tint is applied with a CSS filter to match the palette.
+          Tint follows the active theme via GitHubChart.
         */}
         <div className="overflow-hidden border border-border bg-background-soft p-5 sm:p-6">
           <p className="mb-4 text-xs font-medium uppercase tracking-wider text-accent">
             Contribution activity · last year
           </p>
           <div className="overflow-x-auto">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`https://ghchart.rshah.org/f97316/${GH_USER}`}
-              alt="GitHub contribution chart"
-              className="h-auto w-full min-w-[600px] opacity-80"
-              loading="lazy"
-            />
+            <GitHubChart user={GH_USER} />
           </div>
 
           {/* Stats row */}

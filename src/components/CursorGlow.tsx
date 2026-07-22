@@ -1,25 +1,27 @@
 "use client";
 
 import { useEffect } from "react";
-import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 
 /**
- * Full-screen overlay that renders a soft radial glow following the mouse cursor.
- * Uses spring physics so the glow lags slightly behind the cursor — giving it
- * a natural, organic feel rather than snapping rigidly to the pointer.
- * Hidden on touch devices (no hover intent).
+ * Soft accent wash that follows the cursor on large screens.
+ * Uses the active theme's --accent-glow so Classic/Ink/Editorial stay in sync.
+ * Hidden on touch devices and kept subtle on light themes via CSS token opacity.
  */
 export function CursorGlow() {
   const rawX = useMotionValue(-1200);
   const rawY = useMotionValue(-1200);
 
-  // Spring config: fairly responsive but with enough damping to look fluid
   const springConfig = { stiffness: 100, damping: 22, mass: 0.5 };
   const x = useSpring(rawX, springConfig);
   const y = useSpring(rawY, springConfig);
 
-  // Build the gradient string reactively — updates every animation frame
-  const background = useMotionTemplate`radial-gradient(700px circle at ${x}px ${y}px, rgba(249, 115, 22, 0.09), transparent 75%)`;
+  const background = useMotionTemplate`radial-gradient(700px circle at ${x}px ${y}px, var(--accent-glow), transparent 75%)`;
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {

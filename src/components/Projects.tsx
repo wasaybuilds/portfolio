@@ -190,8 +190,8 @@ function SaasPreview({ project }: { project: Project }) {
         <div className="flex items-center justify-between border-b border-border px-4 py-3">
           <div className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-accent/70" />
-            <span className="h-2 w-2 rounded-full bg-white/20" />
-            <span className="h-2 w-2 rounded-full bg-white/10" />
+            <span className="h-2 w-2 rounded-full bg-foreground/20" />
+            <span className="h-2 w-2 rounded-full bg-foreground/10" />
           </div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted">
             Live SaaS
@@ -451,8 +451,8 @@ function HorologyPlayground({ project }: { project: Project }) {
           className="relative mt-4"
         >
           {/* Watch outer case */}
-          <div className="relative flex h-40 w-40 items-center justify-center rounded-full border border-border bg-background-soft shadow-[inset_0_0_40px_rgba(0,0,0,0.45)]">
-            <div className="absolute inset-2 rounded-full border border-white/5" />
+          <div className="relative flex h-40 w-40 items-center justify-center rounded-full border border-border bg-background-soft shadow-[inset_0_0_40px_rgba(0,0,0,0.25)]">
+            <div className="absolute inset-2 rounded-full border border-foreground/5" />
             <div className="absolute inset-4 rounded-full border border-accent/20" />
 
             {/* Tick marks */}
@@ -464,7 +464,7 @@ function HorologyPlayground({ project }: { project: Project }) {
               >
                 <span
                   className={`absolute left-1/2 top-2 h-2 w-px -translate-x-1/2 ${
-                    i % 3 === 0 ? "bg-accent/70" : "bg-white/20"
+                    i % 3 === 0 ? "bg-accent/70" : "bg-foreground/20"
                   }`}
                 />
               </span>

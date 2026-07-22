@@ -1,12 +1,44 @@
 @import "tailwindcss";
 
-:root {
+/*
+ * Dark-first palettes — switch with data-theme on <html>:
+ *   ink     — blue-charcoal + steel (default)
+ *   classic — near-black + orange
+ */
+
+:root,
+[data-theme="ink"] {
+  color-scheme: dark;
+  --background: #141820;
+  --background-soft: #1c222c;
+  --foreground: #e8eaef;
+  --muted: #8a909c;
+  --border: rgba(232, 234, 239, 0.09);
+  --accent: #8fb3c9;
+  --accent-foreground: #12141a;
+  --accent-glow: rgba(143, 179, 201, 0.1);
+  --grid-line: rgba(232, 234, 239, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.03);
+  --status: #5ecf9a;
+  --noise-opacity: 0.045;
+  --chart-color: 8fb3c9;
+}
+
+[data-theme="classic"] {
+  color-scheme: dark;
   --background: #080a0f;
   --background-soft: #0e1118;
   --foreground: #f2f2f7;
   --muted: #868699;
   --border: rgba(255, 255, 255, 0.07);
   --accent: #f97316;
+  --accent-foreground: #ffffff;
+  --accent-glow: rgba(249, 115, 22, 0.09);
+  --grid-line: rgba(255, 255, 255, 0.03);
+  --surface-hover: rgba(255, 255, 255, 0.025);
+  --status: #34d399;
+  --noise-opacity: 0.04;
+  --chart-color: f97316;
 }
 
 @theme inline {
@@ -16,6 +48,8 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-status: var(--status);
   --font-sans: var(--font-space-grotesk);
   --font-display: var(--font-sora);
   --font-serif: var(--font-instrument-serif);
@@ -35,11 +69,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 ::selection {
   background: var(--accent);
-  color: white;
+  color: var(--accent-foreground);
 }
 
 ::-webkit-scrollbar {
@@ -97,7 +132,14 @@ body {
    -------------------------------------------------------------------------- */
 .noise-overlay {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
-  opacity: 0.04;
+  opacity: var(--noise-opacity);
+}
+
+/* Soft wash so light editorial isn't a flat sheet of white */
+.atmosphere-wash {
+  background:
+    radial-gradient(ellipse 70% 45% at 15% -10%, var(--accent-glow), transparent 55%),
+    radial-gradient(ellipse 55% 40% at 90% 10%, var(--accent-glow), transparent 50%);
 }
 
 /* --------------------------------------------------------------------------
@@ -109,7 +151,7 @@ body {
 }
 
 .work-row:hover {
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--surface-hover);
 }
 
 /* --------------------------------------------------------------------------
