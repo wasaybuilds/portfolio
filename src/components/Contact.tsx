@@ -10,8 +10,9 @@ export function Contact() {
       <div className="mx-auto max-w-5xl">
         <EditorialSectionHeader
           index="09"
-          label="Contact"
-          title="Let's build something worth using."
+          label="Chapter IX · Contact"
+          title="Let's make something people feel."
+          description="If you want passionate and a little funny — not just 'available' — say hello."
         />
 
         <Reveal delay={0.1}>

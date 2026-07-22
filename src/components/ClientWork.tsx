@@ -7,8 +7,8 @@ import { clientWork } from "@/lib/data";
  * ClientWork section — CMS & freelance builds shown as an editorial list.
  *
  * Each row links directly to the live site and shows the platform used.
- * Sits directly below the flagship Projects section to demonstrate the
- * full breadth of delivery: SaaS products *and* polished client builds.
+ * Sits after Proof so the story goes: flagship products → receipts →
+ * then breadth across client builds.
  */
 export function ClientWork() {
   return (
@@ -16,9 +16,10 @@ export function ClientWork() {
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
-          index="02"
-          label="Client Builds"
-          title="Beyond the products."
+          index="03"
+          label="Chapter III · Client Builds"
+          title="Same craft. More stages."
+          description="When the brief isn't mine, the standard still is. Yes, even the logo tweaks."
           meta={`${clientWork.length} sites`}
         />
 

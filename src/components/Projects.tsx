@@ -37,8 +37,9 @@ export function Projects() {
       <div className="mx-auto max-w-5xl">
         <EditorialSectionHeader
           index="01"
-          label="Work"
-          title="What I've shipped."
+          label="Chapter I · Work"
+          title="I don't ship average."
+          description="AI products in the wild — agents, CRMs, real users, real stakes. Demo day energy, production scars."
           meta={`${saasProjects.length} SaaS · ${labProjects.length} lab`}
         />
 
@@ -49,7 +50,7 @@ export function Projects() {
               AI SaaS products
             </p>
             <p className="mt-1.5 max-w-md text-sm text-muted">
-              Production systems — AI agents, CRM workflows, real users.
+              Built end to end — then stress-tested by people who don't care about your elegant abstractions.
             </p>
           </div>
         </div>
@@ -150,10 +151,10 @@ export function Projects() {
                   Lab · for fun
                 </p>
                 <h3 className="mt-2 font-display text-2xl font-semibold tracking-tighter text-foreground sm:text-3xl">
-                  Experiments I built to play.
+                  Passion projects. Zero brief. Maximum chaos.
                 </h3>
                 <p className="mt-2 max-w-lg text-sm text-muted">
-                  Not products — interactive side projects. Hover, click, poke around.
+                  Nobody asked for these. I built them anyway. Hover, click, poke — break nothing expensive.
                 </p>
               </div>
               <span className="text-xs text-muted">

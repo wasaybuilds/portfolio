@@ -13,15 +13,15 @@ import { profile } from "@/lib/data";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
- * Single-word traits build from mindset to craft before the name reveal.
- * These describe how the portfolio's work was approached, not generic skills.
+ * Opening story beat with a dry wink before the name lands.
+ * Passion first — humour keeps it human, not résumé-robot.
  */
 const INTRO_WORDS = [
-  "Curious",
-  "Inventive",
-  "Intentional",
+  "Passionate",
+  "Obsessed",
   "Relentless",
-  "Engineer",
+  "Caffeinated",
+  "Builder",
 ];
 
 /**
@@ -75,7 +75,7 @@ const wordVariants = {
 
 /**
  * IntroLoader — a slow, skippable opening sequence (≈13s, click/Esc to skip):
- * five personality words → name mark → curtain lifts.
+ * passion story words → name mark → curtain lifts.
  *
  * - plays on every full page load so the sequence is part of the experience
  * - respects prefers-reduced-motion (skipped entirely)
@@ -259,7 +259,7 @@ function IntroLoader({ onReveal }: { onReveal: () => void }) {
       </div>
 
       <span className="absolute bottom-8 text-[10px] uppercase tracking-[0.25em] text-muted/60">
-        Click or Esc to skip
+        Click or Esc — I won&apos;t take it personally
       </span>
     </motion.div>
   );

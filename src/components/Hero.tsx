@@ -45,7 +45,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
             </span>
-            Open to work
+            Open to work (and good problems)
           </span>
           <span className="opacity-20 select-none">·</span>
           <span className="text-xs text-muted">{profile.location}</span>

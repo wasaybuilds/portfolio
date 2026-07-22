@@ -11,9 +11,10 @@ export function Skills() {
     <section id="stack" className="relative px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto max-w-5xl">
         <EditorialSectionHeader
-          index="05"
-          label="Stack"
-          title="What I reach for."
+          index="06"
+          label="Chapter VI · Stack"
+          title="What I reach for when it matters."
+          description="Not every shiny tool — the ones that don't flake mid-demo."
         />
 
         <div className="grid gap-px border border-border bg-border sm:grid-cols-2">

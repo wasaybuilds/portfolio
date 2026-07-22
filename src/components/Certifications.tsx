@@ -44,8 +44,9 @@ export function Certifications() {
       <div className="mx-auto max-w-5xl px-5 sm:px-8">
         <EditorialSectionHeader
           index="08"
-          label="Credentials"
-          title="Always learning."
+          label="Chapter VIII · Credentials"
+          title="Never done learning."
+          description="Curiosity compounds. Certificates are just fancy receipts for staying curious."
           meta={`${certifications.length} certs`}
         />
       </div>

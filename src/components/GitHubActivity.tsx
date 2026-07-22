@@ -66,8 +66,9 @@ export async function GitHubActivity() {
 
         <EditorialSectionHeader
           index="07"
-          label="GitHub"
-          title="Still shipping."
+          label="Chapter VII · GitHub"
+          title="Still in the arena."
+          description="Green squares don't lie. Neither does the commit at 1:14am."
           meta={
             <a
               href={profile.github}

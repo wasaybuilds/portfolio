@@ -17,10 +17,10 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { Skills } from "@/components/Skills";
 
 /**
- * Page story: intro curtain → who → what shipped → client breadth →
- * how I think → where I built → what I use → proof → still active →
- * credentials → contact. Marquee dividers mark the two biggest chapter
- * breaks: into the work, and into the close.
+ * Page story (passion → proof → craft → close):
+ * intro curtain → who I am → what I shipped → the numbers that prove it →
+ * breadth beyond products → the obsession behind the work → where it was
+ * forged → tools → still in the arena → always learning → invitation.
  */
 export default function Home() {
   return (
@@ -32,16 +32,16 @@ export default function Home() {
         <Navbar />
         <main>
           <Hero />
-          <MarqueeDivider text="Selected work" />
+          <MarqueeDivider text="Built with obsession (and snacks)" />
           <Projects />
+          <Proof />
           <ClientWork />
           <About />
           <Experience />
           <Skills />
-          <Proof />
           <GitHubActivity />
           <Certifications />
-          <MarqueeDivider text="Let's build something" />
+          <MarqueeDivider text="Inbox open. Ego optional." />
           <Contact />
         </main>
         <Footer />

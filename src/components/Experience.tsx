@@ -15,9 +15,10 @@ export function Experience() {
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
-          index="04"
-          label="Experience"
-          title="Where I've built."
+          index="05"
+          label="Chapter V · Experience"
+          title="Where the fire was forged."
+          description="From founding engineer to leading product ops — fewer excuses, more shipping."
         />
 
         <div className="flex flex-col divide-y divide-border">

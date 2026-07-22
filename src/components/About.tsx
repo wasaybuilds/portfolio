@@ -3,12 +3,10 @@ import { Reveal } from "@/components/ui/Reveal";
 import { education } from "@/lib/data";
 
 /**
- * About section — editorial two-column layout.
+ * About section — the obsession chapter.
  *
- * Left: A large pull-quote that captures Wasay's engineering philosophy
- * in one punchy sentence, rendered at display scale.
- *
- * Right: compact principles + education.
+ * Left: a pull-quote that states the emotional thesis.
+ * Right: principles that turn passion into craft, plus education.
  */
 export function About() {
   return (
@@ -16,27 +14,26 @@ export function About() {
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
-          index="03"
-          label="About"
-          title="How I think."
+          index="04"
+          label="Chapter IV · About"
+          title="The obsession behind it."
+          description="Passion without craft is noise. Craft without passion is a very polished spreadsheet."
         />
 
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
 
-          {/* ---------- Left — pull-quote + philosophy ---------- */}
           <Reveal>
             <blockquote className="font-display text-display-md text-foreground leading-snug">
-              Full ownership.
+              Not tickets.
               <br />
-              <span className="text-accent">Idea to production.</span>
+              <span className="text-accent">Products people feel.</span>
             </blockquote>
 
             <p className="mt-4 max-w-sm text-sm text-muted">
-              Close to the code, the user, and what actually ships.
+              Close to the code. Closer to the outcome. Allergic to &quot;works on my machine.&quot;
             </p>
           </Reveal>
 
-          {/* ---------- Right — capabilities + education ---------- */}
           {/*
            * Flat divider-row layout: same visual language as Experience and
            * Skills. No glassmorphism cards — just clean horizontal rules.
@@ -44,11 +41,23 @@ export function About() {
           <Reveal delay={0.1}>
             <div className="flex flex-col divide-y divide-border">
               {[
-                { label: "Product-minded", desc: "Metrics over tickets." },
-                { label: "Performance-first", desc: "Fast UI, clean APIs." },
-                { label: "Team multiplier", desc: "Reviews and mentoring." },
+                {
+                  label: "Passionate",
+                  desc: "I stay when the idea won't leave (sleep is negotiable).",
+                },
+                {
+                  label: "Obsessed",
+                  desc: "Performance until the spinner feels personally attacked.",
+                },
+                {
+                  label: "Extraordinary",
+                  desc: "Results that make the client double-check the decimal.",
+                },
               ].map((item) => (
-                <div key={item.label} className="group flex flex-wrap items-baseline gap-x-2 py-4">
+                <div
+                  key={item.label}
+                  className="group flex flex-wrap items-baseline gap-x-2 py-4"
+                >
                   <span className="text-sm font-semibold text-foreground transition-colors group-hover:text-accent">
                     {item.label}
                   </span>
@@ -56,12 +65,13 @@ export function About() {
                 </div>
               ))}
 
-              {/* Education — flat row, same language */}
               <div className="py-5">
                 <div className="text-xs font-semibold uppercase tracking-wider text-accent">
                   Education
                 </div>
-                <div className="mt-2 font-medium text-foreground">{education.school}</div>
+                <div className="mt-2 font-medium text-foreground">
+                  {education.school}
+                </div>
                 <div className="mt-0.5 text-sm text-muted">
                   {education.degree} · {education.period}
                 </div>

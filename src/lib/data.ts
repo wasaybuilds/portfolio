@@ -1,7 +1,12 @@
 export const profile = {
   name: "Abdul Wasay",
   role: "Senior Full Stack Engineer",
-  tagline: "React · Node.js · Python · TypeScript — Performance-Focused Full Stack & API Architecture",
+  /**
+   * Hero thesis — one sentence that states the story, not a stack dump.
+   * Stack still shows in the ticker below so the first read stays emotional.
+   */
+  tagline:
+    "I build AI products people actually feel — then stick around when the bugs try to ruin the vibe.",
   location: "Lahore, Punjab, Pakistan",
   email: "wasaya670@gmail.com",
   github: "https://github.com/wasaybuilds",
@@ -9,9 +14,9 @@ export const profile = {
   resumeUrl: "/Abdul_Wasay_Full_Stack_Engineer.pdf",
   resumeFilename: "Abdul_Wasay_Full_Stack_Engineer.pdf",
   about: [
-    "Wasay is a Senior Full Stack Engineer with 3+ years building and shipping production-grade web and SaaS products — from complex React/Next.js frontends through to Node.js backends, REST and GraphQL APIs, and cloud infrastructure on AWS. He takes complete ownership of product lifecycles, not just individual tickets.",
-    "He's the kind of engineer who stays close to the code while keeping the bigger picture in mind — leveraging AI tools like GitHub Copilot to accelerate delivery, conducting structured code reviews to enforce architectural standards, and mentoring junior engineers to grow the team's overall capability.",
-    "Wasay is obsessed with performance and correctness: optimising render cycles on the frontend, designing efficient data pipelines on the backend, and deploying on Linux-based infrastructure. Whether it's a fast-moving SaaS startup or a product that demands real-time reliability, he ships things that actually work.",
+    "Wasay is a Senior Full Stack Engineer who treats every product like it has his name on the door — 3+ years shipping production SaaS from React/Next.js frontends through Node.js APIs and AWS infrastructure. Tickets are fine. Ownership is the point. PowerPoints are… tolerated.",
+    "He stays close to the code and closer to the outcome: using AI to move faster, reviewing architecture so standards hold, and mentoring so the whole team levels up. Passion without craft is noise — he insists on both. Also coffee. Mostly coffee.",
+    "Obsessed with performance and correctness — tight render cycles, efficient pipelines, Linux deployments that don't blink at 2am. Whether it's a fast-moving SaaS or a system that has to be right at 1,000 AI calls a day, he ships work that feels extraordinary because the results refuse to be average.",
   ],
 };
 
@@ -27,10 +32,10 @@ export const stats = [
  * Each item includes a value (displayed huge), a label, and an optional note.
  */
 export const proof = [
-  { value: "3+", label: "Years shipping", note: "Production code" },
-  { value: "4+", label: "Products live", note: "End to end" },
-  { value: "370%", label: "ROI on Befer", note: "Client results" },
-  { value: "1,000+", label: "AI calls / day", note: "DealerIQ peak" },
+  { value: "3+", label: "Years shipping", note: "Still not bored" },
+  { value: "4+", label: "Products live", note: "None are 'almost done'" },
+  { value: "370%", label: "ROI on Befer", note: "Math did the flexing" },
+  { value: "1,000+", label: "AI calls / day", note: "DealerIQ peak hour" },
 ];
 
 export type Experience = {
@@ -52,7 +57,7 @@ export const experiences: Experience[] = [
     location: "Lahore, Pakistan",
     current: true,
     description:
-      "Leading product operations — strategy, tooling, and delivery across squads at Hatzs Dimensions.",
+      "Leading product operations across squads — strategy, tooling, and delivery — with the same ownership that built the products.",
   },
   {
     role: "Full Stack Engineer",
@@ -61,7 +66,7 @@ export const experiences: Experience[] = [
     period: "Sep 2023 — Jun 2025",
     location: "Lahore, Pakistan",
     description:
-      "Full-stack engineer shipping SaaS and CMS products. Pioneered Befer from zero as founding engineer.",
+      "Founding engineer on Befer. Shipped SaaS and CMS products end to end when average wasn't an option.",
   },
 ];
 
@@ -154,7 +159,7 @@ export const projects: Project[] = [
     slug: "intent-engine",
     name: "Intent Engine",
     url: "https://github.com/wasaybuilds/intent-engine",
-    tagline: "Weekend experiment — niche + city → enriched B2B leads",
+    tagline: "Weekend experiment — niche + city → leads (sleep optional)",
     description:
       "A for-fun full-stack lab: scrape Google Maps by niche and city, enrich decision makers with an LLM, and spit out 3-step cold email sequences. Built to learn Playwright stealth, Celery jobs, and agentic outreach — not as a SaaS product.",
     role: "Side project — open source",
@@ -185,7 +190,7 @@ export const projects: Project[] = [
     slug: "horology-api",
     name: "Horology API",
     url: "https://horology-api.vercel.app",
-    tagline: "Playground — wind a 3D watch from any GitHub profile",
+    tagline: "Wind a 3D watch from any GitHub profile — because why not",
     description:
       "A pure craft project: map commits, languages, and stars onto a living mechanical watch in the browser. Drag to inspect, toggle lume, export a PNG — built with React Three Fiber just to see how far a weird idea could go.",
     role: "Side project — interactive demo",

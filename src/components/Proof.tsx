@@ -91,9 +91,10 @@ export function Proof() {
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
-          index="06"
-          label="Proof"
-          title="The proof."
+          index="02"
+          label="Chapter II · Proof"
+          title="Extraordinary leaves a trail."
+          description="Not vibes. Receipts. The kind of numbers that survive a skeptical CFO."
         />
 
         {/* ---------- Metric grid ---------- */}
