@@ -1,12 +1,16 @@
 export const profile = {
   name: "Abdul Wasay",
-  role: "Senior Full Stack Engineer",
-  /**
-   * Hero thesis — one sentence that states the story, not a stack dump.
-   * Stack still shows in the ticker below so the first read stays emotional.
-   */
+  role: "Full Stack Engineer",
+  /** Role + primary stack, shown as the single line under the name. */
+  headline: "Full Stack Engineer — TypeScript · Node.js · React · AWS",
+  /** Hero thesis — one plain sentence about what gets built. */
   tagline:
-    "I build AI products people actually feel — then stick around when the bugs try to ruin the vibe.",
+    "I build SaaS and CRM platforms end to end — APIs, data pipelines, and the interfaces on top of them.",
+  /** Stated explicitly: international employers need to know the terms up front. */
+  availability: "Open to remote roles and contract work — available worldwide",
+  /** Used verbatim as the meta description / search + LinkedIn preview text. */
+  metaDescription:
+    "Abdul Wasay — Full Stack Engineer in Lahore, Pakistan. I build SaaS and CRM platforms end to end with TypeScript, Node.js, React, PostgreSQL and AWS. Open to remote roles and contract work worldwide.",
   location: "Lahore, Punjab, Pakistan",
   email: "wasaya670@gmail.com",
   github: "https://github.com/wasaybuilds",
@@ -14,29 +18,11 @@ export const profile = {
   resumeUrl: "/Abdul_Wasay_Full_Stack_Engineer.pdf",
   resumeFilename: "Abdul_Wasay_Full_Stack_Engineer.pdf",
   about: [
-    "Wasay is a Senior Full Stack Engineer who treats every product like it has his name on the door — 3+ years shipping production SaaS from React/Next.js frontends through Node.js APIs and AWS infrastructure. Tickets are fine. Ownership is the point. PowerPoints are… tolerated.",
-    "He stays close to the code and closer to the outcome: using AI to move faster, reviewing architecture so standards hold, and mentoring so the whole team levels up. Passion without craft is noise — he insists on both. Also coffee. Mostly coffee.",
-    "Obsessed with performance and correctness — tight render cycles, efficient pipelines, Linux deployments that don't blink at 2am. Whether it's a fast-moving SaaS or a system that has to be right at 1,000 AI calls a day, he ships work that feels extraordinary because the results refuse to be average.",
+    "I'm a full stack engineer in Lahore, Pakistan, working across the whole path of a product: Postgres schema and Node.js APIs at the back, React and Next.js at the front, and AWS in between. I started professionally in June 2023 and have spent that time on SaaS and CRM platforms that real businesses run their day on.",
+    "Most of my work is the unglamorous middle: data migrations that have to not lose rows, background pipelines that have to resume where they failed, and interfaces that stay fast once the table has a hundred thousand records in it. I care more about a system being correct under load than about it being clever.",
+    "I'm also finishing a CS degree at Lahore Garrison University, expected June 2026 — which mostly means I've written a lot of production code between lectures.",
   ],
 };
-
-export const stats = [
-  { label: "Years of Experience", value: "3+" },
-  { label: "Client Sites Built", value: "8+" },
-  { label: "Products Built", value: "4+" },
-  { label: "Certifications", value: "10+" },
-];
-
-/**
- * Proof metrics — large, headline-worthy numbers shown in the Proof section.
- * Each item includes a value (displayed huge), a label, and an optional note.
- */
-export const proof = [
-  { value: "3+", label: "Years shipping", note: "Still not bored" },
-  { value: "4+", label: "Products live", note: "None are 'almost done'" },
-  { value: "370%", label: "ROI on Befer", note: "Math did the flexing" },
-  { value: "1,000+", label: "AI calls / day", note: "DealerIQ peak hour" },
-];
 
 export type Experience = {
   role: string;
@@ -45,7 +31,7 @@ export type Experience = {
   period: string;
   location: string;
   current?: boolean;
-  description: string;
+  description?: string;
 };
 
 export const experiences: Experience[] = [
@@ -53,27 +39,30 @@ export const experiences: Experience[] = [
     role: "Lead of Product Operations",
     company: "Hatzs Dimensions",
     companyUrl: "https://www.linkedin.com/company/hatzsdimensions",
-    period: "Jun 2025 — Present",
+    period: "Feb 2025 — Present",
     location: "Lahore, Pakistan",
     current: true,
-    description:
-      "Leading product operations across squads — strategy, tooling, and delivery — with the same ownership that built the products.",
   },
   {
-    role: "Full Stack Engineer",
+    role: "Software Engineer",
     company: "Hatzs Dimensions",
     companyUrl: "https://www.linkedin.com/company/hatzsdimensions",
-    period: "Sep 2023 — Jun 2025",
+    period: "Oct 2023 — Jan 2025",
     location: "Lahore, Pakistan",
-    description:
-      "Founding engineer on Befer. Shipped SaaS and CMS products end to end when average wasn't an option.",
+  },
+  {
+    role: "Frontend Engineer",
+    company: "Hatzs Dimensions",
+    companyUrl: "https://www.linkedin.com/company/hatzsdimensions",
+    period: "Jun 2023 — Sep 2023",
+    location: "Lahore, Pakistan",
   },
 ];
 
 export const education = {
   school: "Lahore Garrison University",
-  degree: "Bachelor's Degree",
-  period: "2022 — 2026",
+  degree: "BS Computer Science — in progress",
+  period: "Expected June 2026",
   location: "Lahore, Punjab, Pakistan",
 };
 
@@ -83,12 +72,20 @@ export type Project = {
   url: string;
   tagline: string;
   description: string;
+  /**
+   * The hard part, stated concretely. Optional so a project is never padded
+   * with a plausible-sounding problem it didn't actually have — a card simply
+   * omits the block until the real text exists.
+   */
+  problem?: string;
+  /** Architecture-level account of what was built. Same rule as `problem`. */
+  built?: string;
   role: string;
   /**
-   * saas — production AI products (DealerIQ, Befer).
-   * lab — personal / for-fun experiments shown as interactive playgrounds.
+   * saas — production platforms shipped for a business.
+   * side — projects I own and built myself.
    */
-  category: "saas" | "lab";
+  category: "saas" | "side";
   /** Live products use a screenshot; open-source repos use a code-card preview instead. */
   kind?: "live" | "repo";
   image?: string;
@@ -117,11 +114,7 @@ export const projects: Project[] = [
     kind: "live",
     image: "/projects/dealeriq.png",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "AI Agents", "CRM"],
-    highlights: [
-      { label: "Calls processed", value: "1,000+ / day" },
-      { label: "Appointments lift", value: "+42%" },
-      { label: "Support agents deployed", value: "1,000+" },
-    ],
+    highlights: [{ label: "Calls processed", value: "1,000+ / day" }],
     features: [
       "Multilingual pre-built AI agents for sales, service, buying & reception",
       "Unified lead inbox consolidating every channel into one dashboard",
@@ -136,17 +129,13 @@ export const projects: Project[] = [
     url: "https://befer.co",
     tagline: "AI CRM for Blue-Collar Service Businesses",
     description:
-      "Befer is a cutting-edge CRM built for blue-collar business owners — plumbers, electricians, cleaners, and more — featuring AI-driven insights, an AI calling agent that turns calls into sales, image recognition, and SMS automation. As the pioneer engineer, I designed and built the entire product end to end, from frontend to backend.",
-    role: "Pioneer Full Stack Engineer — built the entire product",
+      "Befer is a CRM for blue-collar service businesses — plumbers, electricians, cleaners — covering scheduling, invoicing, and customer follow-up. I was the founding engineer and built the product end to end, from the Postgres schema and API through to the web and mobile clients.",
+    role: "Founding Engineer",
     category: "saas",
     kind: "live",
     image: "/projects/befer.png",
     tags: ["Next.js", "TypeScript", "AI Calling", "QuickBooks API", "Zapier"],
-    highlights: [
-      { label: "Return on investment", value: "370%" },
-      { label: "Orders", value: "2x" },
-      { label: "Revenue increase reported", value: "+40%" },
-    ],
+    highlights: [],
     features: [
       "AI calling agent that qualifies leads and books jobs automatically",
       "Workforce management with live job tracking & productivity insights",
@@ -159,11 +148,11 @@ export const projects: Project[] = [
     slug: "intent-engine",
     name: "Intent Engine",
     url: "https://github.com/wasaybuilds/intent-engine",
-    tagline: "Weekend experiment — niche + city → leads (sleep optional)",
+    tagline: "Turns a niche and a city into an enriched lead list",
     description:
-      "A for-fun full-stack lab: scrape Google Maps by niche and city, enrich decision makers with an LLM, and spit out 3-step cold email sequences. Built to learn Playwright stealth, Celery jobs, and agentic outreach — not as a SaaS product.",
-    role: "Side project — open source",
-    category: "lab",
+      "Scrapes Google Maps by niche and city, enriches the decision makers behind each listing with an LLM, and drafts a three-step outreach sequence. The interesting part was the job layer — long scrapes run on Celery workers with per-user history, so a browser tab closing doesn't lose the run.",
+    role: "Side project",
+    category: "side",
     kind: "repo",
     repoFullName: "wasaybuilds/intent-engine",
     languages: [
@@ -175,8 +164,7 @@ export const projects: Project[] = [
     tags: ["FastAPI", "Next.js", "Playwright", "Celery", "LLM"],
     highlights: [
       { label: "License", value: "MIT" },
-      { label: "Vibe", value: "For fun" },
-      { label: "Outreach", value: "3-step AI" },
+      { label: "Status", value: "Work in progress" },
     ],
     features: [
       "Google Maps discovery via Playwright with proxy rotation and stealth evasion",
@@ -190,18 +178,16 @@ export const projects: Project[] = [
     slug: "horology-api",
     name: "Horology API",
     url: "https://horology-api.vercel.app",
-    tagline: "Wind a 3D watch from any GitHub profile — because why not",
+    tagline: "Renders any GitHub profile as a mechanical watch",
     description:
-      "A pure craft project: map commits, languages, and stars onto a living mechanical watch in the browser. Drag to inspect, toggle lume, export a PNG — built with React Three Fiber just to see how far a weird idea could go.",
-    role: "Side project — interactive demo",
-    category: "lab",
+      "Maps commits, languages, and stars from the GitHub API onto an interactive 3D mechanical watch. Built with React Three Fiber; the work was mostly in keeping the scene at 60fps on a mid-range phone while every complication is driven by live data.",
+    role: "Side project",
+    category: "side",
     kind: "live",
     image: "/projects/horology-api.png",
     playSteps: ["Enter handle", "Wind spring", "Inspect 3D"],
     tags: ["Next.js", "React Three Fiber", "Three.js", "Zustand", "GitHub API"],
     highlights: [
-      { label: "Visual", value: "3D mechanical" },
-      { label: "Vibe", value: "For fun" },
       { label: "Demo", value: "Live" },
     ],
     features: [
@@ -214,83 +200,37 @@ export const projects: Project[] = [
   },
 ];
 
-/** Production AI SaaS products featured in the Work section. */
+/** Production platforms featured in the Work section. */
 export const saasProjects = projects.filter((p) => p.category === "saas");
 
-/** For-fun / lab experiments with interactive playground cards. */
-export const labProjects = projects.filter((p) => p.category === "lab");
+/** Projects I own and shipped myself. */
+export const sideProjects = projects.filter((p) => p.category === "side");
 
-export type Certification = {
-  name: string;
-  issuer: string;
-  date: string;
-  url?: string;
-};
-
-export const certifications: Certification[] = [
-  {
-    name: "Frontend Developer (React)",
-    issuer: "HackerRank",
-    date: "Sep 2024",
-    url: "https://hackerrank.com/certificates/42d500161f94",
-  },
-  {
-    name: "JavaScript (Intermediate)",
-    issuer: "HackerRank",
-    date: "May 2024",
-    url: "https://hackerrank.com/certificates/e0fba9011a38",
-  },
-  { name: "Layouts Level 1 Certification", issuer: "Webflow", date: "May 2024" },
-  {
-    name: "React Basics",
-    issuer: "Meta",
-    date: "May 2024",
-    url: "https://coursera.org/account/accomplishments/records/6BERY9M3RUWA",
-  },
-  {
-    name: "Version Control",
-    issuer: "Meta",
-    date: "May 2024",
-    url: "https://coursera.org/account/accomplishments/records/RY7UNM4GEQKT",
-  },
-  { name: "Webflow 101 Certification Exam", issuer: "Webflow", date: "May 2024" },
-  {
-    name: "Programming with JavaScript",
-    issuer: "Meta",
-    date: "Mar 2024",
-    url: "https://coursera.org/account/accomplishments/records/SMAK7SLAL8VM",
-  },
-  { name: "CMS Certification Exam", issuer: "Webflow", date: "Feb 2024" },
-  {
-    name: "Introduction to Front-End Development",
-    issuer: "Meta",
-    date: "Feb 2024",
-    url: "https://coursera.org/account/accomplishments/records/2FNR4NMW5XNS",
-  },
-  {
-    name: "JavaScript (Basic)",
-    issuer: "HackerRank",
-    date: "2024",
-    url: "https://hackerrank.com/certificates/8b4665b4453a",
-  },
-];
-
+/**
+ * Stack — grouped by layer, listed plainly. No proficiency labels: a
+ * self-assigned "Expert" badge tells a reader nothing they can verify, and
+ * every item here is one I'm willing to be interviewed on.
+ */
 export const skills: { category: string; items: string[] }[] = [
   {
-    category: "Build",
-    items: ["React", "Next.js", "TypeScript", "Node.js", "Python"],
+    category: "Languages",
+    items: ["TypeScript", "JavaScript", "Python", "SQL"],
   },
   {
-    category: "Ship",
-    items: ["AWS", "Docker", "Linux", "CI/CD", "PostgreSQL"],
+    category: "Backend",
+    items: ["Node.js", "NestJS", "REST API design", "Background job queues"],
   },
   {
-    category: "Polish",
-    items: ["Tailwind", "Framer Motion", "Webflow", "Shopify", "WordPress"],
+    category: "Frontend",
+    items: ["React", "Next.js", "Tailwind CSS"],
   },
   {
-    category: "Lead",
-    items: ["API design", "Code reviews", "Mentoring", "AI-assisted dev"],
+    category: "Data",
+    items: ["PostgreSQL", "Redis", "Schema design & migrations"],
+  },
+  {
+    category: "Infra",
+    items: ["AWS (Lambda, S3, Step Functions)", "Docker", "Linux", "CI/CD"],
   },
 ];
 

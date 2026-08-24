@@ -1,37 +1,42 @@
-import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
+import { Chapter } from "@/components/ui/Chapter";
 import { Reveal } from "@/components/ui/Reveal";
 import { skills } from "@/lib/data";
 
 /**
- * Stack section — four pillars in a compact grid.
- * Tells the story of how Wasay works: build, ship, polish, lead.
+ * Stack — a grouped list, deliberately unadorned. No proficiency badges, no
+ * logo wall: the reader is here to check whether the stack overlaps with
+ * theirs, and a list answers that faster than anything else.
  */
 export function Skills() {
   return (
-    <section id="stack" className="relative px-5 py-12 sm:px-8 sm:py-16">
-      <div className="mx-auto max-w-5xl">
-        <EditorialSectionHeader
-          index="06"
-          label="Chapter VI · Stack"
-          title="What I reach for when it matters."
-          description="Not every shiny tool — the ones that don't flake mid-demo."
-        />
-
-        <div className="grid gap-px border border-border bg-border sm:grid-cols-2">
-          {skills.map((group, index) => (
-            <Reveal key={group.category} delay={index * 0.05}>
-              <div className="group bg-background p-5 transition-colors hover:bg-background-soft sm:p-6">
-                <div className="font-display text-2xl font-semibold tracking-tighter text-foreground transition-colors group-hover:text-accent">
-                  {group.category}
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  {group.items.join(" · ")}
-                </p>
+    <Chapter
+      id="stack"
+      index="05"
+      label="Stack"
+      title="What I build with."
+      description="The tools I use regularly enough to be interviewed on. Nothing listed here is a single tutorial deep."
+    >
+      <div className="flex flex-col divide-y divide-border border-y border-border">
+        {skills.map((group, index) => (
+          <Reveal key={group.category} delay={index * 0.05}>
+            <div className="group grid gap-2 py-5 sm:grid-cols-[8rem_1fr] sm:gap-8">
+              <div className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-accent">
+                {group.category}
               </div>
-            </Reveal>
-          ))}
-        </div>
+              <ul className="flex flex-wrap gap-x-2 gap-y-2">
+                {group.items.map((item) => (
+                  <li
+                    key={item}
+                    className="rounded-full border border-border bg-foreground/[0.03] px-3 py-1 text-sm text-foreground/85 transition-colors group-hover:border-accent/25"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        ))}
       </div>
-    </section>
+    </Chapter>
   );
 }

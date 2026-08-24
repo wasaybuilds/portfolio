@@ -66,10 +66,10 @@ export async function GitHubActivity() {
       <div className="mx-auto max-w-5xl">
 
         <EditorialSectionHeader
-          index="07"
-          label="Chapter VII · GitHub"
-          title="Still in the arena."
-          description="Green squares don't lie. Neither does the commit at 1:14am."
+          index="08"
+          label="GitHub"
+          title="Public activity."
+          description="Public repositories and contribution history, pulled live from the GitHub API."
           meta={
             <a
               href={profile.github}

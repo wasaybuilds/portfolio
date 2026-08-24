@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { EditorialSectionHeader } from "@/components/ui/EditorialSectionHeader";
+import { Chapter } from "@/components/ui/Chapter";
 import { Reveal } from "@/components/ui/Reveal";
 import { clientWork } from "@/lib/data";
 
@@ -12,19 +12,15 @@ import { clientWork } from "@/lib/data";
  */
 export function ClientWork() {
   return (
-    <section id="client-work" className="relative px-5 py-12 sm:px-8 sm:py-16">
-      <div className="mx-auto max-w-5xl">
-
-        <EditorialSectionHeader
-          index="03"
-          label="Chapter III · Client Builds"
-          title="Same craft. More stages."
-          description="When the brief isn't mine, the standard still is. Yes, even the logo tweaks."
-          meta={`${clientWork.length} sites`}
-        />
-
-        {/* ---------- Site list ---------- */}
-        <div>
+    <Chapter
+      id="client-work"
+      index="06"
+      label="Client Builds"
+      title="Sites shipped for clients."
+      description="Freelance and agency builds on WordPress, Shopify and Webflow. Every one is live — the links go straight to the running site."
+      meta={`${clientWork.length} sites`}
+    >
+      <div className="border-t border-border">
           {clientWork.map((site, index) => (
             <Reveal key={site.url} delay={index * 0.04}>
               <a
@@ -56,8 +52,7 @@ export function ClientWork() {
               </a>
             </Reveal>
           ))}
-        </div>
       </div>
-    </section>
+    </Chapter>
   );
 }

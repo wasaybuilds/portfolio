@@ -31,6 +31,21 @@ const instrumentSerif = Instrument_Serif({
  */
 const themeInitScript = `(function(){try{var t=localStorage.getItem("portfolio-theme");if(t!=="ink"&&t!=="classic")t="ink";document.documentElement.setAttribute("data-theme",t);document.documentElement.classList.add("dark");localStorage.setItem("portfolio-theme",t);}catch(e){}})();`;
 
+/**
+ * Without JavaScript the intro curtain never lifts and every framer-motion
+ * element keeps its `initial` inline style (opacity: 0), leaving a blank page.
+ * These rules remove the curtain and force content visible so crawlers and
+ * JS-disabled browsers still get the full, readable page.
+ */
+const noScriptFallbackCss = `
+  .intro-curtain { display: none !important; }
+  main, main * {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+`;
+
 export const metadata: Metadata = {
   /*
    * metadataBase tells Next.js the root URL of the deployment so that
@@ -46,29 +61,30 @@ export const metadata: Metadata = {
       : "http://localhost:3000"
   ),
   title: `${profile.name} — ${profile.role}`,
-  description: profile.about[0],
+  description: profile.metaDescription,
   keywords: [
     "Abdul Wasay",
-    "Wasay",
-    "Senior Full Stack Engineer",
+    "Full Stack Engineer",
+    "TypeScript Developer",
+    "Node.js Developer",
     "React Developer",
     "Next.js Developer",
-    "Node.js Developer",
-    "Python Developer",
-    "SaaS Developer",
-    "Portfolio",
+    "PostgreSQL",
+    "AWS",
+    "Remote Contractor",
+    "Lahore Pakistan",
   ],
   authors: [{ name: profile.name, url: profile.linkedin }],
   openGraph: {
     title: `${profile.name} — ${profile.role}`,
-    description: profile.tagline,
+    description: profile.metaDescription,
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: `${profile.name} — ${profile.role}`,
-    description: profile.tagline,
+    description: profile.metaDescription,
   },
 };
 
@@ -84,6 +100,11 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${sora.variable} ${instrumentSerif.variable} antialiased`}
     >
+      <head>
+        <noscript>
+          <style>{noScriptFallbackCss}</style>
+        </noscript>
+      </head>
       <body className="bg-background text-foreground selection:bg-accent selection:text-accent-foreground">
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInitScript}

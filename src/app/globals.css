@@ -61,6 +61,25 @@
   scroll-behavior: smooth;
 }
 
+/* Fixed navbar would otherwise sit on top of a section jumped to via #anchor. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/*
+ * Respect the OS-level motion preference. The JS components already check
+ * `useReducedMotion`, but the marquees and the ping dot are pure CSS, so they
+ * need stopping here too.
+ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 html {
   background: var(--background);
 }

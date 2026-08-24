@@ -1,7 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { useRef } from "react";
+import { ArrowUpRight, Download, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
 import { useIntroDone } from "@/components/IntroLoader";
 import { profile } from "@/lib/data";
@@ -26,12 +32,32 @@ export function Hero() {
    * name reveal happens *as* the curtain exposes it — not hidden behind it.
    */
   const introDone = useIntroDone();
+  const reduced = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+
+  /*
+   * Scroll-linked exit: the hero recedes as the first chapter rises over it,
+   * so the handoff into Work reads as one movement instead of two sections
+   * meeting at a hard edge.
+   */
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
+  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
   return (
     <section
+      ref={ref}
       id="hero"
       className="relative flex min-h-dvh flex-col overflow-hidden px-5 pb-5 pt-20 sm:min-h-screen sm:px-8 sm:pb-10 sm:pt-28"
     >
+      <motion.div
+        style={reduced ? undefined : { scale, opacity, y }}
+        className="flex min-h-0 flex-1 flex-col origin-top"
+      >
       {/* Status */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
@@ -45,7 +71,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-status" />
             </span>
-            Open to work (and good problems)
+            {profile.availability}
           </span>
           <span className="opacity-20 select-none">·</span>
           <span className="text-xs text-muted">{profile.location}</span>
@@ -83,9 +109,9 @@ export function Hero() {
           className="mt-3 max-w-md sm:mt-5"
         >
           <p className="font-display text-base font-semibold text-foreground sm:text-xl">
-            {profile.role}
+            {profile.headline}
           </p>
-          <p className="mt-1.5 line-clamp-2 text-xs leading-snug text-muted sm:mt-2 sm:line-clamp-none sm:text-sm sm:leading-relaxed">
+          <p className="mt-1.5 text-xs leading-snug text-muted sm:mt-2 sm:text-sm sm:leading-relaxed">
             {profile.tagline}
           </p>
         </motion.div>
@@ -130,14 +156,23 @@ export function Hero() {
               href={`mailto:${profile.email}`}
               className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-foreground/10 sm:px-5 sm:py-2"
             >
-              Say Hello
+              <Mail className="h-3.5 w-3.5" />
+              Email
+            </a>
+            <a
+              href={profile.resumeUrl}
+              download={profile.resumeFilename}
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/5 px-4 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-foreground/10 sm:px-5 sm:py-2"
+            >
+              <Download className="h-3.5 w-3.5" />
+              CV
             </a>
             <a
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border bg-foreground/5 text-muted transition-colors hover:text-foreground sm:flex"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-foreground/5 text-muted transition-colors hover:text-foreground"
             >
               <GithubIcon className="h-4 w-4" />
             </a>
@@ -146,7 +181,7 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border bg-foreground/5 text-muted transition-colors hover:text-foreground sm:flex"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-foreground/5 text-muted transition-colors hover:text-foreground"
             >
               <LinkedinIcon className="h-4 w-4" />
             </a>
@@ -164,6 +199,7 @@ export function Hero() {
           </nav>
         </motion.div>
       </div>
+      </motion.div>
     </section>
   );
 }

@@ -164,7 +164,7 @@ function IntroLoader({ onReveal }: { onReveal: () => void }) {
   if (phase === "done" || phase === "boot") {
     /* boot renders the plain curtain (no text) to avoid a hydration flash. */
     if (phase === "done") return null;
-    return <div className="fixed inset-0 z-100 bg-background" aria-hidden />;
+    return <div className="intro-curtain fixed inset-0 z-100 bg-background" aria-hidden />;
   }
 
   const skip = () => {
@@ -191,7 +191,7 @@ function IntroLoader({ onReveal }: { onReveal: () => void }) {
           skip();
         }
       }}
-      className="fixed inset-0 z-100 flex cursor-pointer flex-col items-center justify-center bg-background outline-none"
+      className="intro-curtain fixed inset-0 z-100 flex cursor-pointer flex-col items-center justify-center bg-background outline-none"
     >
       {/* Step counter — quiet, editorial, keeps the eye anchored */}
       <span
