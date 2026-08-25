@@ -1,47 +1,72 @@
 ---
 import Section from './Section.astro';
+import Diagram from './Diagram.astro';
 import { work } from '../data/site';
 ---
 
-<Section id="work" label="Work" title="Platforms running in production.">
+<Section id="work" label="Work" title="Systems running in production.">
   <ul class="divide-y divide-rule">
-    {work.map((project, i) => (
+    {work.map((project) => (
       <li class="row py-12 first:pt-0 last:pb-0" data-reveal>
-        <p class="ordinal mb-4">{String(i + 1).padStart(2, '0')}</p>
-
         <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
           <h3 class="text-title">{project.name}</h3>
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="link font-mono text-sm"
-          >
-            {project.urlLabel} ↗
-          </a>
+          {project.url && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link font-mono text-sm"
+            >
+              {project.urlLabel} ↗
+            </a>
+          )}
         </div>
 
         <p class="text-lede mt-3 max-w-lg text-ink-soft">{project.blurb}</p>
 
-        <p class="mt-4 max-w-2xl text-sm text-ink-muted">{project.summary}</p>
-
-        {project.problem && (
-          <p class="mt-4 max-w-2xl text-sm text-ink-muted">
-            <span class="label mr-2">Problem</span>
-            {project.problem}
-          </p>
+        {/*
+          The figures come before any prose. They are the part a reader
+          actually stops on, and they are the part that is hardest to fake.
+        */}
+        {project.scale && (
+          <dl class="mt-7 flex flex-wrap gap-x-12 gap-y-5">
+            {project.scale.map((figure) => (
+              <div>
+                <dt class="font-mono text-2xl text-ink sm:text-3xl">
+                  {figure.value}
+                </dt>
+                <dd class="mt-1 text-xs text-ink-muted">{figure.label}</dd>
+              </div>
+            ))}
+          </dl>
         )}
 
-        {project.built && (
-          <p class="mt-3 max-w-2xl text-sm text-ink-muted">
-            <span class="label mr-2">Built</span>
-            {project.built}
-          </p>
+        {/* The architecture, drawn. Only where the stages are fact. */}
+        {project.stages && <Diagram stages={project.stages} />}
+
+        <p class="mt-7 max-w-xl text-sm text-ink-muted">{project.summary}</p>
+
+        {/* Problem and built, one sentence each, side by side rather than
+            stacked as paragraphs. */}
+        {(project.problem || project.built) && (
+          <div class="mt-6 grid gap-6 border-t border-rule pt-6 sm:grid-cols-2 sm:gap-10">
+            {project.problem && (
+              <div>
+                <p class="label label--rail">Problem</p>
+                <p class="mt-2 text-sm text-ink-soft">{project.problem}</p>
+              </div>
+            )}
+            {project.built && (
+              <div>
+                <p class="label label--rail">Built</p>
+                <p class="mt-2 text-sm text-ink-soft">{project.built}</p>
+              </div>
+            )}
+          </div>
         )}
 
-        <p class="mt-5 font-mono text-xs text-ink-faint">
-          {project.stack.join(' · ')}
-          {project.scale && <span class="text-ink-muted"> — {project.scale}</span>}
+        <p class="mt-6 font-mono text-xs text-ink-faint">
+          {project.role} · {project.stack.join(' · ')}
         </p>
       </li>
     ))}

@@ -24,7 +24,7 @@ import { jobs } from '../data/site';
 
         <div>
           <p class="text-ink">{job.role}</p>
-          <p class="mt-1 text-sm">
+          <p class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
             {job.companyUrl ? (
               <a
                 href={job.companyUrl}
@@ -37,7 +37,17 @@ import { jobs } from '../data/site';
             ) : (
               <span class="text-ink-muted">{job.company}</span>
             )}
+            {job.location && (
+              <>
+                <span class="text-ink-faint">·</span>
+                <span class="text-ink-faint">{job.location}</span>
+              </>
+            )}
           </p>
+
+          {job.note && (
+            <p class="mt-3 max-w-2xl text-sm text-ink-muted">{job.note}</p>
+          )}
         </div>
       </li>
     ))}

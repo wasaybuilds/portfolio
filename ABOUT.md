@@ -18,7 +18,7 @@ than filled with something plausible.
 | Location | Lahore, Punjab, Pakistan |
 | Email | wasaya670@gmail.com |
 | GitHub | https://github.com/wasaybuilds |
-| LinkedIn | https://www.linkedin.com/in/abdul-wasay01/ **[NEEDS INPUT: confirm this is the live URL — an older variant may be dead]** |
+| LinkedIn | https://www.linkedin.com/in/abdul-wasay01/ — confirmed live |
 | Availability | Open to remote roles and contract work, worldwide. No relocation or sponsorship required. |
 
 **Never use "Senior."** Three years of experience. In the US/UK market "senior"
@@ -57,25 +57,34 @@ Reproduce exactly. A recruiter cross-checks this against LinkedIn, and a row
 that matches on every field is worth more than a row with a paragraph that
 doesn't. No "Senior" or "Lead" framing on anything before February 2025.
 
-| Role | Employer | Period |
-|---|---|---|
-| Frontend Engineer | Hatzs Dimensions | June 2023 – September 2023 |
-| Software Engineer | Hatzs Dimensions | October 2023 – January 2025 |
-| Lead of Product Operations | Hatzs Dimensions | February 2025 – present |
-| Founding Engineer | Befer | **[NEEDS INPUT: start and end dates]** |
+| Role | Employer | Period | Location |
+|---|---|---|---|
+| Frontend Engineer | Hatzs Dimensions | Jun 2023 – Sep 2023 | Lahore |
+| Software Engineer | Hatzs Dimensions | Oct 2023 – Jan 2025 | Lahore |
+| Founding Engineer | Befer | Aug 2024 – Aug 2026 | Lahore |
+| Lead of Product Operations / Full Stack Engineer | Hatzs Dimensions | Feb 2025 – present | Lahore |
+| Team Lead | DealerIQ AI | Jan 2026 – Aug 2026 | Anaheim, CA (remote) |
 
-First engineering role: June 2023. Roughly three years professional experience.
+First engineering role: June 2023. Hatzs total tenure: 3 years 3 months.
 
-### DealerIQ — employment status
+Befer's LinkedIn title reads "Pioneer & Product Owner"; the description beneath
+it says "Founding Engineer at Befer". Use **Founding Engineer** — it is the
+accurate one, and the other is not a real job title.
 
-Began as a Hatzs Dimensions project. Following a merger with the US client it
-was registered as a separate entity, and the work continued remotely for that
-entity.
+### Overlapping dates — decide before this goes out
 
-**[NEEDS INPUT: registered entity name; job title held there; start date;
-whether it runs concurrently with Lead of Product Operations at Hatzs]**
+Three roles run concurrently from January to August 2026: Befer, Hatzs and
+DealerIQ AI. A recruiter cross-checking LinkedIn sees three simultaneous
+full-time positions and reads it as padding unless it is explained.
 
-Until this is resolved it must not appear as a dated employment row.
+Options, in order of preference:
+
+1. Mark the concurrent ones as contract or part-time, on LinkedIn *and* here.
+2. Present DealerIQ as a client engagement delivered through Hatzs rather than
+   as its own employment row.
+3. Leave as is, and expect the question in every first call.
+
+**[NEEDS INPUT: which of these is true?]**
 
 ### Education
 
@@ -89,17 +98,24 @@ Two to three projects maximum. Each one gets: what the product is in a sentence
 a non-engineer understands · the technical problem · what I built
 (architecture-level, 2–3 sentences) · stack · scale if provable.
 
-### AWS migration pipeline — lead project
+### Salesforce → DealerIQ migration pipeline — lead project
 
-The most technically distinctive work and the hardest to fabricate, so it leads.
+Moved an automotive vehicle-acquisition client's historic Salesforce estate
+into DealerIQ. Covered Leads, Opportunities, Contacts, Accounts, Service
+Appointments, Work Orders, SMS history and file attachments.
 
-Partial architecture, to be confirmed: three decoupled stages; checkpoint-based
-auto-resume so a failed multi-gigabyte migration restarts from the last
-checkpoint rather than from zero; authenticated webhook loading.
+Three decoupled stages:
 
-**[NEEDS INPUT: what migrated from what system to what · client/product context ·
-confirmation of the three stages · full stack · which of the metrics below
-belong to it]**
+1. Extract-and-join, writing checkpoints as it goes, so a failed run resumes
+   from the last good checkpoint instead of restarting a multi-gigabyte job.
+2. Transformation into a single composite import schema.
+3. Authenticated webhook-based loading into DealerIQ.
+
+Step Functions orchestrates, Lambda executes, S3 holds intermediate state.
+
+Stack: TypeScript, Node.js, AWS (Lambda, S3, Step Functions), PostgreSQL.
+Scale: 350,000+ records, 500+ field mappings, and a regression suite covering
+850 records end to end in 44 seconds.
 
 ### DealerIQ — AI sales assistant and CRM for car dealerships
 
@@ -107,9 +123,16 @@ Unifies AI-driven calls, texts and shared memory across a live-agent workflow,
 with pre-built agent roles for reception, sales, service and buying.
 
 - Live: https://www.dealeriq.ai
-- Stack: Next.js, TypeScript, Tailwind CSS, AI agents
-- Scale: 1,000+ calls processed per day
-- **[NEEDS INPUT: the technical problem, and what I built at architecture level]**
+- Role: Team Lead, four engineers. Sales, Acquisition and Service modules.
+- Problem: a vehicle deal crossed four manual handoffs between separate systems
+  (lender approvals, service scheduling, inventory), each one a place for a
+  deal to stall silently.
+- Built: event-driven jobs wiring dealership workflows to external lender APIs,
+  service-centre scheduling and inventory platforms, removing all four
+  handoffs. Plus the voice and chat layer — Twilio and ElevenLabs with
+  conversation memory shared across channels, so a call resumes where the
+  previous chat ended. Low latency was the governing constraint.
+- Stack: TypeScript, React, Node.js, PostgreSQL, AWS, Twilio, ElevenLabs
 
 ### Befer — CRM for blue-collar service businesses
 
@@ -118,9 +141,15 @@ cleaners. Founding engineer; built end to end from the Postgres schema and API
 through to the web and mobile clients.
 
 - Live: https://befer.co
-- Stack: Next.js, TypeScript, QuickBooks API, Zapier
-- **[NEEDS INPUT: the technical problem, what I built, and one provable
-  technical scale figure]**
+- Role: Founding Engineer. Built the platform end to end.
+- Problem: technicians write jobs up from memory at the end of a shift, so
+  parts, labour hours and follow-ups are lost between the van and the invoice.
+- Built: an intake assistant turning a technician's voice note into a
+  structured job record — parts, labour hours, customer details and
+  recommended follow-ups — on top of the full platform (Postgres schema,
+  backend APIs, frontend workflows).
+- Stack: React, TypeScript, Node.js, PostgreSQL, OpenAI API, AWS
+- Scale: 9 businesses onboarded, 4,000+ service jobs processed in production
 
 ---
 
@@ -131,14 +160,21 @@ through to the web and mobile clients.
 Specific, technical, and self-evidently real. Credible *because* they are
 granular and unglamorous.
 
-- 350,000+ records migrated
-- 500+ field mappings
-- Regression suite processing 850 records in 44 seconds
-- Initial page load reduced 4.1s → 1.6s
-- Deployment time reduced 38min → 11min
-- 28-component shared library
+| Figure | Belongs to |
+|---|---|
+| 350,000+ records migrated | Salesforce → DealerIQ pipeline |
+| 500+ field mappings | Salesforce → DealerIQ pipeline |
+| 850 records end to end in 44 seconds | Salesforce → DealerIQ pipeline |
+| Initial page load 4.1s → 1.6s | Frontend Engineer, Hatzs (2023) |
+| 28-component shared library | Frontend Engineer, Hatzs (2023) |
+| Deployment time 38min → 11min | Software Engineer, Hatzs (2023–25) |
+| Release cycle 3 weeks → 5 days, 2 to 8 releases/month | Lead Product Ops, Hatzs |
+| ~15 hrs/week of manual work eliminated | Insurance CRM, Hatzs |
+| 20+ production screens | Frontend Engineer, Hatzs |
+| 9 businesses, 4,000+ jobs | Befer |
 
-**[NEEDS INPUT: which project each of these belongs to]**
+The last two rows are usage counts from systems Abdul built and can query.
+They are weaker than the engineering figures — drop them if challenged.
 
 ### Banned — never restore
 
@@ -243,4 +279,5 @@ I work with international teams remotely. Nothing else.
 - Typos: "zero tech debt debt" → "zero tech debt"
 - "SaaS and CMS products" → **CRM**, wherever the old GitHub bio phrasing appears
 - OG image URL must point at the production domain, never a Vercel preview
-  deployment. **[NEEDS INPUT: production domain]**
+  deployment. Currently `https://wasay-one.vercel.app`; update before launch
+  if the Astro rebuild deploys elsewhere.

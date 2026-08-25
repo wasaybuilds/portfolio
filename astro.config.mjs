@@ -24,6 +24,9 @@ import tailwindcss from '@tailwindcss/vite';
  * https://astro.build/config
  */
 export default defineConfig({
+  /* Absolute URL resolution for social previews and canonical links.
+     Point this at the final domain before launch. */
+  site: "https://wasay-one.vercel.app",
   vite: {
     plugins: [tailwindcss()],
   },
