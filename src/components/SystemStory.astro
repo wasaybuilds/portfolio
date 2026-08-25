@@ -2,67 +2,114 @@
 /**
  * The graphic half of the Approach section: one system, drawn four times.
  *
- * This is the "sticky graphic, stepper text" pattern — the graphic stays put
- * while the text scrolls past, and it changes state as each step arrives. The
- * scroll maps onto something the story already has: the life of a service,
- * from drawing to handover. That binding is the whole point; a pinned panel
- * whose scroll drives nothing is just a slow page.
+ * "Sticky graphic, stepper text" — the graphic stays put while the text
+ * scrolls past, changing state as each step arrives. The scroll maps onto
+ * something the story already has: the life of a service, from drawing to
+ * handover. That binding is the point; a pinned panel whose scroll drives
+ * nothing is just a slow page.
  *
- * State is set by `data-state` on the root, from 0 to 3, and everything else
- * is CSS. Nothing here animates on a timer.
+ * The system drawn here is the one Abdul actually builds — a client, an API,
+ * Postgres, and a job queue with a worker behind it, under a monitoring
+ * trace. An abstract box would have been easier and would have said nothing.
+ *
+ * State is `data-state` on the root, 0–3. Everything else is CSS: no timers,
+ * no per-frame JavaScript. The only motion is a dash animation on the edges,
+ * which runs solely in the states where traffic is actually flowing.
  */
 ---
 
 <div class="system-story" data-state="0">
-  <svg viewBox="0 0 340 250" fill="none" aria-hidden="true" class="w-full">
-    <!-- ── Blueprint dimension marks: only while it is being designed ── -->
-    <g class="layer layer--plan" stroke="currentColor" stroke-width="1" opacity="0.5">
-      <path d="M96 52h148" stroke-dasharray="3 4" />
-      <path d="M96 47v10M244 47v10" />
-      <path d="M70 78v70" stroke-dasharray="3 4" />
-      <path d="M65 78h10M65 148h10" />
+  <svg viewBox="0 0 360 300" fill="none" aria-hidden="true" class="w-full">
+    <!-- ── Blueprint marks: only while it is being designed ── -->
+    <g class="layer layer--plan" stroke="currentColor" stroke-width="0.9">
+      <path d="M140 62h88" stroke-dasharray="3 4" />
+      <path d="M140 57v10M228 57v10" />
+      <path d="M118 88v56" stroke-dasharray="3 4" />
+      <path d="M113 88h10M113 144h10" />
+      <path d="M14 168h332" stroke-dasharray="2 6" opacity="0.5" />
     </g>
 
-    <!-- ── The service itself ── -->
-    <rect
-      class="service"
-      x="96"
-      y="78"
-      width="148"
-      height="70"
-      rx="8"
-      stroke="currentColor"
-      stroke-width="1.6"
-    />
-    <text
-      x="170"
-      y="118"
-      text-anchor="middle"
-      dominant-baseline="middle"
-      class="service__label"
-      style="font-family: var(--font-mono), monospace; font-size: 11px;"
-    >service</text>
-
-    <!-- ── Traffic in and out: solid once it is running ── -->
-    <g class="layer layer--flow" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-      <path d="M18 113h72" />
-      <path d="M84 108.5 90 113l-6 4.5" stroke-linejoin="round" />
-      <path d="M250 113h72" />
-      <path d="M316 108.5 322 113l-6 4.5" stroke-linejoin="round" />
+    <!-- ── Edges. Dash animation runs only where traffic flows. ── -->
+    <g class="edges" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+      <path class="edge" d="M80 116h54" />
+      <path class="edge" d="M230 116h50" />
+      <path class="edge" d="M184 146v44" />
+      <path class="edge edge--fragile" d="M220 214h46" />
     </g>
 
-    <!-- ── The monitoring trace along the bottom ── -->
-    <g class="layer layer--monitor">
-      <path
-        class="trace trace--flat"
-        d="M18 205h304"
-        stroke="currentColor"
-        stroke-width="1.2"
-        opacity="0.35"
-      />
+    <!-- Arrowheads, static so they do not flicker with the dash animation. -->
+    <g class="layer layer--flow" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M129 111.5 134 116l-5 4.5" />
+      <path d="M275 111.5 280 116l-5 4.5" />
+      <path d="M179.5 185 184 190l4.5-5" />
+      <path d="M261 209.5 266 214l-5 4.5" />
+    </g>
+
+    <!-- ── Client ── -->
+    <g class="node">
+      <rect x="14" y="96" width="66" height="40" rx="6" stroke="currentColor" stroke-width="1.5" />
+      <path d="M30 128h34" stroke="currentColor" stroke-width="1" opacity="0.45" />
+      <text x="47" y="113" class="node__label">client</text>
+    </g>
+
+    <!-- ── API service ── -->
+    <g class="node node--api">
+      <rect class="service" x="140" y="88" width="90" height="58" rx="8" stroke="currentColor" stroke-width="1.7" />
+      <text x="185" y="112" class="node__label node__label--strong">API</text>
+      <text x="185" y="129" class="node__sub">Node · TypeScript</text>
+    </g>
+
+    <!-- ── Postgres ── -->
+    <g class="node">
+      <ellipse cx="316" cy="98" rx="30" ry="9" stroke="currentColor" stroke-width="1.5" />
+      <path d="M286 98v42a30 9 0 0 0 60 0V98" stroke="currentColor" stroke-width="1.5" />
+      <path d="M286 118a30 9 0 0 0 60 0" stroke="currentColor" stroke-width="1" opacity="0.4" />
+      <text x="316" y="160" class="node__label">postgres</text>
+    </g>
+
+    <!-- ── Queue ── -->
+    <g class="node">
+      <rect x="150" y="190" width="70" height="30" rx="5" stroke="currentColor" stroke-width="1.5" />
+      <g stroke="currentColor" stroke-width="1" opacity="0.45">
+        <path d="M160 198v14M170 198v14M180 198v14" />
+      </g>
+      <text x="185" y="236" class="node__label">queue</text>
+    </g>
+
+    <!-- ── Worker ── -->
+    <g class="node node--worker">
+      <rect x="266" y="190" width="70" height="30" rx="5" stroke="currentColor" stroke-width="1.5" />
+      <path d="M280 200l6 5-6 5M292 210h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" />
+      <text x="301" y="236" class="node__label">worker</text>
+    </g>
+
+    <!-- ── Fault badge, sitting on the edge that fails ── -->
+    <g class="layer layer--fault">
+      <circle cx="243" cy="214" r="10" fill="var(--paper)" />
+      <circle cx="243" cy="214" r="10" stroke="var(--accent)" stroke-width="1.5" />
+      <path d="M243 209v6" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" />
+      <circle cx="243" cy="218.5" r="1.1" fill="var(--accent)" />
+    </g>
+
+    <!-- ── Handover document ── -->
+    <g class="layer layer--handover">
+      <path d="M286 28h30l12 12v40h-42z" fill="var(--paper)" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+      <path d="M316 28v12h12" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+      <g stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity="0.6">
+        <path d="M294 52h20M294 60h26M294 68h14" />
+      </g>
+      <path d="M292 44l3 3 5-6" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- ── Monitoring strip ── -->
+    <g class="monitor">
+      <path d="M14 258h332" stroke="currentColor" stroke-width="1" opacity="0.18" />
+      <text x="14" y="250" class="node__sub" text-anchor="start">monitoring</text>
+
+      <path class="trace trace--flat" d="M14 278h332" stroke="currentColor" stroke-width="1.2" opacity="0.3" />
       <path
         class="trace trace--live"
-        d="M18 205h58l10-16 12 32 11-24 9 8h44l10-14 12 28 11-22 9 8h96"
+        d="M14 278h44l8-13 10 26 9-19 7 6h48l8-11 10 22 9-17 7 6h52l8-12 10 24 9-18 7 6h58"
         stroke="var(--accent)"
         stroke-width="1.6"
         stroke-linecap="round"
@@ -70,42 +117,20 @@
       />
       <path
         class="trace trace--fault"
-        d="M18 205h96l8-30 9 58 8-28h157"
-        stroke="currentColor"
+        d="M14 278h96l7-26 8 50 7-24h214"
+        stroke="var(--accent)"
         stroke-width="1.6"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
     </g>
 
-    <!-- ── Fault marker ── -->
-    <g class="layer layer--fault">
-      <circle cx="170" cy="60" r="10" stroke="var(--accent)" stroke-width="1.5" />
-      <path d="M170 55v6" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" />
-      <circle cx="170" cy="65.5" r="1" fill="var(--accent)" />
-    </g>
-
-    <!-- ── Handover: the document left behind ── -->
-    <g class="layer layer--handover" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round">
-      <path d="M258 26h34l12 12v42h-46z" />
-      <path d="M292 26v12h12" />
-      <g stroke-width="1.1" opacity="0.7">
-        <path d="M266 48h24M266 56h30M266 64h18" />
-      </g>
-    </g>
-
-    <!-- ── Caption ── -->
-    <text
-      x="170"
-      y="236"
-      text-anchor="middle"
-      class="system-story__caption"
-      style="font-family: var(--font-mono), monospace; font-size: 10px; letter-spacing: 0.08em;"
-    >
-      <tspan class="cap cap--0" x="170">DESIGNED</tspan>
-      <tspan class="cap cap--1" x="170">OBSERVED</tspan>
-      <tspan class="cap cap--2" x="170">DIAGNOSED</tspan>
-      <tspan class="cap cap--3" x="170">HANDED OVER</tspan>
+    <!-- ── Caption. All tspans share x, so they overlap instead of running on. ── -->
+    <text x="180" y="296" text-anchor="middle" class="caption">
+      <tspan class="cap cap--0" x="180">DESIGNED</tspan>
+      <tspan class="cap cap--1" x="180">OBSERVED</tspan>
+      <tspan class="cap cap--2" x="180">DIAGNOSED</tspan>
+      <tspan class="cap cap--3" x="180">HANDED OVER</tspan>
     </text>
   </svg>
 </div>
@@ -117,22 +142,41 @@
 
   .layer,
   .trace,
-  .cap {
-    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .service {
+  .cap,
+  .node,
+  .edge {
     transition:
-      stroke-dasharray 0.55s ease,
-      opacity 0.55s ease;
+      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      stroke-dasharray 0.5s ease;
   }
 
-  .service__label {
+  /* Type inside the drawing. Set here rather than inline so it inherits the
+     theme colours and stays legible when the palette inverts. */
+  .node__label,
+  .node__sub,
+  .caption {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    text-anchor: middle;
     fill: var(--ink-faint);
     transition: fill 0.55s ease;
   }
+  .node__label {
+    font-size: 10px;
+  }
+  .node__label--strong {
+    font-size: 12px;
+  }
+  .node__sub {
+    font-size: 8.5px;
+    letter-spacing: 0.04em;
+  }
+  .caption {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    fill: var(--ink-muted);
+  }
 
-  /* Everything off by default; each state switches on what it needs. */
+  /* Off by default; each state switches on what it needs. */
   .layer--plan,
   .layer--fault,
   .layer--handover,
@@ -142,43 +186,59 @@
     opacity: 0;
   }
 
-  /* ── 0 · Before the code: a drawing, not a system ── */
+  /* Flow: dashes travelling along the edge read as traffic without moving any
+     element, so it stays on the compositor and costs nothing. */
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -20;
+    }
+  }
+
+  /* Flow runs only in the states where traffic is actually moving, driven by
+     the state attribute rather than by an extra class from script. */
+  [data-state='1'] .edge,
+  [data-state='3'] .edge {
+    stroke-dasharray: 5 5;
+    animation: flow 1.1s linear infinite;
+  }
+
+  /* ── 0 · Before the code ── */
   [data-state='0'] .service {
     stroke-dasharray: 5 5;
   }
   [data-state='0'] .layer--plan {
-    opacity: 0.5;
+    opacity: 0.55;
   }
+  [data-state='0'] .node,
+  [data-state='0'] .edge,
   [data-state='0'] .layer--flow {
-    opacity: 0.18;
+    opacity: 0.3;
+  }
+  [data-state='0'] .node--api {
+    opacity: 0.75;
   }
   [data-state='0'] .cap--0 {
     opacity: 1;
   }
 
-  /* ── 1 · While it runs: traffic flowing, trace alive ── */
-  [data-state='1'] .service {
-    stroke-dasharray: 0 0;
-  }
-  [data-state='1'] .layer--flow {
-    opacity: 1;
-  }
+  /* ── 1 · While it runs ── */
   [data-state='1'] .trace--live {
     opacity: 1;
   }
-  [data-state='1'] .service__label {
+  [data-state='1'] .node__label--strong {
     fill: var(--ink);
   }
   [data-state='1'] .cap--1 {
     opacity: 1;
   }
 
-  /* ── 2 · When it breaks: one spike, then flat, and an alert ── */
-  [data-state='2'] .service {
-    stroke-dasharray: 0 0;
+  /* ── 2 · When it breaks ── */
+  [data-state='2'] .edge--fragile {
+    opacity: 0.25;
+    animation: none;
   }
-  [data-state='2'] .layer--flow {
-    opacity: 0.3;
+  [data-state='2'] .node--worker {
+    opacity: 0.4;
   }
   [data-state='2'] .trace--fault {
     opacity: 1;
@@ -190,20 +250,14 @@
     opacity: 1;
   }
 
-  /* ── 3 · After you leave: running, documented, someone else's now ── */
-  [data-state='3'] .service {
-    stroke-dasharray: 0 0;
-  }
-  [data-state='3'] .layer--flow {
-    opacity: 1;
-  }
+  /* ── 3 · After you leave ── */
   [data-state='3'] .trace--live {
-    opacity: 0.55;
+    opacity: 0.5;
   }
   [data-state='3'] .layer--handover {
     opacity: 1;
   }
-  [data-state='3'] .service__label {
+  [data-state='3'] .node__label--strong {
     fill: var(--ink);
   }
   [data-state='3'] .cap--3 {
@@ -214,9 +268,15 @@
     .layer,
     .trace,
     .cap,
-    .service,
-    .service__label {
+    .node,
+    .edge,
+    .node__label,
+    .caption {
       transition: none;
+    }
+    [data-state] .edge {
+      animation: none;
+      stroke-dasharray: 0;
     }
   }
 </style>
