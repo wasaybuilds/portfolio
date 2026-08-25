@@ -31,7 +31,7 @@ import { about, education, principles, profile } from '../data/site';
     </div>
 
     <!-- The steps. Ordinary flow, generously spaced so each gets its moment. -->
-    <ol class="space-y-[22vh] lg:space-y-[38vh] lg:pb-[18vh] lg:pt-[12vh]">
+    <ol class="space-y-[clamp(3rem,10vw,5rem)] lg:space-y-[38vh] lg:pb-[18vh] lg:pt-[12vh]">
       {principles.map((principle, i) => (
         <li class="step" data-step={i}>
           <div class="flex items-center gap-4">
