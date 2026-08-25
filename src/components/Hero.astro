@@ -11,28 +11,40 @@ const links = [
 ];
 ---
 
-<section id="top" class="section-pad flex min-h-[78svh] flex-col justify-center">
+<section
+  id="top"
+  class="section-pad flex min-h-[68svh] flex-col justify-center sm:min-h-[78svh]"
+>
   <div class="shell">
     <div class="rail">
       <p class="label label--ticked label--rail lg:pt-3">{profile.role}</p>
 
       <div class="min-w-0">
-        <div class="grid items-center gap-10 sm:grid-cols-[1fr_auto] sm:gap-12">
-          <div class="min-w-0">
-            <h1 class="text-hero" data-reveal>{profile.name}</h1>
+        {/*
+          Named grid areas rather than two layouts, so the mark exists once in
+          the DOM and simply lands in a different place.
 
-            <p class="text-lede mt-8 max-w-lg text-ink-soft" data-reveal>
-              {profile.intro}
-            </p>
-          </div>
+          Narrow: the name takes a full row of its own — it needs the width —
+          and the intro then shares the next row with the mark. Putting the
+          mark on its own row left a large empty space to its left.
 
-          <div class="hidden sm:block" data-reveal>
+          Wide: the mark moves into a column of its own spanning both rows, so
+          it sits beside the name and intro together.
+        */}
+        <div class="hero-grid">
+          <h1 class="hero-grid__name text-hero" data-reveal>{profile.name}</h1>
+
+          <p class="hero-grid__intro text-lede max-w-lg text-ink-soft" data-reveal>
+            {profile.intro}
+          </p>
+
+          <div class="hero-grid__mark" data-reveal>
             <StackMark />
           </div>
         </div>
 
         <div
-          class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule pt-6"
+          class="mt-8 flex flex-col gap-4 border-t border-rule pt-6 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-3"
           data-reveal
         >
           <p class="label flex items-center gap-2.5">
@@ -40,7 +52,7 @@ const links = [
             Available for remote work
           </p>
 
-          <ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <ul class="flex flex-wrap items-center gap-x-6 gap-y-3 sm:gap-x-5 sm:gap-y-2">
             {links.map((link) => (
               <li>
                 <a
@@ -62,3 +74,43 @@ const links = [
     </div>
   </div>
 </section>
+
+<style>
+  .hero-grid {
+    display: grid;
+    grid-template-areas:
+      'name name'
+      'intro mark';
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: clamp(1rem, 4vw, 2rem);
+    row-gap: 1.5rem;
+  }
+
+  .hero-grid__name {
+    grid-area: name;
+  }
+  .hero-grid__intro {
+    grid-area: intro;
+  }
+  .hero-grid__mark {
+    grid-area: mark;
+    /* Sized against the column it shares, so it never crowds the sentence. */
+    width: clamp(4.5rem, 26vw, 8rem);
+  }
+
+  @media (min-width: 40rem) {
+    .hero-grid {
+      grid-template-areas:
+        'name mark'
+        'intro mark';
+      column-gap: 3rem;
+      row-gap: 2rem;
+    }
+
+    .hero-grid__mark {
+      width: clamp(8rem, 20vw, 15rem);
+      justify-self: end;
+    }
+  }
+</style>

@@ -1,19 +1,60 @@
 ---
 import { Font } from 'astro:assets';
+import { profile } from '../data/site';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
+  /** Social card, relative to the site root. */
+  image?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, image = '/og.png' } = Astro.props;
 
-/**
- * Applies the saved or system theme before first paint. Without this the page
- * paints light, then swaps — the flash is more noticeable on a light-first
- * design than a dark one, because the swap goes from bright to dark.
+/*
+ * Absolute URLs, because Open Graph and Twitter both reject relative ones —
+ * a relative og:image is the single most common reason a link preview shows
+ * no picture. Astro.site comes from astro.config.mjs.
  */
+const site = Astro.site ?? new URL('https://wasay-one.vercel.app');
+const canonical = new URL(Astro.url.pathname, site);
+const ogImage = new URL(image, site);
+
+/*
+ * Person schema. This is what lets a search engine understand that the page is
+ * about a person with a job title, an employer and a set of skills, rather
+ * than guessing from the prose. It is also what feeds a knowledge panel.
+ */
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  alternateName: profile.shortName,
+  url: canonical.href,
+  image: ogImage.href,
+  jobTitle: profile.role,
+  email: `mailto:${profile.email}`,
+  description: profile.metaDescription,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Lahore',
+    addressRegion: 'Punjab',
+    addressCountry: 'PK',
+  },
+  worksFor: { '@type': 'Organization', name: 'Hatzs Dimensions' },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Lahore Garrison University',
+  },
+  knowsAbout: [
+    'TypeScript', 'Node.js', 'React', 'Next.js', 'PostgreSQL',
+    'AWS Lambda', 'AWS Step Functions', 'Docker', 'REST API design',
+    'Event-driven architecture', 'Data migration',
+  ],
+  sameAs: [profile.github, profile.linkedin],
+};
+
 const themeScript = `(function(){try{var s=localStorage.getItem("theme");var t=s||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}document.documentElement.classList.add("js");})();`;
 ---
 
@@ -24,6 +65,37 @@ const themeScript = `(function(){try{var s=localStorage.getItem("theme");var t=s
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="author" content={profile.name} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Matches the browser chrome to the page in each theme. -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf9f7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#131315" />
+
+    <!-- Open Graph: LinkedIn, WhatsApp, Slack, Facebook, iMessage. -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name} — ${profile.role}`} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Abdul" />
+    <meta property="profile:last_name" content="Wasay" />
+
+    <!-- Twitter / X. summary_large_image is what gives the full-width card. -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={`${profile.name} — ${profile.role}`} />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
@@ -34,6 +106,7 @@ const themeScript = `(function(){try{var s=localStorage.getItem("theme");var t=s
     <Font cssVariable="--font-mono" />
 
     <script is:inline set:html={themeScript} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
   </head>
 
   <body>

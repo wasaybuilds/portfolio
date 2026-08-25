@@ -157,12 +157,22 @@ a {
 /* The name. Large enough to be the page's anchor, which is the one job the
    hero has to do before anything is read. */
 .text-hero {
-  font-size: clamp(3.25rem, 12vw, 7.5rem);
-  line-height: 0.92;
-  /* Tracking has to tighten as the size grows — the same -0.035em that looks
-     right at 3rem looks loose at 7.5rem. */
+  /* The floor was 3.25rem, which on a 320px phone left "Abdul Wasay" pressed
+     against both gutters. Lower floor, steeper slope: the small end gets room,
+     the large end is unchanged. */
+  font-size: clamp(2.6rem, 13vw, 7.5rem);
+  /* 0.92 is right for a single line at display size, but the name wraps to two
+     lines on a phone and that leading closes the gap to nothing. */
+  line-height: 1;
   letter-spacing: -0.03em;
   font-weight: 600;
+  text-wrap: balance;
+}
+
+@media (min-width: 40rem) {
+  .text-hero {
+    line-height: 0.92;
+  }
 }
 
 .text-display  { font-size: clamp(2.25rem, 6vw, 4rem);   line-height: 1.05; letter-spacing: -0.035em; font-weight: 600; }

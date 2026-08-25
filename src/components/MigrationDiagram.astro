@@ -2,116 +2,152 @@
 /**
  * The Salesforce → DealerIQ pipeline, drawn.
  *
- * This is the strongest thing on the site and it was rendering as three
- * unlabelled boxes. The point of the architecture is the checkpoint store: a
- * failed multi-gigabyte run resumes from the last good checkpoint instead of
- * restarting. A left-to-right row of boxes cannot show that, because the whole
- * idea is the arrow that goes *backwards*.
+ * The point of the architecture is the checkpoint store: a failed
+ * multi-gigabyte run resumes from the last good checkpoint instead of
+ * restarting. A plain row of boxes cannot show that, because the whole idea is
+ * an arrow that goes backwards.
  *
- * So the checkpoint store sits below the row with a resume path looping back
- * into stage one, and Step Functions brackets the stages it orchestrates.
- * Every label is a real component or a figure from ABOUT.md — nothing here is
- * decorative.
+ * Two layouts rather than one that scrolls. The wide version needs about 32rem
+ * to keep its labels legible, so on a phone it used to sit in a horizontal
+ * scroller — which hides half the diagram behind a gesture nobody knows to
+ * make, on the single most important thing on the page. The narrow version
+ * runs the same pipeline top to bottom, which is the direction a phone has
+ * room in.
  *
- * Static: no state, no script. It scrolls horizontally on narrow screens
- * rather than shrinking its labels below legibility.
+ * Only one is ever exposed to assistive tech: the visible one carries the
+ * description, the hidden one is aria-hidden.
+ *
+ * Every label is a real component or a figure from ABOUT.md.
  */
+
+const DESC =
+  'Pipeline: Salesforce, then extract and join with checkpointing, then transform to a composite schema, then authenticated webhook load into DealerIQ. Step Functions orchestrates the three stages; an S3 checkpoint store lets a failed run resume from the last checkpoint, and a regression suite validates 850 records in 44 seconds.';
 ---
 
 <figure class="migration">
-  <div class="migration__scroll">
-    <svg viewBox="0 0 524 246" fill="none" role="img" class="migration__svg"
-      aria-label="Pipeline: Salesforce, then extract and join with checkpointing, then transform to a composite schema, then authenticated webhook load into DealerIQ. Step Functions orchestrates the three stages; a checkpoint store on S3 allows a failed run to resume from the last checkpoint.">
+  <!-- ── Wide: left to right ──────────────────────────────────────────── -->
+  <svg
+    viewBox="0 0 524 246"
+    fill="none"
+    role="img"
+    aria-label={DESC}
+    class="migration__wide"
+  >
+    <g class="orch">
+      <path d="M92 44v-10h344v10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" />
+      <rect x="196" y="20" width="136" height="19" rx="9.5" fill="var(--paper)" />
+      <text x="264" y="33" class="t t--mono">AWS Step Functions</text>
+    </g>
 
-      <!-- ── Step Functions bracket over the stages it orchestrates ── -->
-      <g class="orch">
-        <path d="M92 44v-10h344v10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" />
-        <rect x="196" y="20" width="136" height="19" rx="9.5" fill="var(--paper)" />
-        <text x="264" y="33" class="t t--mono">AWS Step Functions</text>
-      </g>
+    <rect x="4" y="82" width="66" height="52" rx="6" stroke="currentColor" stroke-width="1.5" />
+    <text x="37" y="104" class="t t--node">Salesforce</text>
+    <text x="37" y="118" class="t t--sub">source</text>
 
-      <!-- ── Source ── -->
-      <g class="node">
-        <rect x="4" y="82" width="66" height="52" rx="6" stroke="currentColor" stroke-width="1.5" />
-        <text x="37" y="104" class="t t--node">Salesforce</text>
-        <text x="37" y="118" class="t t--sub">source</text>
-      </g>
+    <rect x="92" y="70" width="112" height="76" rx="8" stroke="currentColor" stroke-width="1.6" />
+    <text x="148" y="92" class="t t--step">01</text>
+    <text x="148" y="110" class="t t--node">Extract + join</text>
+    <text x="148" y="126" class="t t--sub">checkpointed</text>
 
-      <!-- ── Stage 1 ── -->
-      <g class="node">
-        <rect x="92" y="70" width="112" height="76" rx="8" stroke="currentColor" stroke-width="1.6" />
-        <text x="148" y="92" class="t t--step">01</text>
-        <text x="148" y="110" class="t t--node">Extract + join</text>
-        <text x="148" y="126" class="t t--sub">checkpointed</text>
-      </g>
+    <rect x="224" y="70" width="112" height="76" rx="8" stroke="currentColor" stroke-width="1.6" />
+    <text x="280" y="92" class="t t--step">02</text>
+    <text x="280" y="110" class="t t--node">Transform</text>
+    <text x="280" y="126" class="t t--sub">composite schema</text>
 
-      <!-- ── Stage 2 ── -->
-      <g class="node">
-        <rect x="224" y="70" width="112" height="76" rx="8" stroke="currentColor" stroke-width="1.6" />
-        <text x="280" y="92" class="t t--step">02</text>
-        <text x="280" y="110" class="t t--node">Transform</text>
-        <text x="280" y="126" class="t t--sub">composite schema</text>
-      </g>
+    <rect x="356" y="70" width="112" height="76" rx="8" stroke="currentColor" stroke-width="1.6" />
+    <text x="412" y="92" class="t t--step">03</text>
+    <text x="412" y="110" class="t t--node">Load</text>
+    <text x="412" y="126" class="t t--sub">signed webhook</text>
 
-      <!-- ── Stage 3 ── -->
-      <g class="node">
-        <rect x="356" y="70" width="112" height="76" rx="8" stroke="currentColor" stroke-width="1.6" />
-        <text x="412" y="92" class="t t--step">03</text>
-        <text x="412" y="110" class="t t--node">Load</text>
-        <text x="412" y="126" class="t t--sub">signed webhook</text>
-      </g>
+    <rect x="490" y="82" width="30" height="52" rx="6" stroke="currentColor" stroke-width="1.5" />
+    <text x="505" y="112" class="t t--node">IQ</text>
 
-      <!-- ── Target ── -->
-      <g class="node">
-        <rect x="490" y="82" width="30" height="52" rx="6" stroke="currentColor" stroke-width="1.5" />
-        <text x="505" y="112" class="t t--node">IQ</text>
-      </g>
+    <g stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M70 108h16" /><path d="M81 103.5 86 108l-5 4.5" />
+      <path d="M204 108h14" /><path d="M213 103.5 218 108l-5 4.5" />
+      <path d="M336 108h14" /><path d="M345 103.5 350 108l-5 4.5" />
+      <path d="M468 108h16" /><path d="M479 103.5 484 108l-5 4.5" />
+    </g>
 
-      <!-- ── Forward path ── -->
-      <g stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M70 108h16" />
-        <path d="M81 103.5 86 108l-5 4.5" />
-        <path d="M204 108h14" />
-        <path d="M213 103.5 218 108l-5 4.5" />
-        <path d="M336 108h14" />
-        <path d="M345 103.5 350 108l-5 4.5" />
-        <path d="M468 108h16" />
-        <path d="M479 103.5 484 108l-5 4.5" />
-      </g>
+    <text x="148" y="60" class="t t--figure">350k+ records</text>
+    <text x="280" y="60" class="t t--figure">500+ field mappings</text>
 
-      <!-- ── Volume annotations, on the edges they describe ── -->
-      <text x="148" y="60" class="t t--figure">350k+ records</text>
-      <text x="280" y="60" class="t t--figure">500+ field mappings</text>
+    <path d="M148 146v28" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" />
+    <rect x="80" y="174" width="136" height="40" rx="6" stroke="var(--accent)" stroke-width="1.4" />
+    <text x="148" y="190" class="t t--node t--accent">S3 checkpoint store</text>
+    <text x="148" y="204" class="t t--sub">last good offset</text>
 
-      <!-- ── Checkpoint store and the resume path ── -->
-      <g class="ckpt">
-        <path d="M148 146v28" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" />
+    <path d="M80 194H44a8 8 0 0 1-8-8v-70a8 8 0 0 1 8-8h42" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 4" />
+    <path d="M81 103.5 86 108l-5 4.5" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="36" y="232" class="t t--figure t--accent" text-anchor="start">resume from last checkpoint</text>
 
-        <rect x="80" y="174" width="136" height="40" rx="6" stroke="var(--accent)" stroke-width="1.4" />
-        <text x="148" y="190" class="t t--node t--accent">S3 checkpoint store</text>
-        <text x="148" y="204" class="t t--sub">last good offset</text>
+    <path d="M412 146v28" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" />
+    <rect x="344" y="174" width="136" height="40" rx="6" stroke="currentColor" stroke-width="1.3" />
+    <text x="412" y="190" class="t t--node">Regression suite</text>
+    <text x="412" y="204" class="t t--sub">850 records · 44s</text>
+  </svg>
 
-        <!-- The backwards arrow: the reason the architecture exists. -->
-        <path
-          d="M80 194H44a8 8 0 0 1-8-8v-70a8 8 0 0 1 8-8h42"
-          stroke="var(--accent)"
-          stroke-width="1.4"
-          stroke-dasharray="4 4"
-          fill="none"
-        />
-        <path d="M81 103.5 86 108l-5 4.5" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-        <text x="36" y="232" class="t t--figure t--accent" text-anchor="start">resume from last checkpoint</text>
-      </g>
+  <!-- ── Narrow: top to bottom, same pipeline ─────────────────────────── -->
+  <svg
+    viewBox="0 0 340 470"
+    fill="none"
+    role="img"
+    aria-label={DESC}
+    class="migration__narrow"
+  >
+    <!-- Orchestration bracket down the left of the three stages. -->
+    <path d="M24 74h-10v250h10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" />
+    <text x="14" y="199" class="t t--mono" transform="rotate(-90 14 199)">AWS Step Functions</text>
 
-      <!-- ── Regression suite, attached to the load stage ── -->
-      <g class="ckpt">
-        <path d="M412 146v28" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" />
-        <rect x="344" y="174" width="136" height="40" rx="6" stroke="currentColor" stroke-width="1.3" />
-        <text x="412" y="190" class="t t--node">Regression suite</text>
-        <text x="412" y="204" class="t t--sub">850 records · 44s</text>
-      </g>
-    </svg>
-  </div>
+    <rect x="30" y="8" width="160" height="42" rx="6" stroke="currentColor" stroke-width="1.5" />
+    <text x="110" y="26" class="t t--node">Salesforce</text>
+    <text x="110" y="40" class="t t--sub">source</text>
+
+    <rect x="30" y="74" width="160" height="66" rx="8" stroke="currentColor" stroke-width="1.6" />
+    <text x="110" y="94" class="t t--step">01</text>
+    <text x="110" y="111" class="t t--node">Extract + join</text>
+    <text x="110" y="126" class="t t--sub">checkpointed</text>
+
+    <rect x="30" y="184" width="160" height="66" rx="8" stroke="currentColor" stroke-width="1.6" />
+    <text x="110" y="204" class="t t--step">02</text>
+    <text x="110" y="221" class="t t--node">Transform</text>
+    <text x="110" y="236" class="t t--sub">composite schema</text>
+
+    <rect x="30" y="294" width="160" height="66" rx="8" stroke="currentColor" stroke-width="1.6" />
+    <text x="110" y="314" class="t t--step">03</text>
+    <text x="110" y="331" class="t t--node">Load</text>
+    <text x="110" y="346" class="t t--sub">signed webhook</text>
+
+    <rect x="30" y="406" width="160" height="42" rx="6" stroke="currentColor" stroke-width="1.5" />
+    <text x="110" y="424" class="t t--node">DealerIQ</text>
+    <text x="110" y="438" class="t t--sub">target</text>
+
+    <!-- Vertical flow -->
+    <g stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M110 50v14" /><path d="M105.5 59 110 64l4.5-5" />
+      <path d="M110 140v34" /><path d="M105.5 169 110 174l4.5-5" />
+      <path d="M110 250v34" /><path d="M105.5 279 110 284l4.5-5" />
+      <path d="M110 360v36" /><path d="M105.5 391 110 396l4.5-5" />
+    </g>
+
+    <text x="110" y="163" class="t t--figure">350k+ records</text>
+    <text x="110" y="273" class="t t--figure">500+ field mappings</text>
+
+    <!-- Checkpoint store beside stage 01, resuming back into it. -->
+    <rect x="216" y="82" width="118" height="50" rx="6" stroke="var(--accent)" stroke-width="1.4" />
+    <text x="275" y="101" class="t t--node t--accent">S3 checkpoint</text>
+    <text x="275" y="115" class="t t--sub">last good offset</text>
+    <text x="275" y="127" class="t t--sub t--accent">resume point</text>
+    <g stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 4">
+      <path d="M216 107h-16" />
+    </g>
+    <path d="M204.5 102.5 200 107l4.5 4.5" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Regression suite beside stage 03. -->
+    <rect x="216" y="302" width="118" height="50" rx="6" stroke="currentColor" stroke-width="1.3" />
+    <text x="275" y="322" class="t t--node">Regression</text>
+    <text x="275" y="337" class="t t--sub">850 records · 44s</text>
+    <path d="M216 327h-16" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" />
+  </svg>
 
   <figcaption class="migration__caption">
     Three decoupled stages. A failed run resumes from the last checkpoint
@@ -124,18 +160,26 @@
     margin-top: 1.75rem;
   }
 
-  /* Wide diagrams scroll in their own container rather than shrinking labels
-     below legibility or forcing the page to scroll sideways. */
-  .migration__scroll {
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-  }
-
-  .migration__svg {
-    min-width: 32rem;
+  .migration__wide,
+  .migration__narrow {
     width: 100%;
     height: auto;
     color: var(--ink-soft);
+  }
+
+  /* Narrow by default — the layout a phone has room for. */
+  .migration__wide {
+    display: none;
+  }
+
+  /* 34rem is where the wide version's labels stop being cramped. */
+  @media (min-width: 34rem) {
+    .migration__narrow {
+      display: none;
+    }
+    .migration__wide {
+      display: block;
+    }
   }
 
   .migration__caption {
@@ -147,36 +191,14 @@
     max-width: 34rem;
   }
 
-  /* Type inside the drawing, in tokens so it inverts with the theme. */
   .t {
     font-family: var(--font-mono), ui-monospace, monospace;
     text-anchor: middle;
   }
-  .t--node {
-    font-size: 10px;
-    fill: var(--ink);
-  }
-  .t--sub {
-    font-size: 8px;
-    fill: var(--ink-faint);
-    letter-spacing: 0.04em;
-  }
-  .t--step {
-    font-size: 8px;
-    fill: var(--ink-faint);
-    letter-spacing: 0.14em;
-  }
-  .t--mono {
-    font-size: 9px;
-    fill: var(--ink-muted);
-    letter-spacing: 0.08em;
-  }
-  .t--figure {
-    font-size: 8.5px;
-    fill: var(--ink-muted);
-    letter-spacing: 0.04em;
-  }
-  .t--accent {
-    fill: var(--accent);
-  }
+  .t--node { font-size: 10px; fill: var(--ink); }
+  .t--sub { font-size: 8px; fill: var(--ink-faint); letter-spacing: 0.04em; }
+  .t--step { font-size: 8px; fill: var(--ink-faint); letter-spacing: 0.14em; }
+  .t--mono { font-size: 9px; fill: var(--ink-muted); letter-spacing: 0.08em; }
+  .t--figure { font-size: 8.5px; fill: var(--ink-muted); letter-spacing: 0.04em; }
+  .t--accent { fill: var(--accent); }
 </style>
