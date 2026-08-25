@@ -1,109 +1,262 @@
 ---
 /**
- * A cat that walks along the bottom of the page and watches the cursor.
+ * A ground scene along the bottom of the page: two shrubs, a tree, a cat house
+ * on the right, and a cat that paces between them.
  *
- * Drawn here rather than loaded from a .riv, after trying four community
- * files. Every one of them carried problems that cannot be fixed from code:
- * an opaque artboard background baked into the binary, no walk cycle on the
- * rigs that tracked the cursor, no cursor tracking on the rig that walked, and
- * 31KB–2.5MB of asset plus a 173KB runtime for a decorative detail.
+ * The cat walks to the house, stops at the door, hops, then turns and heads
+ * back — so the traversal has a destination rather than bouncing off an
+ * invisible edge. It also stops and looks at you whenever the pointer comes
+ * near, and dozes off if left alone.
  *
- * This has none of those. It is transparent by construction, draws in the
- * page's own ink colour so it inverts with the theme, weighs about 3KB, and
- * needs no dependency.
+ * Everything is a filled silhouette in `currentColor` or `var(--paper)`, so it
+ * inverts with the theme and is transparent by construction. Scenery sits at a
+ * low opacity and behind the content layer: it should register at the edge of
+ * vision while reading, never compete with the page.
  *
- * The motion is driven in JavaScript rather than CSS keyframes because the
- * legs have to stay in step with the distance actually covered each frame. A
- * fixed keyframe duration is what makes a walking sprite look like it is
- * skating.
+ * Motion is driven in JavaScript, not CSS keyframes, because the legs have to
+ * stay in step with the distance actually covered each frame — a fixed
+ * keyframe duration is what makes a walking sprite look like it is skating.
  *
- * Behaviour: paces the bottom of the viewport, turns its head toward the
- * pointer, stops and sits when you come near, and dozes off if left alone.
- * Disabled under reduced-motion. aria-hidden and click-through throughout —
- * it is decoration and must never intercept a click or reach a screen reader.
+ * Disabled under reduced-motion. aria-hidden and click-through throughout.
  */
 ---
 
 <div
-  id="companion"
+  id="scene"
   aria-hidden="true"
-  class="pointer-events-none fixed bottom-0 left-0 z-40 hidden opacity-0 transition-opacity duration-700 will-change-transform"
+  class="pointer-events-none fixed inset-x-0 bottom-0 z-30 hidden h-0 text-ink-soft"
 >
+  <!--
+    Scenery. Silhouettes with detail punched out in the page colour rather than
+    drawn as extra strokes — that keeps every element a single flat shape, so
+    it stays readable at 40px and inverts cleanly with the theme.
+  -->
+
+  <!-- Bush, left. Scalloped rather than circular: overlapping circles read as
+       overlapping circles, a scalloped outline reads as foliage. -->
   <svg
-    width="52"
-    height="40"
-    viewBox="0 0 52 40"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.5"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class="text-ink-soft"
+    class="absolute bottom-0 left-[7%] h-10 w-auto opacity-[0.2] sm:h-14"
+    viewBox="0 0 56 44"
+    fill="currentColor"
+    aria-hidden="true"
   >
-    <!-- Back legs first so the body overlaps them, which reads as depth. -->
-    <line id="leg-bl" x1="15" y1="26" x2="15" y2="33" />
-    <line id="leg-br" x1="20" y1="26" x2="20" y2="33" />
-    <line id="leg-fl" x1="31" y1="26" x2="31" y2="33" />
-    <line id="leg-fr" x1="36" y1="26" x2="36" y2="33" />
-
-    <path id="tail" d="M13 25c-6 0-7.5-4.5-5-7.5" />
-
-    <path d="M13 25h21a4.5 4.5 0 0 0 4.5-4.5V19" />
-    <path d="M13 25v-5" />
-
-    <g id="head">
-      <circle cx="39" cy="13" r="7" />
-      <path d="M34 7.5 32 2l5.5 2.6" />
-      <path d="M44 7.5 46 2l-5.5 2.6" />
-
-      <!-- Pupils are moved by script to follow the pointer. -->
-      <g id="eyes">
-        <circle id="pupil-l" cx="36.6" cy="12.2" r="1.05" fill="currentColor" stroke="none" />
-        <circle id="pupil-r" cx="41.4" cy="12.2" r="1.05" fill="currentColor" stroke="none" />
-      </g>
-      <g id="eyes-shut" style="display:none">
-        <path d="M35.4 12.4q1.2 1.1 2.4 0" />
-        <path d="M40.2 12.4q1.2 1.1 2.4 0" />
-      </g>
-
-      <path d="M38.2 15.6h1.6" />
-    </g>
-
-    <g id="zzz" style="display:none">
-      <path d="M44 5h3.2l-3.2 3.2h3.2" opacity="0.85" />
-      <path d="M48.8 1h2.2l-2.2 2.2h2.2" opacity="0.5" />
+    <path d="M6 42Q0 34 6 28Q4 19 13 17Q18 9 27 13Q37 10 41 19Q50 23 46 32Q49 40 40 42Z" />
+    <g fill="var(--paper)" opacity="0.28">
+      <path d="M18 24q3 4 0 8" />
+      <path d="M30 21q3 5 0 10" />
     </g>
   </svg>
+
+  <!-- Tree. Tapered trunk with a fork, and a scalloped canopy. -->
+  <svg
+    class="absolute bottom-0 left-[33%] h-20 w-auto opacity-[0.16] sm:h-28"
+    viewBox="0 0 66 96"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M30 94Q29.5 74 28 60L25 52h4l2 6q1-5 6-9l2 2q-6 5-6 12 1 14 1 31Z" />
+    <path d="M12 52Q2 44 9 34Q6 20 19 17Q26 5 39 11Q54 8 58 22Q68 30 60 42Q63 52 50 55Q33 62 22 55Q13 57 12 52Z" />
+    <g fill="var(--paper)" opacity="0.22">
+      <path d="M24 28q4 6 0 12" />
+      <path d="M40 24q4 7 0 14" />
+      <path d="M50 34q3 5 0 10" />
+    </g>
+  </svg>
+
+  <!-- Small shrub, mid-right. -->
+  <svg
+    class="absolute bottom-0 left-[60%] h-8 w-auto opacity-[0.18] sm:h-10"
+    viewBox="0 0 44 34"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M5 32Q0 25 5 20Q4 12 12 11Q17 4 25 8Q34 6 36 14Q43 18 39 25Q41 32 33 32Z" />
+    <path d="M16 17q3 4 0 8" fill="none" stroke="var(--paper)" stroke-width="1.4" opacity="0.28" />
+  </svg>
+
+  <!-- The destination. Its measured position is what bounds the cat's walk. -->
+  <svg
+    id="cathouse"
+    class="absolute bottom-0 right-[5%] h-[4.5rem] w-auto opacity-[0.5] sm:h-24"
+    viewBox="0 0 96 82"
+    fill="none"
+    aria-hidden="true"
+  >
+    <!-- Roof with an eave overhang either side, plus a ridge cap. -->
+    <path d="M2 36 48 4l46 32H82L48 12 14 36Z" fill="currentColor" />
+    <path d="M14 34 48 10l34 24v6H14Z" fill="currentColor" />
+    <rect x="44" y="2" width="8" height="7" rx="2" fill="currentColor" />
+
+    <!-- Shingle courses, punched out of the roof. -->
+    <g stroke="var(--paper)" stroke-width="1.2" opacity="0.3">
+      <path d="M22 30h52" />
+      <path d="M28 24h40" />
+      <path d="M34 18h28" />
+    </g>
+
+    <!-- Walls, with a plinth so it sits on the ground rather than floating. -->
+    <rect x="14" y="39" width="68" height="38" rx="3" fill="currentColor" />
+    <rect x="9" y="75" width="78" height="6" rx="2" fill="currentColor" />
+
+    <!-- Plank seams. -->
+    <g stroke="var(--paper)" stroke-width="1" opacity="0.22">
+      <path d="M22 41v34" />
+      <path d="M74 41v34" />
+    </g>
+
+    <!-- Arched doorway with a threshold step. -->
+    <path d="M33 77V57a15 15 0 0 1 30 0v20Z" fill="var(--paper)" />
+    <rect x="31" y="74" width="34" height="4" rx="2" fill="currentColor" opacity="0.55" />
+
+    <!-- Name plate over the door: a paw, four toes and a pad. -->
+    <g fill="var(--paper)" opacity="0.8">
+      <ellipse cx="48" cy="31" rx="3.1" ry="2.6" />
+      <circle cx="43.6" cy="26.6" r="1.3" />
+      <circle cx="46.6" cy="24.8" r="1.3" />
+      <circle cx="49.9" cy="24.8" r="1.3" />
+      <circle cx="52.8" cy="26.6" r="1.3" />
+    </g>
+  </svg>
+
+  <!-- Food bowl beside the house, because an empty doorstep looks unlived-in. -->
+  <svg
+    class="absolute bottom-0 right-[calc(5%+7.5rem)] h-4 w-auto opacity-[0.34] sm:right-[calc(5%+10rem)] sm:h-5"
+    viewBox="0 0 30 16"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M3 5h24l-3 9a2 2 0 0 1-2 1.5H8A2 2 0 0 1 6 14Z" />
+    <ellipse cx="15" cy="5" rx="12" ry="3.2" />
+    <ellipse cx="15" cy="5" rx="8" ry="1.9" fill="var(--paper)" opacity="0.5" />
+  </svg>
+
+  <!-- The cat. -->
+  <div id="companion" class="absolute bottom-0 left-0 will-change-transform">
+    <svg
+      width="60"
+      height="42"
+      viewBox="0 0 64 44"
+      fill="none"
+      aria-hidden="true"
+    >
+      <!-- Tapered tail as a filled curl. A stroke cannot taper, and a
+           constant-width tail is most of what made the old one read as a
+           diagram rather than an animal. -->
+      <path
+        id="tail"
+        d="M16 22C7 22 3.5 12.5 8.5 7.5C10 6 12.5 7 11.8 9.2C9 13.5 10.5 19 16.5 19Z"
+        fill="currentColor"
+      />
+
+      <g stroke="currentColor" stroke-width="5" stroke-linecap="round">
+        <line id="leg-bl" x1="20" y1="26" x2="20" y2="38" />
+        <line id="leg-br" x1="26" y1="26" x2="26" y2="38" />
+      </g>
+
+      <!-- Body: back curve into the shoulder, chest, belly, rounded haunch.
+           Drawn as one path so the silhouette has a spine. -->
+      <path
+        d="M15 21C15 14.5 24 12.5 33 13C40 13.4 45 16 47 20C48.5 23 47 28.5 43 29.5L21 29.5C15.5 29.5 15 25 15 21Z"
+        fill="currentColor"
+      />
+
+      <g stroke="currentColor" stroke-width="5" stroke-linecap="round">
+        <line id="leg-fl" x1="39" y1="26" x2="39" y2="38" />
+        <line id="leg-fr" x1="45" y1="26" x2="45" y2="38" />
+      </g>
+
+      <!-- Tabby markings, punched out at low opacity. -->
+      <g stroke="var(--paper)" stroke-width="1.6" stroke-linecap="round" opacity="0.3">
+        <path d="M23 15.5q1.6 2.6 0 5" />
+        <path d="M29 14.6q1.8 2.9 0 5.6" />
+        <path d="M35 14.8q1.8 2.9 0 5.6" />
+      </g>
+
+      <g id="head">
+        <!-- Ears before the skull so their bases are covered by it. -->
+        <path d="M45.5 7 42.8 0.5 51 4Z" fill="currentColor" />
+        <path d="M58.5 7 61.2 0.5 53 4Z" fill="currentColor" />
+        <path d="M46.6 6.2 45.3 2.9 49.4 4.8Z" fill="var(--paper)" opacity="0.45" />
+        <path d="M57.4 6.2 58.7 2.9 54.6 4.8Z" fill="var(--paper)" opacity="0.45" />
+
+        <!-- Head is slightly wider than tall, with a soft jaw. -->
+        <path
+          d="M52 3.6C57 3.6 60.6 7.1 60.6 11.6C60.6 15.2 58.6 18 55.6 19.2C54.1 19.8 49.9 19.8 48.4 19.2C45.4 18 43.4 15.2 43.4 11.6C43.4 7.1 47 3.6 52 3.6Z"
+          fill="currentColor"
+        />
+
+        <g stroke="var(--paper)" stroke-width="0.85" stroke-linecap="round" opacity="0.5">
+          <path d="M54 15.6 61.5 14.2" />
+          <path d="M54 16.8 61 18.2" />
+        </g>
+
+        <g id="eyes">
+          <ellipse cx="48.6" cy="11.4" rx="2.4" ry="2.9" fill="var(--paper)" />
+          <ellipse cx="55.4" cy="11.4" rx="2.4" ry="2.9" fill="var(--paper)" />
+          <g id="pupils">
+            <ellipse cx="48.6" cy="11.4" rx="1.05" ry="1.6" fill="currentColor" />
+            <ellipse cx="55.4" cy="11.4" rx="1.05" ry="1.6" fill="currentColor" />
+          </g>
+        </g>
+
+        <g id="eyes-shut" style="display:none" stroke="var(--paper)" stroke-width="1.3" stroke-linecap="round">
+          <path d="M46.6 11.4q2 1.9 4 0" />
+          <path d="M53.4 11.4q2 1.9 4 0" />
+        </g>
+
+        <!-- Muzzle: nose triangle over a small mouth. -->
+        <path d="M52 14.6 50.7 13.4h2.6Z" fill="var(--paper)" opacity="0.75" />
+        <path d="M52 14.6v1.1" stroke="var(--paper)" stroke-width="0.85" stroke-linecap="round" opacity="0.55" />
+      </g>
+
+      <g id="zzz" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" style="display:none">
+        <path d="M55.5 4h3.4L55.5 7.4h3.4" opacity="0.8" />
+        <path d="M60.3 0.4h2.2l-2.2 2.2h2.2" opacity="0.45" />
+      </g>
+    </svg>
+  </div>
 </div>
 
 <script>
+  const scene = document.getElementById('scene');
   const el = document.getElementById('companion');
+  const house = document.getElementById('cathouse');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (el && !reduced) {
+  if (scene && el && !reduced) {
     const legs = ['leg-bl', 'leg-br', 'leg-fl', 'leg-fr'].map((id) =>
       document.getElementById(id),
     );
     const tail = document.getElementById('tail');
     const head = document.getElementById('head');
+    const pupils = document.getElementById('pupils');
     const eyes = document.getElementById('eyes');
     const eyesShut = document.getElementById('eyes-shut');
     const zzz = document.getElementById('zzz');
 
     /* Diagonal pairs swing together, which is how a cat actually walks. */
     const PHASE = [0, Math.PI, Math.PI, 0];
-    const PIVOTS = ['15px 26px', '20px 26px', '31px 26px', '36px 26px'];
+    const PIVOTS = ['20px 26px', '26px 26px', '39px 26px', '45px 26px'];
     legs.forEach((leg, i) => {
       if (leg) leg.style.transformOrigin = PIVOTS[i];
     });
-    if (tail) tail.style.transformOrigin = '13px 25px';
-    if (head) head.style.transformOrigin = '39px 16px';
+    if (tail) tail.style.transformOrigin = '16px 21px';
+    if (head) head.style.transformOrigin = '50px 20px';
 
     const SPEED = 34;
     const SLEEP_AFTER = 6;
-    const NEAR = 110;
+    const NEAR = 120;
+    const JUMP_MS = 620;
+    const JUMP_HEIGHT = 26;
+    /* A beat at the door before and after the hop, so arrival reads as a
+       decision rather than a bounce. */
+    const PAUSE_MS = 420;
 
-    let x = -30;
+    type Mode = 'walk' | 'arrive' | 'jump' | 'leave';
+
+    let mode: Mode = 'walk';
+    let modeStart = performance.now();
+    let x = -20;
     let direction = 1;
     let phase = 0;
     let idle = 0;
@@ -116,92 +269,149 @@
       (event) => {
         pointerX = event.clientX;
         pointerY = event.clientY;
-        if (el.style.opacity !== '0.85') el.style.opacity = '0.85';
       },
       { passive: true },
     );
 
+    /** Where the cat should stop: just short of the doorway. */
+    const doorstep = (catWidth: number) => {
+      if (!house) return window.innerWidth - catWidth;
+      const box = house.getBoundingClientRect();
+      return Math.max(0, box.left + box.width * 0.28 - catWidth);
+    };
+
+    const setMode = (next: Mode, now: number) => {
+      mode = next;
+      modeStart = now;
+    };
+
     const frame = (now: number) => {
       /* Clamped so returning from a background tab cannot teleport the cat
-         across the screen in a single enormous step. */
+         across the screen in one enormous step. */
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
 
       const box = el.getBoundingClientRect();
       const cx = box.left + box.width / 2;
       const cy = box.top + box.height / 2;
-      const distance = Math.hypot(pointerX - cx, pointerY - cy);
+      const alert = Math.hypot(pointerX - cx, pointerY - cy) < NEAR;
 
-      /* Stop and pay attention when the pointer comes close. */
-      const alert = distance < NEAR;
-      const walking = !alert && !document.hidden;
+      const rightLimit = doorstep(box.width);
+      const leftLimit = -box.width * 0.25;
 
-      if (walking) {
-        idle = 0;
-        const step = SPEED * dt;
-        x += direction * step;
-        phase += (step / 4.5) * Math.PI;
+      let lift = 0;
+      let walking = false;
 
-        const limit = window.innerWidth - box.width;
-        if (x >= limit) {
-          x = limit;
-          direction = -1;
-        } else if (x <= -box.width * 0.3) {
-          x = -box.width * 0.3;
-          direction = 1;
-        }
+      if (alert && mode === 'walk') {
+        /* Stop and pay attention. */
+        idle += dt;
       } else {
+        switch (mode) {
+          case 'walk': {
+            walking = !document.hidden;
+            if (walking) {
+              idle = 0;
+              const step = SPEED * dt;
+              x += direction * step;
+              /* Cadence from distance covered, never from elapsed time. */
+              phase += (step / 4.5) * Math.PI;
+
+              if (direction === 1 && x >= rightLimit) {
+                x = rightLimit;
+                setMode('arrive', now);
+              } else if (direction === -1 && x <= leftLimit) {
+                x = leftLimit;
+                direction = 1;
+              }
+            }
+            break;
+          }
+
+          case 'arrive': {
+            if (now - modeStart > PAUSE_MS) setMode('jump', now);
+            break;
+          }
+
+          case 'jump': {
+            const t = (now - modeStart) / JUMP_MS;
+            if (t >= 1) {
+              setMode('leave', now);
+            } else {
+              /* A single arc: up and back down over the whole duration. */
+              lift = Math.sin(t * Math.PI) * JUMP_HEIGHT;
+            }
+            break;
+          }
+
+          case 'leave': {
+            if (now - modeStart > PAUSE_MS) {
+              direction = -1;
+              setMode('walk', now);
+            }
+            break;
+          }
+        }
+      }
+
+      if (!walking) {
         idle += dt;
         phase += dt * 0.7;
       }
 
-      const asleep = idle > SLEEP_AFTER && !alert;
+      const asleep = idle > SLEEP_AFTER && !alert && mode === 'walk';
+      const airborne = mode === 'jump';
 
       legs.forEach((leg, i) => {
         if (!leg) return;
-        const swing = walking ? Math.sin(phase + PHASE[i]) * 27 : 0;
-        leg.style.transform = `rotate(${swing}deg)`;
+        if (airborne) {
+          /* Tucked underneath mid-hop. */
+          leg.style.transform = `rotate(${i < 2 ? 26 : -26}deg)`;
+        } else {
+          leg.style.transform = walking
+            ? `rotate(${Math.sin(phase + PHASE[i]) * 24}deg)`
+            : 'rotate(0deg)';
+        }
       });
 
       if (tail) {
-        const sway = walking
-          ? Math.sin(phase * 0.5) * 13
-          : Math.sin(phase * 1.6) * (asleep ? 3 : 9);
+        const sway = airborne
+          ? -22
+          : walking
+            ? Math.sin(phase * 0.5) * 14
+            : Math.sin(phase * 1.6) * (asleep ? 3 : 10);
         tail.style.transform = `rotate(${sway}deg)`;
       }
 
-      /* Head turns toward the pointer. Divided by the mirror so the tilt goes
-         the right way when the cat is facing left. */
+      /* Head turn is multiplied by direction so the tilt goes the right way
+         once the whole sprite has been mirrored. */
       if (head) {
-        const dip = walking ? Math.sin(phase) * 1.5 : 0;
-        const tilt = alert
-          ? Math.max(-14, Math.min(14, ((pointerY - cy) / 90) * 14)) * direction
-          : asleep
-            ? 8 * direction
-            : 0;
-        head.style.transform = `translateY(${dip}px) rotate(${tilt}deg)`;
+        const bob = walking ? Math.sin(phase) * 1.4 : 0;
+        const tilt = airborne
+          ? -8 * direction
+          : alert
+            ? Math.max(-13, Math.min(13, ((pointerY - cy) / 90) * 13)) * direction
+            : asleep
+              ? 9 * direction
+              : 0;
+        head.style.transform = `translateY(${bob}px) rotate(${tilt}deg)`;
       }
 
-      /* Pupils track the pointer within the eye, which sells the attention
-         far more cheaply than rotating the whole head further. */
-      if (eyes) {
-        const px = Math.max(-1.3, Math.min(1.3, (pointerX - cx) / 160)) * direction;
-        const py = Math.max(-1, Math.min(1, (pointerY - cy) / 160));
-        eyes.style.transform = `translate(${px}px, ${py}px)`;
+      if (pupils) {
+        const px = Math.max(-1.2, Math.min(1.2, (pointerX - cx) / 170)) * direction;
+        const py = Math.max(-1, Math.min(1, (pointerY - cy) / 170));
+        pupils.style.transform = `translate(${px}px, ${py}px)`;
       }
 
-      const blinking = !walking && Math.sin(now / 1500) > 0.987;
-      const shut = asleep || blinking;
+      const shut = asleep || (!walking && !airborne && Math.sin(now / 1500) > 0.987);
       if (eyes) eyes.style.display = shut ? 'none' : '';
       if (eyesShut) eyesShut.style.display = shut ? '' : 'none';
       if (zzz) zzz.style.display = asleep ? '' : 'none';
 
-      el.style.transform = `translate3d(${x}px, 0, 0) scaleX(${direction})`;
+      el.style.transform = `translate3d(${x}px, ${-lift}px, 0) scaleX(${direction})`;
       requestAnimationFrame(frame);
     };
 
-    el.classList.remove('hidden');
-    el.style.opacity = '0.85';
+    scene.classList.remove('hidden');
     requestAnimationFrame(frame);
   }
 </script>
