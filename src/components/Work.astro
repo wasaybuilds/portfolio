@@ -44,8 +44,6 @@ import { work } from '../data/site';
         {/* The architecture, drawn. Only where the stages are fact. */}
         {project.stages && <Diagram stages={project.stages} />}
 
-        <p class="mt-7 max-w-xl text-sm text-ink-muted">{project.summary}</p>
-
         {/* Problem and built, one sentence each, side by side rather than
             stacked as paragraphs. */}
         {(project.problem || project.built) && (

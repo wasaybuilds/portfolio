@@ -4,24 +4,42 @@ import { clientSites } from '../data/site';
 ---
 
 <Section id="clients" label="Client Builds">
-  <ul class="divide-y divide-rule">
-    {clientSites.map((site) => (
-      <li data-reveal>
-        <a
-          href={site.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="row group flex flex-wrap items-baseline gap-x-4 gap-y-1 py-4 no-underline"
-        >
-          <span class="text-ink transition-colors group-hover:text-accent">
-            {site.name}
-          </span>
-          <span class="text-sm text-ink-muted">{site.sector}</span>
-          <span class="ml-auto font-mono text-xs text-ink-faint">
-            {site.platform}
-          </span>
-        </a>
-      </li>
-    ))}
-  </ul>
+  {/*
+    Collapsed by default. Eight CMS builds are real and verifiable, but they
+    dilute the engineering positioning if they occupy as much of the page as
+    the production systems above. A native <details> keeps them one click away
+    and costs no JavaScript.
+  */}
+  <details class="group">
+    <summary class="flex cursor-pointer list-none items-baseline gap-3 text-ink-soft transition-colors hover:text-ink">
+      <span class="text-lede">Freelance and agency sites</span>
+      <span class="font-mono text-xs text-ink-faint">
+        {clientSites.length} live · WordPress, Shopify, Webflow
+      </span>
+      <span
+        class="ml-auto font-mono text-xs text-ink-faint transition-transform group-open:rotate-90"
+        aria-hidden="true"
+      >&rsaquo;</span>
+    </summary>
+
+    <ul class="mt-6 divide-y divide-rule border-t border-rule">
+      {clientSites.map((site) => (
+        <li>
+          <a
+            href={site.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="row group/link flex flex-wrap items-baseline gap-x-4 gap-y-1 py-3 no-underline"
+          >
+            <span class="text-sm text-ink transition-colors group-hover/link:text-accent">
+              {site.name}
+            </span>
+            <span class="ml-auto font-mono text-xs text-ink-faint">
+              {site.platform}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </details>
 </Section>

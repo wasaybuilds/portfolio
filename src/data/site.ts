@@ -24,9 +24,8 @@ export const profile = {
 } as const;
 
 export const about = [
-  'Most of my work is the unglamorous middle: migrations that have to not lose rows, pipelines that resume where they failed, and interfaces that stay fast once the table has a hundred thousand records in it. Correct under load beats clever.',
-  'I design before I code, build systems that can be observed when they misbehave, and fix root causes rather than symptoms — largely because I am usually the person who has to maintain the result.',
-  "I've been shipping professionally since June 2023, and I'm finishing a CS degree alongside it — which mostly means I've written a lot of production code between lectures.",
+  'Most of my work is the unglamorous middle: migrations that have to not lose rows, pipelines that resume where they failed, and interfaces that stay fast once the table has a hundred thousand records in it.',
+  "Shipping professionally since June 2023, and finishing a CS degree alongside it — which mostly means I've written a lot of production code between lectures.",
 ];
 
 export const education = {
@@ -207,15 +206,14 @@ export const stack: { group: string; items: string[] }[] = [
   { group: 'Languages', items: ['TypeScript', 'JavaScript', 'Python', 'SQL'] },
   {
     group: 'Backend',
-    items: ['Node.js', 'REST API design', 'Event-driven architecture', 'Background job queues'],
+    items: ['Node.js', 'REST APIs', 'Event-driven architecture', 'Job queues', 'LLM & voice AI'],
   },
   { group: 'Frontend', items: ['React', 'Next.js', 'Tailwind CSS'] },
   { group: 'Data', items: ['PostgreSQL', 'Schema design & migrations'] },
   {
     group: 'Infra',
-    items: ['AWS (Lambda, S3, Step Functions)', 'Docker', 'CI/CD', 'Structured logging & alerting'],
+    items: ['AWS (Lambda, S3, Step Functions)', 'Docker', 'CI/CD', 'Logging & alerting'],
   },
-  { group: 'AI', items: ['LLM integrations', 'Voice AI (Twilio, ElevenLabs)', 'OpenAI API'] },
 ];
 
 export type ClientSite = {

@@ -29,8 +29,6 @@ import { sideProjects } from '../data/site';
 
         <p class="mt-1 text-ink-soft">{project.blurb}</p>
 
-        <p class="mt-4 max-w-2xl text-sm text-ink-muted">{project.summary}</p>
-
         {project.stages && (
           <Diagram stages={project.stages} note={project.stagesNote} />
         )}
