@@ -1,0 +1,90 @@
+---
+/**
+ * Stage diagram — a horizontal pipeline rendered as hairline boxes.
+ *
+ * Used only where the stages are stated as fact in ABOUT.md. A diagram reads
+ * as an architecture claim, so drawing one for a system whose shape I am
+ * guessing at would be exactly the kind of unverifiable assertion this site
+ * exists to avoid.
+ *
+ * Scrolls horizontally inside its own container on narrow screens rather than
+ * shrinking the labels below legibility.
+ */
+interface Props {
+  stages: string[];
+  /** Optional note rendered beneath, e.g. what the stages run on. */
+  note?: string;
+}
+
+const { stages, note } = Astro.props;
+
+const BOX_W = 132;
+const BOX_H = 44;
+const GAP = 40;
+const width = stages.length * BOX_W + (stages.length - 1) * GAP;
+---
+
+<figure class="mt-6 overflow-x-auto">
+  <svg
+    viewBox={`0 0 ${width} ${BOX_H + 2}`}
+    width={width}
+    height={BOX_H + 2}
+    fill="none"
+    role="img"
+    aria-label={`Pipeline: ${stages.join(', then ')}`}
+    class="text-rule-strong"
+    style="max-width: 100%; height: auto;"
+  >
+    {stages.map((stage, i) => {
+      const x = i * (BOX_W + GAP);
+      const midY = BOX_H / 2 + 1;
+      return (
+        <>
+          <rect
+            x={x + 0.5}
+            y="1"
+            width={BOX_W - 1}
+            height={BOX_H}
+            rx="3"
+            stroke="currentColor"
+            stroke-width="1"
+          />
+          <text
+            x={x + BOX_W / 2}
+            y={midY}
+            text-anchor="middle"
+            dominant-baseline="middle"
+            fill="var(--ink-soft)"
+            style="font-family: var(--font-mono), monospace; font-size: 11px;"
+          >
+            {stage}
+          </text>
+
+          {i < stages.length - 1 && (
+            <>
+              <line
+                x1={x + BOX_W}
+                y1={midY}
+                x2={x + BOX_W + GAP - 6}
+                y2={midY}
+                stroke="var(--accent)"
+                stroke-width="1"
+              />
+              <path
+                d={`M ${x + BOX_W + GAP - 10} ${midY - 3.5} L ${x + BOX_W + GAP - 5} ${midY} L ${x + BOX_W + GAP - 10} ${midY + 3.5}`}
+                stroke="var(--accent)"
+                stroke-width="1"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </>
+          )}
+        </>
+      );
+    })}
+  </svg>
+
+  {note && (
+    <figcaption class="mt-3 font-mono text-xs text-ink-faint">{note}</figcaption>
+  )}
+</figure>

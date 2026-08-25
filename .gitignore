@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 
 dist/
+
+# Community .riv files kept for reference; not shipped.
+.riv-library/

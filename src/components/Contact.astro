@@ -1,0 +1,38 @@
+---
+import Section from './Section.astro';
+import { profile } from '../data/site';
+
+const links = [
+  { label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
+  { label: 'LinkedIn', value: 'abdul-wasay01', href: profile.linkedin },
+  { label: 'GitHub', value: 'wasaybuilds', href: profile.github },
+  { label: 'CV', value: 'Download PDF', href: profile.resumeUrl },
+];
+---
+
+<Section id="contact" label="Contact" title="Let’s talk.">
+  <p class="max-w-xl text-ink-soft" data-reveal>
+    Looking for remote full stack work, employed or contract. I've worked with
+    international teams since 2023 — no relocation or sponsorship needed.
+  </p>
+
+  <dl class="mt-8 divide-y divide-rule" data-reveal>
+    {links.map((link) => (
+      <div class="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:gap-8">
+        <dt class="label label--rail">{link.label}</dt>
+        <dd>
+          <a
+            href={link.href}
+            class="link text-sm"
+            {...link.href.startsWith('http')
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {}}
+            {...link.label === 'CV' ? { download: true } : {}}
+          >
+            {link.value}
+          </a>
+        </dd>
+      </div>
+    ))}
+  </dl>
+</Section>

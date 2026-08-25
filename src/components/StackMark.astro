@@ -1,0 +1,62 @@
+---
+/**
+ * Hero mark — four isometric planes.
+ *
+ * A visual restatement of the one claim the hero makes: work across the whole
+ * stack, interface down to infrastructure. It is a diagram rather than an
+ * ornament, which is why it earns space on a page this restrained.
+ *
+ * Drawn as hairlines in the page's own rule colour, with a single accented
+ * plane, so it obeys the same "one accent per three elements" rule as
+ * everything else and inverts correctly in dark mode.
+ *
+ * Purely presentational: aria-hidden, and it carries no text a reader needs.
+ */
+
+/* Isometric rhombus: half-width 90, half-height 28, on a 62px vertical pitch.
+   The pitch exceeds the full height, so no two planes intersect and the
+   hairlines stay clean. */
+const HALF_W = 90;
+const HALF_H = 28;
+const CENTRES = [40, 102, 164, 226];
+const ACCENT_INDEX = 2;
+
+const plane = (cy: number) =>
+  `M 100 ${cy - HALF_H} L ${100 + HALF_W} ${cy} L 100 ${cy + HALF_H} L ${100 - HALF_W} ${cy} Z`;
+---
+
+<svg
+  viewBox="0 0 200 266"
+  fill="none"
+  aria-hidden="true"
+  class="h-auto w-full max-w-[15rem] text-rule-strong"
+>
+  <!-- Vertical guides through the outer vertices, implying depth between
+       the planes without drawing hidden edges. -->
+  <g stroke="currentColor" stroke-width="1" opacity="0.45">
+    <line x1={100 - HALF_W} y1={CENTRES[0]} x2={100 - HALF_W} y2={CENTRES[3]} />
+    <line x1={100 + HALF_W} y1={CENTRES[0]} x2={100 + HALF_W} y2={CENTRES[3]} />
+  </g>
+
+  {CENTRES.map((cy, i) => (
+    <path
+      d={plane(cy)}
+      stroke={i === ACCENT_INDEX ? 'var(--accent)' : 'currentColor'}
+      stroke-width={i === ACCENT_INDEX ? 1.5 : 1}
+      stroke-linejoin="round"
+    />
+  ))}
+
+  <!-- Centre spine: the through-line that makes it read as one system rather
+       than four separate shapes. -->
+  <line
+    x1="100"
+    y1={CENTRES[0] - HALF_H}
+    x2="100"
+    y2={CENTRES[3] + HALF_H}
+    stroke="currentColor"
+    stroke-width="1"
+    stroke-dasharray="2 5"
+    opacity="0.5"
+  />
+</svg>

@@ -1,0 +1,34 @@
+---
+/**
+ * A beat between acts.
+ *
+ * The page was seven consecutive sections of identical shape — sticky label,
+ * divided list — which reads as a specification, not a story. An interlude
+ * breaks the pattern deliberately: no label column, no list, one line at
+ * display size with a lot of air around it.
+ *
+ * Two rules keep this from becoming the swagger the old site was full of:
+ * the line has to be a position I can defend rather than a boast, and there
+ * are at most two of these on the page. A third would make it a mannerism.
+ */
+interface Props {
+  /** The statement. Kept short enough to read in one pass at display size. */
+  line: string;
+  /** Optional supporting clause, set small and muted beneath. */
+  footnote?: string;
+}
+
+const { line, footnote } = Astro.props;
+---
+
+<section class="beat-pad border-t border-rule">
+  <div class="shell">
+    <p class="text-display max-w-3xl text-ink" data-reveal>{line}</p>
+
+    {footnote && (
+      <p class="mt-8 max-w-md text-sm text-ink-muted" data-reveal>
+        {footnote}
+      </p>
+    )}
+  </div>
+</section>

@@ -1,0 +1,45 @@
+---
+import Section from './Section.astro';
+import { jobs } from '../data/site';
+---
+
+<Section id="experience" label="Experience">
+  <ol class="relative border-l border-rule pl-6 sm:pl-8">
+    {jobs.map((job) => (
+      <li class="relative grid gap-1 pb-8 last:pb-0 sm:grid-cols-[11rem_1fr] sm:gap-8" data-reveal>
+        <span
+          class={`absolute -left-[calc(1.5rem+3.5px)] top-2 h-[7px] w-[7px] rounded-full sm:-left-[calc(2rem+3.5px)] ${
+            job.current ? 'bg-signal' : 'bg-rule-strong'
+          }`}
+        ></span>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="tabular font-mono text-sm text-ink-muted">{job.period}</span>
+          {job.current && (
+            <span class="flex items-center gap-1.5 font-mono text-xs text-signal">
+              <span class="dot-live inline-block h-1.5 w-1.5 rounded-full bg-signal"></span>
+              Current
+            </span>
+          )}
+        </div>
+
+        <div>
+          <p class="text-ink">{job.role}</p>
+          <p class="mt-1 text-sm">
+            {job.companyUrl ? (
+              <a
+                href={job.companyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link"
+              >
+                {job.company}
+              </a>
+            ) : (
+              <span class="text-ink-muted">{job.company}</span>
+            )}
+          </p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</Section>

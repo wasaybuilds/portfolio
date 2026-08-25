@@ -1,0 +1,27 @@
+---
+import Section from './Section.astro';
+import { clientSites } from '../data/site';
+---
+
+<Section id="clients" label="Client Builds">
+  <ul class="divide-y divide-rule">
+    {clientSites.map((site) => (
+      <li data-reveal>
+        <a
+          href={site.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="row group flex flex-wrap items-baseline gap-x-4 gap-y-1 py-4 no-underline"
+        >
+          <span class="text-ink transition-colors group-hover:text-accent">
+            {site.name}
+          </span>
+          <span class="text-sm text-ink-muted">{site.sector}</span>
+          <span class="ml-auto font-mono text-xs text-ink-faint">
+            {site.platform}
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Section>

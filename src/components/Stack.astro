@@ -1,0 +1,18 @@
+---
+import Section from './Section.astro';
+import { stack } from '../data/site';
+---
+
+<Section id="stack" label="Stack">
+  <dl class="divide-y divide-rule">
+    {stack.map((group) => (
+      <div class="grid gap-2 py-5 sm:grid-cols-[9rem_1fr] sm:gap-8" data-reveal>
+        <dt class="label label--rail">{group.group}</dt>
+        <dd class="font-mono text-sm text-ink-soft">
+          {group.items.join(' · ')}
+        </dd>
+      </div>
+    ))}
+  </dl>
+
+</Section>

@@ -4,17 +4,22 @@ import { defineConfig, fontProviders } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 /**
- * Fonts are declared through Astro's built-in Fonts API, which downloads and
- * self-hosts them at build time. No request ever leaves for fonts.googleapis.com,
- * so there is no third-party round trip on first paint and no layout shift while
- * a CDN stylesheet resolves.
+ * Fonts come from Fontshare rather than Google Fonts.
  *
- * Three families, each with one job:
- *   Newsreader    — display serif for headings. Editorial, well-drawn, and
- *                   unremarkable in the way a good serif should be.
- *   Inter         — UI and body. The most legible neutral sans at small sizes.
- *   JetBrains Mono — metadata, labels, code. Signals "engineer" without the
- *                   whole page having to shout it.
+ * That is the whole point: Google's catalogue is what every generated site
+ * reaches for, so Inter, Geist and Plus Jakarta now read as "default modern"
+ * however well drawn they are. Fontshare's families are free for commercial
+ * use, professionally drawn by the Indian Type Foundry, and are what the
+ * portfolios that look designed are actually set in.
+ *
+ *   Clash Display — hero and section headings. Tight, high-impact, with real
+ *                   character in the letterforms at large sizes.
+ *   Satoshi       — body and UI. A modern neutral grotesque that stays
+ *                   invisible at reading size, which is its job.
+ *   JetBrains Mono — labels, metadata, diagrams.
+ *
+ * Astro still downloads and self-hosts all of it at build time, so nothing is
+ * requested from a third-party CDN at runtime.
  *
  * https://astro.build/config
  */
@@ -24,19 +29,16 @@ export default defineConfig({
   },
   fonts: [
     {
-      provider: fontProviders.google(),
-      name: 'Newsreader',
+      provider: fontProviders.fontshare(),
+      name: 'Clash Display',
       cssVariable: '--font-display',
-      weights: [400, 500],
-      styles: ['normal', 'italic'],
-      subsets: ['latin'],
+      weights: [500, 600],
     },
     {
-      provider: fontProviders.google(),
-      name: 'Inter',
+      provider: fontProviders.fontshare(),
+      name: 'Satoshi',
       cssVariable: '--font-sans',
-      weights: [400, 500, 600],
-      subsets: ['latin'],
+      weights: [400, 500, 700],
     },
     {
       provider: fontProviders.google(),

@@ -14,7 +14,7 @@ const { title, description } = Astro.props;
  * paints light, then swaps — the flash is more noticeable on a light-first
  * design than a dark one, because the swap goes from bright to dark.
  */
-const themeScript = `(function(){try{var s=localStorage.getItem("theme");var t=s||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();`;
+const themeScript = `(function(){try{var s=localStorage.getItem("theme");var t=s||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}document.documentElement.classList.add("js");})();`;
 ---
 
 <!doctype html>
@@ -34,6 +34,51 @@ const themeScript = `(function(){try{var s=localStorage.getItem("theme");var t=s
   </head>
 
   <body>
+    <div class="page-grid" aria-hidden="true">
+      <div>
+        <span></span><span></span><span></span><span></span>
+        <span class="hidden sm:block"></span>
+        <span class="hidden sm:block"></span>
+        <span class="hidden sm:block"></span>
+        <span class="hidden sm:block"></span>
+      </div>
+    </div>
+
     <slot />
+
+    <script>
+      /* Reveal on entry, once. Elements are visible by default; the `.js`
+         class on <html> is what opts them into the hidden start state, so a
+         failure here can never leave the page blank. */
+      const targets = document.querySelectorAll('[data-reveal]');
+
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px' },
+        );
+        targets.forEach((target) => observer.observe(target));
+      } else {
+        targets.forEach((target) => target.classList.add('is-visible'));
+      }
+
+      /* Theme toggle */
+      document.getElementById('theme-toggle')?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try {
+          localStorage.setItem('theme', next);
+        } catch {
+          /* Private mode — the toggle still works for this page view. */
+        }
+      });
+    </script>
   </body>
 </html>

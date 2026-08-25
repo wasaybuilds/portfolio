@@ -1,0 +1,44 @@
+---
+import Section from './Section.astro';
+import Diagram from './Diagram.astro';
+import { sideProjects } from '../data/site';
+---
+
+<Section id="projects" label="Side Projects" title="Built for myself.">
+  <ul class="divide-y divide-rule">
+    {sideProjects.map((project) => (
+      <li class="row py-8 first:pt-0 last:pb-0" data-reveal>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          <h2 class="font-mono text-base text-ink">
+            {project.name}
+            {project.status && (
+              <span class="ml-3 font-sans text-xs font-normal text-ink-faint">
+                {project.status}
+              </span>
+            )}
+          </h2>
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link font-mono text-sm"
+          >
+            {project.urlLabel} ↗
+          </a>
+        </div>
+
+        <p class="mt-1 text-ink-soft">{project.blurb}</p>
+
+        <p class="mt-4 max-w-2xl text-sm text-ink-muted">{project.summary}</p>
+
+        {project.stages && (
+          <Diagram stages={project.stages} note={project.stagesNote} />
+        )}
+
+        <p class="mt-5 font-mono text-xs text-ink-faint">
+          {project.stack.join(' · ')}
+        </p>
+      </li>
+    ))}
+  </ul>
+</Section>
