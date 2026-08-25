@@ -215,10 +215,14 @@ languages and stars drive the complications. The work was keeping the scene at
 Next.js · React Three Fiber · Three.js · Zustand · GitHub API.
 https://horology-api.vercel.app
 
-### appointly
+### CareerPulse
 
-**[NEEDS INPUT: repo URL · one sentence on what it does and what was interesting
-to build · finished or work in progress]**
+Job application tracker: applications, job descriptions, resumes and interview
+stages in one place. React · TypeScript · MongoDB. Work in progress.
+https://career-pulse-three.vercel.app
+
+_Dropped: appointly. The repo exists but was never written up, and three side
+projects with nothing to say about them is worse than two with something._
 
 ---
 

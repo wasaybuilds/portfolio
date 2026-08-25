@@ -1,8 +1,19 @@
 ---
+import { Image } from 'astro:assets';
 import Section from './Section.astro';
 import Diagram from './Diagram.astro';
 import MigrationDiagram from './MigrationDiagram.astro';
 import { work } from '../data/site';
+import dealeriq from '../assets/dealeriq.png';
+import befer from '../assets/befer.png';
+
+/*
+ * Astro can only optimise an image it can see at build time, so each one needs
+ * a static import; the data file holds a key and this map resolves it. The
+ * sources are ~8000px wide, far past anything a browser needs, so `widths`
+ * caps what is actually emitted and `sizes` tells the browser which to pick.
+ */
+const shots = { dealeriq, befer } as const;
 ---
 
 <Section id="work" label="Work" title="Systems running in production.">
@@ -24,6 +35,22 @@ import { work } from '../data/site';
         </div>
 
         <p class="text-lede mt-3 max-w-lg text-ink-soft">{project.blurb}</p>
+
+        {project.image && (
+          <div class="mt-7 overflow-hidden rounded-xl border border-rule bg-paper-sunk">
+            <Image
+              src={shots[project.image]}
+              alt={`${project.name} interface`}
+              widths={[520, 800, 1200, 1600]}
+              sizes="(min-width: 64rem) 44rem, 100vw"
+              format="webp"
+              quality={72}
+              loading="lazy"
+              decoding="async"
+              class="aspect-[16/10] w-full object-cover object-top"
+            />
+          </div>
+        )}
 
         {/*
           The figures come before any prose. They are the part a reader

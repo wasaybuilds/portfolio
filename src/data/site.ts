@@ -105,6 +105,9 @@ export type Project = {
   stages?: string[];
   /** Opt into a bespoke diagram component instead of the generic one. */
   diagram?: 'migration';
+  /** Key into the image map in Work.astro. Astro needs a static import per
+      image to optimise it, so the file itself cannot live in this data. */
+  image?: 'dealeriq' | 'befer';
   url?: string;
   urlLabel?: string;
 };
@@ -130,6 +133,7 @@ export const work: Project[] = [
   },
   {
     name: 'DealerIQ',
+    image: 'dealeriq',
     blurb: 'Dealership platform automating the full customer lifecycle',
     summary:
       'A dealership platform covering acquisition, sales, finance and after-sales service in one system. I led the Sales, Acquisition and Service modules.',
@@ -149,6 +153,7 @@ export const work: Project[] = [
   },
   {
     name: 'Befer',
+    image: 'befer',
     blurb: 'AI-assisted CRM for field service businesses',
     summary:
       'A CRM for HVAC, plumbing, electrical and cleaning firms: scheduling, dispatch, quoting, invoicing and customer communication.',
