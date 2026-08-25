@@ -23,15 +23,23 @@ import { about, education, principles, profile } from '../data/site';
     nothing is just a slow page.
   */}
   <div id="approach-steps" class="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-    <!-- The graphic. Pinned on wide screens, inline above the text on narrow. -->
-    <div class="lg:sticky lg:top-28 lg:h-[62vh] lg:self-start">
-      <div class="flex h-full items-center rounded-xl border border-rule p-6">
+    <!--
+      The graphic pins on every size. On a phone it sits under the header and
+      the steps scroll beneath it, which is the standard mobile scrollytelling
+      arrangement; the alternative — showing it once at the top and then
+      scrolling past it — is what made the section static on mobile.
+
+      It needs an opaque background at every size, because on narrow screens
+      the text now scrolls underneath rather than beside it.
+    -->
+    <div class="sticky top-14 z-10 bg-paper py-3 lg:top-28 lg:h-[62vh] lg:self-start lg:py-0">
+      <div class="flex h-[34svh] items-center rounded-xl border border-rule p-4 sm:h-[38svh] lg:h-full lg:p-6">
         <SystemStory />
       </div>
     </div>
 
     <!-- The steps. Ordinary flow, generously spaced so each gets its moment. -->
-    <ol class="space-y-[clamp(3rem,10vw,5rem)] lg:space-y-[38vh] lg:pb-[18vh] lg:pt-[12vh]">
+    <ol class="space-y-[clamp(4rem,22vw,7rem)] pb-[8svh] lg:space-y-[38vh] lg:pb-[18vh] lg:pt-[12vh]">
       {principles.map((principle, i) => (
         <li class="step" data-step={i}>
           <div class="flex items-center gap-4">
@@ -81,13 +89,12 @@ import { about, education, principles, profile } from '../data/site';
     transition: opacity 0.5s ease;
   }
 
-  @media (min-width: 64rem) {
-    :global(.js) .step {
-      opacity: 0.32;
-    }
-    :global(.js) .step.is-current {
-      opacity: 1;
-    }
+  :global(.js) .step {
+    opacity: 0.32;
+  }
+
+  :global(.js) .step.is-current {
+    opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -108,13 +115,19 @@ import { about, education, principles, profile } from '../data/site';
        Reading position, not entry order — scrolling back up works too. */
     const observer = new IntersectionObserver(
       () => {
-        const middle = window.innerHeight / 2;
+        /* The reading line sits at the middle of the viewport on desktop,
+           where the graphic is beside the text. On a phone the graphic is
+           pinned across the top, so the line drops into the space actually
+           left for reading — otherwise the step that counts as current is one
+           hidden behind the graphic. */
+        const narrow = !window.matchMedia('(min-width: 64rem)').matches;
+        const focus = window.innerHeight * (narrow ? 0.72 : 0.5);
         let best = 0;
         let bestDistance = Infinity;
 
         steps.forEach((step, i) => {
           const box = step.getBoundingClientRect();
-          const distance = Math.abs(box.top + box.height / 2 - middle);
+          const distance = Math.abs(box.top + box.height / 2 - focus);
           if (distance < bestDistance) {
             bestDistance = distance;
             best = i;
@@ -124,7 +137,9 @@ import { about, education, principles, profile } from '../data/site';
         story.dataset.state = String(best);
         steps.forEach((step, i) => step.classList.toggle('is-current', i === best));
       },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+      /* A band rather than a line, so a step entering or leaving re-runs the
+         calculation on both narrow and wide layouts. */
+      { rootMargin: '-20% 0px -20% 0px', threshold: 0 },
     );
 
     steps.forEach((step) => observer.observe(step));
