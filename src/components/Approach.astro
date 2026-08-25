@@ -1,0 +1,41 @@
+---
+import Section from './Section.astro';
+import { principles } from '../data/site';
+---
+
+<Section id="approach" label="Approach" title="How I work.">
+  {/*
+    A stack of pinned cards. Each one sticks under the last with a small
+    offset, so scrolling deals them out one at a time and the earlier cards
+    stay visible as a spine down the left edge — the section holds you for
+    four beats instead of scrolling past as one block of text.
+
+    Pinning is `lg:` only. On a phone the cards simply flow, because a sticky
+    stack in a 400px-tall viewport traps the reader instead of guiding them.
+  */}
+  <div class="lg:pb-[30vh]">
+    {principles.map((principle, i) => (
+      <article
+        class="lg:sticky"
+        style={`top: calc(7rem + ${i * 2.75}rem)`}
+        data-reveal
+      >
+        <div class="mb-5 rounded-xl border border-rule bg-paper p-6 sm:p-8">
+          <div class="flex items-baseline gap-4">
+            <span class="font-mono text-xs text-ink-faint">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="text-title">{principle.title}</h3>
+          </div>
+
+          <p class="mt-4 max-w-xl text-ink-soft">{principle.body}</p>
+
+          <p class="mt-5 flex gap-3 border-t border-rule pt-4 text-sm text-ink-muted">
+            <span class="text-accent" aria-hidden="true">→</span>
+            {principle.proof}
+          </p>
+        </div>
+      </article>
+    ))}
+  </div>
+</Section>

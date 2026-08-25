@@ -166,6 +166,36 @@ export const work: Project[] = [
   },
 ];
 
+export type Contribution = {
+  repo: string;
+  repoUrl: string;
+  stars: string;
+  title: string;
+  detail: string;
+  prUrl: string;
+  merged: string;
+};
+
+/**
+ * Merged pull requests to repositories Abdul does not own.
+ *
+ * One entry, and it stays one entry until there is a second. The value of this
+ * section is that every line survives a click; padding it with anything less
+ * than a merged external PR would destroy that in the only way that matters.
+ */
+export const contributions: Contribution[] = [
+  {
+    repo: 'TanStack/query',
+    repoUrl: 'https://github.com/TanStack/query',
+    stars: '50k',
+    title: 'Fixed prototype-property false positives in no-unstable-deps',
+    detail:
+      'The eslint-plugin-query rule flagged inherited Object.prototype members as unstable dependencies, so valid code failed lint. +57/-3 across three files.',
+    prUrl: 'https://github.com/TanStack/query/pull/11188',
+    merged: 'Merged Aug 2026',
+  },
+];
+
 export type SideProject = {
   name: string;
   blurb: string;
@@ -192,6 +222,14 @@ export const sideProjects: SideProject[] = [
     status: 'Work in progress',
   },
   {
+    name: 'CareerPulse',
+    blurb: 'Job application tracker, minus the spreadsheet',
+    stack: ['React', 'TypeScript', 'MongoDB'],
+    url: 'https://career-pulse-three.vercel.app',
+    urlLabel: 'View live demo',
+    status: 'Work in progress',
+  },
+  {
     name: 'horology-api',
     blurb: 'Any GitHub profile as an interactive 3D mechanical watch',
     summary:
@@ -199,6 +237,41 @@ export const sideProjects: SideProject[] = [
     stack: ['Next.js', 'React Three Fiber', 'Three.js', 'Zustand', 'GitHub API'],
     url: 'https://horology-api.vercel.app',
     urlLabel: 'View live demo',
+  },
+];
+
+export type Principle = {
+  title: string;
+  body: string;
+  /** The thing that turns the principle into a claim someone can check. */
+  proof: string;
+};
+
+/**
+ * Four principles, each paired with something that actually happened.
+ * A principle on its own is a slogan; the proof line is what makes it
+ * an argument.
+ */
+export const principles: Principle[] = [
+  {
+    title: 'Design before coding',
+    body: 'Write the design document, review the architecture, then open the editor. Large features rarely need rewriting when the disagreement happens on paper first.',
+    proof: 'Made technical design docs and architecture reviews standard practice at Hatzs.',
+  },
+  {
+    title: 'Build systems you can watch',
+    body: 'A background job that fails silently is worse than one that crashes. Structured logs, dashboards and alerts come with the feature, not after the first incident.',
+    proof: 'Alerting that caught webhook delivery failures and stalled jobs before customers noticed.',
+  },
+  {
+    title: 'Fix causes, not symptoms',
+    body: 'A retry around a flaky call buys a week. Finding out why it is flaky buys the rest of the year.',
+    proof: 'Deploys went 38min to 11min by fixing Docker layer caching, not by adding machines.',
+  },
+  {
+    title: 'Write for the next engineer',
+    body: 'Most code is read far more often than it is written, usually by someone with less context than the author had. That person is often me, six months later.',
+    proof: 'PR standards still in use across the team; three engineers mentored to their first production deploy.',
   },
 ];
 
@@ -237,6 +310,7 @@ export const clientSites: ClientSite[] = [
 export const sections = [
   { id: 'work', label: 'Work' },
   { id: 'projects', label: 'Projects' },
+  { id: 'approach', label: 'Approach' },
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'contact', label: 'Contact' },
