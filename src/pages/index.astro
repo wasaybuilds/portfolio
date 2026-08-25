@@ -1,0 +1,139 @@
+---
+import Base from '../layouts/Base.astro';
+
+/**
+ * Design system specimen.
+ *
+ * This is scaffolding, not the portfolio. It exists so the palette and type
+ * scale can be judged on a real screen — in both themes — before any content
+ * is written on top of them. Replace it when the real pages land.
+ */
+
+const palette = [
+  { name: 'paper',        token: '--paper',        note: 'page ground' },
+  { name: 'paper-raised', token: '--paper-raised', note: 'cards, wells' },
+  { name: 'paper-sunk',   token: '--paper-sunk',   note: 'recessed areas' },
+  { name: 'ink',          token: '--ink',          note: 'headings, primary text' },
+  { name: 'ink-soft',     token: '--ink-soft',     note: 'body copy' },
+  { name: 'ink-muted',    token: '--ink-muted',    note: 'secondary, labels' },
+  { name: 'ink-faint',    token: '--ink-faint',    note: 'disabled, meta' },
+  { name: 'rule',         token: '--rule',         note: 'hairlines' },
+  { name: 'accent',       token: '--accent',       note: 'links, ~3 per screen' },
+  { name: 'signal',       token: '--signal',       note: 'availability only' },
+];
+---
+
+<Base
+  title="Design system — Abdul Wasay"
+  description="Palette and type specimen for the portfolio rebuild."
+>
+  <main class="mx-auto max-w-3xl px-6 py-20 sm:px-8 sm:py-28">
+    <header class="border-b border-rule pb-10">
+      <p class="label">Specimen · not the site</p>
+      <h1 class="text-display mt-5">Ink on paper.</h1>
+      <p class="text-lede mt-6 max-w-xl text-ink-soft">
+        A warm neutral ground, near-black ink, and one desaturated cool accent.
+        The accent earns its place on about three elements per screen — this
+        sentence's <a href="#palette" class="text-accent underline decoration-rule hover:decoration-accent">link</a> is one of them.
+      </p>
+
+      <p class="mt-6 flex items-center gap-2.5 text-sm text-ink-muted">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-signal"></span>
+        Availability indicator — the only other hue in the system
+      </p>
+    </header>
+
+    <!-- Type scale -->
+    <section class="border-b border-rule py-14">
+      <p class="label">Typography</p>
+
+      <div class="mt-8 space-y-9">
+        <div>
+          <h2 class="text-title">Newsreader sets the headings</h2>
+          <p class="label mt-3 normal-case tracking-normal text-ink-faint">
+            display serif · 400/500 · normal + italic
+          </p>
+        </div>
+
+        <div>
+          <p class="text-ink-soft">
+            Inter carries the body. It is the most legible neutral sans at the
+            sizes that matter here, and it does not compete with the serif above
+            it. Tracking is pulled in slightly at body size, which is most of
+            what separates type that was set from type that was designed.
+          </p>
+          <p class="label mt-3 normal-case tracking-normal text-ink-faint">
+            ui sans · 400/500/600
+          </p>
+        </div>
+
+        <div>
+          <p class="font-mono text-sm text-ink-soft">
+            JetBrains Mono handles labels and metadata.
+          </p>
+          <p class="label mt-3">Uppercase mono label · 0.14em tracking</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Palette -->
+    <section id="palette" class="border-b border-rule py-14">
+      <p class="label">Palette</p>
+
+      <ul class="mt-8 divide-y divide-rule border-y border-rule">
+        {palette.map((swatch) => (
+          <li class="flex items-center gap-4 py-3">
+            <span
+              class="h-9 w-9 shrink-0 rounded border border-rule-strong"
+              style={`background: var(${swatch.token})`}
+            ></span>
+            <span class="font-mono text-sm text-ink">{swatch.name}</span>
+            <span class="ml-auto text-sm text-ink-muted">{swatch.note}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Surfaces -->
+    <section class="py-14">
+      <p class="label">Surfaces</p>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-lg border border-rule bg-paper-raised p-6">
+          <h3 class="text-lg">Raised</h3>
+          <p class="mt-2 text-sm text-ink-muted">
+            Cards sit on paper-raised with a hairline. No shadow, no gradient.
+          </p>
+        </div>
+        <div class="rounded-lg bg-paper-sunk p-6">
+          <h3 class="text-lg">Sunk</h3>
+          <p class="mt-2 text-sm text-ink-muted">
+            Recessed wells use paper-sunk and drop the border entirely.
+          </p>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        id="theme-toggle"
+        class="mt-10 rounded-full border border-rule px-4 py-2 font-mono text-xs text-ink-muted transition-colors hover:border-rule-strong hover:text-ink"
+      >
+        Toggle theme
+      </button>
+    </section>
+  </main>
+
+  <script>
+    const button = document.getElementById('theme-toggle');
+    button?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        /* Private mode — the toggle still works for this page view. */
+      }
+    });
+  </script>
+</Base>
