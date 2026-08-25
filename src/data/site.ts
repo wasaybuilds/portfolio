@@ -18,7 +18,14 @@ export const profile = {
   email: 'wasaya670@gmail.com',
   github: 'https://github.com/wasaybuilds',
   linkedin: 'https://www.linkedin.com/in/abdul-wasay01/',
-  resumeUrl: '/Abdul_Wasay_Full_Stack_Engineer.pdf',
+  /*
+   * Hosted off-repo so the CV is not permanently archived in git history,
+   * and so it can be replaced or revoked without a deploy. dl=0 makes
+   * Dropbox serve it as application/pdf, which opens in the browser's
+   * viewer rather than forcing a download.
+   */
+  resumeUrl:
+    'https://www.dropbox.com/scl/fi/7y12yjooat3n7rw1j4706/Abdul-Wasay-CV-1.pdf?rlkey=tefzh9fproyhf4at6x7zw79gd&st=89tvcrq1&dl=0',
   metaDescription:
     'Abdul Wasay — Full Stack Engineer in Lahore, Pakistan. I build SaaS and CRM platforms end to end with TypeScript, Node.js, React, PostgreSQL and AWS. Open to remote roles and contract work worldwide.',
 } as const;

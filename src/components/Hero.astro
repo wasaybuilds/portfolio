@@ -61,7 +61,6 @@ const links = [
                   {...link.href.startsWith('http')
                     ? { target: '_blank', rel: 'noopener noreferrer' }
                     : {}}
-                  {...link.label === 'CV' ? { download: true } : {}}
                 >
                   <Icon name={link.icon} />
                   {link.label}

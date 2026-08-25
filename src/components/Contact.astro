@@ -6,7 +6,7 @@ const links = [
   { label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
   { label: 'LinkedIn', value: 'abdul-wasay01', href: profile.linkedin },
   { label: 'GitHub', value: 'wasaybuilds', href: profile.github },
-  { label: 'CV', value: 'Download PDF', href: profile.resumeUrl },
+  { label: 'CV', value: 'View PDF', href: profile.resumeUrl },
 ];
 ---
 
@@ -27,7 +27,6 @@ const links = [
             {...link.href.startsWith('http')
               ? { target: '_blank', rel: 'noopener noreferrer' }
               : {}}
-            {...link.label === 'CV' ? { download: true } : {}}
           >
             {link.value}
           </a>
