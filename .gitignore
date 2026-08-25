@@ -27,3 +27,8 @@ dist/
 
 # Community .riv files kept for reference; not shipped.
 .riv-library/
+
+# Content strategy notes. Kept locally, never published: the file records which
+# claims were removed and why, which is precisely what should not be readable
+# by anyone evaluating the site.
+ABOUT.md

@@ -1,10 +1,8 @@
 /**
- * Site content.
+ * Every piece of content on the site, in one place.
  *
- * Mirrors ABOUT.md, which is the source of truth. Every figure here is either
- * a system property Abdul can walk through in an interview (record counts,
- * field mappings, timings) or a fact that appears verbatim on his LinkedIn.
- * Nothing is a client-reported business outcome.
+ * Components read from here and never hardcode copy, so the page can be
+ * updated without touching markup.
  */
 
 export const profile = {
@@ -43,15 +41,13 @@ export type Job = {
   period: string;
   location?: string;
   current?: boolean;
-  /** One factual line. Nothing here that cannot be walked through. */
+  /** One line on what the role involved. */
   note?: string;
 };
 
 /**
- * One employer. DealerIQ and Befer are products built inside Hatzs Dimensions,
- * so they belong in Work rather than as their own employment rows — listing
- * them separately produced three concurrent full-time positions on the
- * timeline, which reads as padding to anyone cross-checking LinkedIn.
+ * DealerIQ and Befer are products built inside Hatzs Dimensions, so they are
+ * listed under Work rather than as separate employment rows.
  */
 export const experienceNote =
   'DealerIQ and Befer are products built at Hatzs Dimensions, not separate employers.';
@@ -180,13 +176,7 @@ export type Contribution = {
   merged: string;
 };
 
-/**
- * Merged pull requests to repositories Abdul does not own.
- *
- * One entry, and it stays one entry until there is a second. The value of this
- * section is that every line survives a click; padding it with anything less
- * than a merged external PR would destroy that in the only way that matters.
- */
+/** Merged pull requests to repositories owned by someone else. */
 export const contributions: Contribution[] = [
   {
     repo: 'TanStack/query',
