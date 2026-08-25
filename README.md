@@ -84,5 +84,9 @@ serving a multi-megabyte PNG to a phone.
 
 ## Licence
 
-Code is MIT. The written content, screenshots and CV are not — please don't
-reuse those.
+The code is [MIT](LICENSE) — take the components, the diagrams, the token
+system, whatever is useful.
+
+That covers code only. The written content, the product screenshots in
+`src/assets/`, and the CV are not licensed for reuse — they describe my work
+and the products I built for clients.
