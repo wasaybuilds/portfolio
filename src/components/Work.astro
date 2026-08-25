@@ -37,17 +37,17 @@ const shots = { dealeriq, befer } as const;
         <p class="text-lede mt-3 max-w-lg text-ink-soft">{project.blurb}</p>
 
         {project.image && (
-          <div class="mt-7 overflow-hidden rounded-xl border border-rule bg-paper-sunk">
+          <div class="mt-7 overflow-hidden rounded-xl border border-rule">
             <Image
               src={shots[project.image]}
               alt={`${project.name} interface`}
-              widths={[520, 800, 1200, 1600]}
-              sizes="(min-width: 64rem) 44rem, 100vw"
+              widths={[560, 840, 1120, 1680]}
+              sizes="(min-width: 64rem) 44rem, calc(100vw - 3rem)"
               format="webp"
-              quality={72}
+              quality={90}
               loading="lazy"
               decoding="async"
-              class="aspect-[16/10] w-full object-cover object-top"
+              class="block h-auto w-full"
             />
           </div>
         )}
