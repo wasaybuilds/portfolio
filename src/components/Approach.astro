@@ -1,22 +1,26 @@
 ---
 import Section from './Section.astro';
 import Mark from './Mark.astro';
-import { principles } from '../data/site';
+import { about, education, principles, profile } from '../data/site';
 ---
 
 <Section id="approach" label="Approach" title="How I work.">
+  {/* The thesis, before the story that argues for it. */}
+  <p class="text-lede mb-12 max-w-xl text-ink-soft sm:mb-16" data-reveal>
+    {about[0]}
+  </p>
+
   {/*
     A deck of pinned cards read as a sequence: the life of a system, from
     before it is written to after whoever wrote it has moved on.
 
-    Each card sticks 3rem lower than the last, so the previous ones stay
-    visible as a stack of edges behind the current one and the reader can see
-    how far through the story they are.
+    Each card sticks 3rem lower than the last, so the earlier ones stay visible
+    as a stack of edges behind the current one and the reader can see how far
+    through the story they are.
 
-    There is deliberately no trailing padding. The earlier version had 30vh of
-    it, which meant that once the final card had pinned you kept scrolling
-    through empty space with nothing left to reveal. The section now ends on
-    the last card.
+    There is deliberately no trailing padding. An earlier version had 30vh of
+    it, which meant that once the final card pinned you kept scrolling through
+    empty space with nothing left to reveal.
 
     Pinning is `lg:` only — a sticky stack in a phone viewport traps the reader
     rather than guiding them, so on mobile the cards simply flow.
@@ -28,7 +32,7 @@ import { principles } from '../data/site';
         style={`top: calc(6.5rem + ${i * 3}rem)`}
         data-reveal
       >
-        <div class="mb-4 rounded-xl border border-rule bg-paper p-6 shadow-[0_1px_0_0_var(--rule)] sm:p-8">
+        <div class="mb-4 rounded-xl border border-rule p-6 sm:p-8">
           <div class="flex items-center justify-between gap-4 border-b border-rule pb-4">
             <p class="label label--rail">{principle.phase}</p>
             <p class="font-mono text-xs text-ink-faint">
@@ -51,6 +55,31 @@ import { principles } from '../data/site';
         </div>
       </article>
     ))}
+  </div>
+
+  {/*
+    The close. After four cards about how systems should be built, the
+    personal line lands better than it did opening a separate About section —
+    it is the answer to "and who is saying all this".
+  */}
+  <div class="mt-14 border-t border-rule pt-8 sm:mt-20" data-reveal>
+    <p class="text-lede max-w-xl text-ink">{about[1]}</p>
+
+    <dl class="mt-8 grid gap-x-10 gap-y-6 sm:grid-cols-2">
+      <div>
+        <dt class="label label--rail">Based in</dt>
+        <dd class="mt-2 text-ink">{profile.location}</dd>
+        <dd class="mt-1 text-sm text-ink-muted">US, UK, EU and Gulf teams.</dd>
+      </div>
+
+      <div>
+        <dt class="label label--rail">Education</dt>
+        <dd class="mt-2 text-ink">{education.school}</dd>
+        <dd class="mt-1 text-sm text-ink-muted">
+          {education.degree} · {education.period}
+        </dd>
+      </div>
+    </dl>
   </div>
 </Section>
 
