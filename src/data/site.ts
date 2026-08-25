@@ -241,37 +241,53 @@ export const sideProjects: SideProject[] = [
 ];
 
 export type Principle = {
+  /** Where in a system's life this happens. The section reads as a sequence. */
+  phase: string;
   title: string;
   body: string;
   /** The thing that turns the principle into a claim someone can check. */
   proof: string;
+  /** Key for the inline mark drawn on the card. */
+  mark: 'plan' | 'pulse' | 'root' | 'read';
 };
 
 /**
- * Four principles, each paired with something that actually happened.
- * A principle on its own is a slogan; the proof line is what makes it
- * an argument.
+ * Four principles ordered as the life of a system: before it is written, while
+ * it runs, when it breaks, and after whoever wrote it has moved on.
+ *
+ * Ordering them this way is what makes the section a sequence rather than a
+ * list — each card is a later moment in the same story. Every principle is
+ * paired with something that actually happened, because a principle alone is a
+ * slogan and the proof line is what makes it an argument.
  */
 export const principles: Principle[] = [
   {
-    title: 'Design before coding',
-    body: 'Write the design document, review the architecture, then open the editor. Large features rarely need rewriting when the disagreement happens on paper first.',
-    proof: 'Made technical design docs and architecture reviews standard practice at Hatzs.',
+    phase: 'Before the code',
+    title: 'Design first',
+    body: 'Write the design document, review the architecture, then open the editor. Large features rarely need rewriting when the disagreement happens on paper.',
+    proof: 'Made design docs and architecture reviews standard practice at Hatzs.',
+    mark: 'plan',
   },
   {
-    title: 'Build systems you can watch',
-    body: 'A background job that fails silently is worse than one that crashes. Structured logs, dashboards and alerts come with the feature, not after the first incident.',
-    proof: 'Alerting that caught webhook delivery failures and stalled jobs before customers noticed.',
+    phase: 'While it runs',
+    title: 'Build something you can watch',
+    body: 'A background job that fails silently is worse than one that crashes loudly. Logs, dashboards and alerts ship with the feature, not after the first incident.',
+    proof: 'Alerting that caught webhook failures and stalled jobs before customers noticed.',
+    mark: 'pulse',
   },
   {
-    title: 'Fix causes, not symptoms',
+    phase: 'When it breaks',
+    title: 'Fix the cause',
     body: 'A retry around a flaky call buys a week. Finding out why it is flaky buys the rest of the year.',
     proof: 'Deploys went 38min to 11min by fixing Docker layer caching, not by adding machines.',
+    mark: 'root',
   },
   {
+    phase: 'After you leave',
     title: 'Write for the next engineer',
-    body: 'Most code is read far more often than it is written, usually by someone with less context than the author had. That person is often me, six months later.',
-    proof: 'PR standards still in use across the team; three engineers mentored to their first production deploy.',
+    body: 'Code is read far more often than written, usually by someone with less context than the author had. That person is frequently me, six months later.',
+    proof: 'PR standards still in use across the team; three engineers mentored to first deploy.',
+    mark: 'read',
   },
 ];
 

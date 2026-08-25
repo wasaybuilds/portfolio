@@ -1,41 +1,62 @@
 ---
 import Section from './Section.astro';
+import Mark from './Mark.astro';
 import { principles } from '../data/site';
 ---
 
 <Section id="approach" label="Approach" title="How I work.">
   {/*
-    A stack of pinned cards. Each one sticks under the last with a small
-    offset, so scrolling deals them out one at a time and the earlier cards
-    stay visible as a spine down the left edge — the section holds you for
-    four beats instead of scrolling past as one block of text.
+    A deck of pinned cards read as a sequence: the life of a system, from
+    before it is written to after whoever wrote it has moved on.
 
-    Pinning is `lg:` only. On a phone the cards simply flow, because a sticky
-    stack in a 400px-tall viewport traps the reader instead of guiding them.
+    Each card sticks 3rem lower than the last, so the previous ones stay
+    visible as a stack of edges behind the current one and the reader can see
+    how far through the story they are.
+
+    There is deliberately no trailing padding. The earlier version had 30vh of
+    it, which meant that once the final card had pinned you kept scrolling
+    through empty space with nothing left to reveal. The section now ends on
+    the last card.
+
+    Pinning is `lg:` only — a sticky stack in a phone viewport traps the reader
+    rather than guiding them, so on mobile the cards simply flow.
   */}
-  <div class="lg:pb-[30vh]">
+  <div>
     {principles.map((principle, i) => (
       <article
         class="lg:sticky"
-        style={`top: calc(7rem + ${i * 2.75}rem)`}
+        style={`top: calc(6.5rem + ${i * 3}rem)`}
         data-reveal
       >
-        <div class="mb-5 rounded-xl border border-rule bg-paper p-6 sm:p-8">
-          <div class="flex items-baseline gap-4">
-            <span class="font-mono text-xs text-ink-faint">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <h3 class="text-title">{principle.title}</h3>
+        <div class="mb-4 rounded-xl border border-rule bg-paper p-6 shadow-[0_1px_0_0_var(--rule)] sm:p-8">
+          <div class="flex items-center justify-between gap-4 border-b border-rule pb-4">
+            <p class="label label--rail">{principle.phase}</p>
+            <p class="font-mono text-xs text-ink-faint">
+              {String(i + 1).padStart(2, '0')} / {String(principles.length).padStart(2, '0')}
+            </p>
           </div>
 
-          <p class="mt-4 max-w-xl text-ink-soft">{principle.body}</p>
+          <div class="mt-5 flex items-start gap-5">
+            <Mark name={principle.mark} />
 
-          <p class="mt-5 flex gap-3 border-t border-rule pt-4 text-sm text-ink-muted">
-            <span class="text-accent" aria-hidden="true">→</span>
-            {principle.proof}
-          </p>
+            <div class="min-w-0">
+              <h3 class="text-title">{principle.title}</h3>
+              <p class="mt-3 max-w-lg text-ink-soft">{principle.body}</p>
+              <p class="mt-5 flex gap-3 text-sm text-ink-muted">
+                <span class="text-accent" aria-hidden="true">→</span>
+                {principle.proof}
+              </p>
+            </div>
+          </div>
         </div>
       </article>
     ))}
   </div>
 </Section>
+
+<style>
+  /* Cards are opaque so they cover the ones stacked behind them. */
+  article > div {
+    background: var(--paper);
+  }
+</style>
