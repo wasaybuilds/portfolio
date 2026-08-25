@@ -1,6 +1,7 @@
 ---
 import Section from './Section.astro';
 import Diagram from './Diagram.astro';
+import MigrationDiagram from './MigrationDiagram.astro';
 import { work } from '../data/site';
 ---
 
@@ -41,7 +42,10 @@ import { work } from '../data/site';
           </dl>
         )}
 
-        {/* The architecture, drawn. Only where the stages are fact. */}
+        {/* The architecture, drawn. The lead project has its own diagram
+            because its whole point — resuming from a checkpoint — is an arrow
+            that goes backwards, which a row of boxes cannot show. */}
+        {project.diagram === 'migration' && <MigrationDiagram />}
         {project.stages && <Diagram stages={project.stages} />}
 
         {/* Problem and built, one sentence each, side by side rather than

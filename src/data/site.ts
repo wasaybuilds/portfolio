@@ -101,8 +101,10 @@ export type Project = {
   stack: string[];
   /** Headline figures, rendered large. Value carries, label explains. */
   scale?: { value: string; label: string }[];
-  /** Pipeline stages, drawn as a diagram. Only where they are fact. */
+  /** Pipeline stages, drawn as a generic diagram. Only where they are fact. */
   stages?: string[];
+  /** Opt into a bespoke diagram component instead of the generic one. */
+  diagram?: 'migration';
   url?: string;
   urlLabel?: string;
 };
@@ -110,6 +112,7 @@ export type Project = {
 export const work: Project[] = [
   {
     name: 'Salesforce → DealerIQ migration',
+    diagram: 'migration',
     blurb: 'Serverless ETL that moved a dealership’s entire Salesforce estate',
     summary:
       'Lifted a vehicle-acquisition client’s historic Salesforce estate into DealerIQ — leads, opportunities, contacts, accounts, work orders, SMS history and attachments.',
@@ -117,7 +120,6 @@ export const work: Project[] = [
       'Multi-gigabyte migrations fail partway through, and restarting from zero is not an option when the source is a live customer CRM.',
     built:
       'Extract-and-join writes checkpoints as it goes, so a failed run resumes from the last good one. Step Functions orchestrates, Lambda executes, S3 holds intermediate state.',
-    stages: ['Extract + checkpoint', 'Transform', 'Authenticated load'],
     role: 'Designed and built the pipeline',
     stack: ['TypeScript', 'AWS Lambda', 'Step Functions', 'S3', 'Node.js', 'PostgreSQL'],
     scale: [
