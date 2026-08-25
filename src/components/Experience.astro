@@ -1,9 +1,11 @@
 ---
 import Section from './Section.astro';
-import { jobs } from '../data/site';
+import { experienceNote, jobs } from '../data/site';
 ---
 
 <Section id="experience" label="Experience">
+  <p class="mb-9 max-w-xl text-sm text-ink-muted" data-reveal>{experienceNote}</p>
+
   <ol class="relative border-l border-rule pl-6 sm:pl-8">
     {jobs.map((job) => (
       <li class="relative grid gap-1 pb-8 last:pb-0 sm:grid-cols-[11rem_1fr] sm:gap-8" data-reveal>

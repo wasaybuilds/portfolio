@@ -9,6 +9,8 @@
 
 export const profile = {
   name: 'Abdul Wasay',
+  /** How he is actually known. The header mark uses this, not the first name. */
+  shortName: 'Wasay',
   role: 'Full Stack Engineer',
   roleLine: 'Full Stack Engineer — TypeScript · Node.js · React · AWS',
   intro:
@@ -45,6 +47,15 @@ export type Job = {
   note?: string;
 };
 
+/**
+ * One employer. DealerIQ and Befer are products built inside Hatzs Dimensions,
+ * so they belong in Work rather than as their own employment rows — listing
+ * them separately produced three concurrent full-time positions on the
+ * timeline, which reads as padding to anyone cross-checking LinkedIn.
+ */
+export const experienceNote =
+  'DealerIQ and Befer are products built at Hatzs Dimensions, not separate employers.';
+
 /** Titles, employers and dates exactly as they appear on LinkedIn. */
 export const jobs: Job[] = [
   {
@@ -54,21 +65,7 @@ export const jobs: Job[] = [
     period: 'Feb 2025 — Present',
     location: 'Lahore',
     current: true,
-    note: 'Player-coach across three SaaS products. Release cycle 3 weeks to 5 days via parallel CI and per-branch previews.',
-  },
-  {
-    role: 'Team Lead',
-    company: 'DealerIQ AI',
-    period: 'Jan 2026 — Aug 2026',
-    location: 'Anaheim, CA — remote',
-    note: 'Led four engineers. Built the Salesforce migration pipeline and the voice and chat layer.',
-  },
-  {
-    role: 'Founding Engineer',
-    company: 'Befer',
-    period: 'Aug 2024 — Aug 2026',
-    location: 'Lahore',
-    note: 'Built the platform end to end — scheduling, dispatch, quoting, invoicing.',
+    note: 'Player-coach across three SaaS products. Led DealerIQ delivery across the Sales, Acquisition and Service modules with a team of four. Release cycle 3 weeks to 5 days via parallel CI and per-branch previews.',
   },
   {
     role: 'Software Engineer',
@@ -76,7 +73,7 @@ export const jobs: Job[] = [
     companyUrl: 'https://www.linkedin.com/company/hatzsdimensions',
     period: 'Oct 2023 — Jan 2025',
     location: 'Lahore',
-    note: 'REST APIs across three SaaS products. OAuth 2.0 SSO. Deployment time 38min to 11min.',
+    note: 'REST APIs across three SaaS products, including founding engineer on Befer. OAuth 2.0 SSO. Deployment time 38min to 11min.',
   },
   {
     role: 'Frontend Engineer',
@@ -123,7 +120,7 @@ export const work: Project[] = [
       'Multi-gigabyte migrations fail partway through, and restarting from zero is not an option when the source is a live customer CRM.',
     built:
       'Extract-and-join writes checkpoints as it goes, so a failed run resumes from the last good one. Step Functions orchestrates, Lambda executes, S3 holds intermediate state.',
-    role: 'Designed and built the pipeline',
+    role: 'Designed and built the pipeline — at Hatzs Dimensions',
     stack: ['TypeScript', 'AWS Lambda', 'Step Functions', 'S3', 'Node.js', 'PostgreSQL'],
     scale: [
       { value: '350k+', label: 'records migrated' },
@@ -142,7 +139,7 @@ export const work: Project[] = [
     built:
       'Event-driven jobs wiring the workflow to lender APIs, service scheduling and inventory. Plus voice and chat on Twilio and ElevenLabs, sharing conversation memory so a call resumes where the chat ended.',
     stages: ['Acquisition', 'Sales', 'Finance', 'Service'],
-    role: 'Team lead — four engineers',
+    role: 'Team lead, four engineers — built at Hatzs Dimensions',
     stack: ['TypeScript', 'React', 'Node.js', 'PostgreSQL', 'AWS', 'Twilio', 'ElevenLabs'],
     scale: [
       { value: '4', label: 'manual handoffs removed' },
@@ -162,7 +159,7 @@ export const work: Project[] = [
     built:
       'An intake assistant that turns a voice note into a structured job record — parts, labour hours, customer details, recommended follow-ups.',
     stages: ['Voice note', 'LLM extract', 'Job record'],
-    role: 'Founding engineer — built the platform end to end',
+    role: 'Founding engineer, built end to end — at Hatzs Dimensions',
     stack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'OpenAI API', 'AWS'],
     scale: [
       { value: '9', label: 'businesses onboarded' },

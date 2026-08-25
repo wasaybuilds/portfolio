@@ -61,9 +61,7 @@ doesn't. No "Senior" or "Lead" framing on anything before February 2025.
 |---|---|---|---|
 | Frontend Engineer | Hatzs Dimensions | Jun 2023 – Sep 2023 | Lahore |
 | Software Engineer | Hatzs Dimensions | Oct 2023 – Jan 2025 | Lahore |
-| Founding Engineer | Befer | Aug 2024 – Aug 2026 | Lahore |
 | Lead of Product Operations / Full Stack Engineer | Hatzs Dimensions | Feb 2025 – present | Lahore |
-| Team Lead | DealerIQ AI | Jan 2026 – Aug 2026 | Anaheim, CA (remote) |
 
 First engineering role: June 2023. Hatzs total tenure: 3 years 3 months.
 
@@ -71,20 +69,19 @@ Befer's LinkedIn title reads "Pioneer & Product Owner"; the description beneath
 it says "Founding Engineer at Befer". Use **Founding Engineer** — it is the
 accurate one, and the other is not a real job title.
 
-### Overlapping dates — decide before this goes out
+### Employer vs product — resolved
 
-Three roles run concurrently from January to August 2026: Befer, Hatzs and
-DealerIQ AI. A recruiter cross-checking LinkedIn sees three simultaneous
-full-time positions and reads it as padding unless it is explained.
+There is **one employer**: Hatzs Dimensions. DealerIQ and Befer are products
+built inside it, not separate companies.
 
-Options, in order of preference:
+Listing them as their own employment rows put three concurrent full-time
+positions on the timeline between January and August 2026, which reads as
+padding to anyone cross-checking LinkedIn. They now appear in Work, attributed
+to Hatzs, and Experience shows the three Hatzs roles in sequence with no
+overlap at all.
 
-1. Mark the concurrent ones as contract or part-time, on LinkedIn *and* here.
-2. Present DealerIQ as a client engagement delivered through Hatzs rather than
-   as its own employment row.
-3. Leave as is, and expect the question in every first call.
-
-**[NEEDS INPUT: which of these is true?]**
+If LinkedIn still lists DealerIQ AI and Befer as separate positions, change it
+there too — the value of this section is that it matches field for field.
 
 ### Education
 

@@ -1,62 +1,114 @@
 ---
 /**
- * Hero mark — four isometric planes.
+ * Hero mark — four extruded isometric slabs.
  *
  * A visual restatement of the one claim the hero makes: work across the whole
- * stack, interface down to infrastructure. It is a diagram rather than an
- * ornament, which is why it earns space on a page this restrained.
+ * stack, interface down to infrastructure.
  *
- * Drawn as hairlines in the page's own rule colour, with a single accented
- * plane, so it obeys the same "one accent per three elements" rule as
- * everything else and inverts correctly in dark mode.
+ * The previous version drew four flat rhombus outlines, which read as four
+ * separate shapes rather than a stack — an outline has no thickness, so there
+ * was nothing to say one layer sat on top of another. Each slab now has a top
+ * face and two side faces, and the top faces are filled with the page colour
+ * so a slab genuinely occludes the one behind it. That occlusion is what makes
+ * it read as depth rather than as a pattern.
  *
- * Purely presentational: aria-hidden, and it carries no text a reader needs.
+ * Drawn back-to-front, since in this projection the lower slab is the nearer
+ * one and has to paint over its neighbour.
+ *
+ * Purely presentational: aria-hidden, carrying no text a reader needs.
  */
 
-/* Isometric rhombus: half-width 90, half-height 28, on a 62px vertical pitch.
-   The pitch exceeds the full height, so no two planes intersect and the
-   hairlines stay clean. */
-const HALF_W = 90;
-const HALF_H = 28;
-const CENTRES = [40, 102, 164, 226];
-const ACCENT_INDEX = 2;
+/* Isometric geometry. HALF_H is half the rhombus height; DEPTH is how far the
+   side faces drop. PITCH exceeds HALF_H * 2 + DEPTH so slabs never collide. */
+const HALF_W = 88;
+const HALF_H = 27;
+const DEPTH = 10;
+const PITCH = 66;
+const CENTRES = [40, 40 + PITCH, 40 + PITCH * 2, 40 + PITCH * 3];
+const ACCENT = 2;
 
-const plane = (cy: number) =>
-  `M 100 ${cy - HALF_H} L ${100 + HALF_W} ${cy} L 100 ${cy + HALF_H} L ${100 - HALF_W} ${cy} Z`;
+const CX = 100;
+
+/** Top face: the rhombus itself. */
+const top = (cy: number) =>
+  `M${CX} ${cy - HALF_H}L${CX + HALF_W} ${cy}L${CX} ${cy + HALF_H}L${CX - HALF_W} ${cy}Z`;
+
+/** Left side face, dropping from the lower-left edge. */
+const left = (cy: number) =>
+  `M${CX - HALF_W} ${cy}L${CX} ${cy + HALF_H}L${CX} ${cy + HALF_H + DEPTH}L${CX - HALF_W} ${cy + DEPTH}Z`;
+
+/** Right side face, dropping from the lower-right edge. */
+const right = (cy: number) =>
+  `M${CX + HALF_W} ${cy}L${CX} ${cy + HALF_H}L${CX} ${cy + HALF_H + DEPTH}L${CX + HALF_W} ${cy + DEPTH}Z`;
 ---
 
 <svg
-  viewBox="0 0 200 266"
+  viewBox="0 0 200 300"
   fill="none"
   aria-hidden="true"
-  class="h-auto w-full max-w-[clamp(9rem,18vw,15rem)] text-rule-strong"
+  class="h-auto w-full max-w-[clamp(9rem,18vw,15rem)]"
 >
-  <!-- Vertical guides through the outer vertices, implying depth between
-       the planes without drawing hidden edges. -->
-  <g stroke="currentColor" stroke-width="1" opacity="0.45">
-    <line x1={100 - HALF_W} y1={CENTRES[0]} x2={100 - HALF_W} y2={CENTRES[3]} />
-    <line x1={100 + HALF_W} y1={CENTRES[0]} x2={100 + HALF_W} y2={CENTRES[3]} />
+  <!-- Guides through the outer vertices, implying the column the slabs sit in. -->
+  <g class="guide">
+    <line x1={CX - HALF_W} y1={CENTRES[0]} x2={CX - HALF_W} y2={CENTRES[3] + DEPTH} />
+    <line x1={CX + HALF_W} y1={CENTRES[0]} x2={CX + HALF_W} y2={CENTRES[3] + DEPTH} />
   </g>
 
   {CENTRES.map((cy, i) => (
-    <path
-      d={plane(cy)}
-      stroke={i === ACCENT_INDEX ? 'var(--accent)' : 'currentColor'}
-      stroke-width={i === ACCENT_INDEX ? 1.5 : 1}
-      stroke-linejoin="round"
-    />
+    <g class={i === ACCENT ? 'slab slab--accent' : 'slab'}>
+      <path class="face face--side" d={left(cy)} />
+      <path class="face face--side" d={right(cy)} />
+      <path class="face face--top" d={top(cy)} />
+    </g>
   ))}
 
-  <!-- Centre spine: the through-line that makes it read as one system rather
-       than four separate shapes. -->
+  <!-- A dashed spine through the centre, so the four read as one system. -->
   <line
-    x1="100"
+    class="spine"
+    x1={CX}
     y1={CENTRES[0] - HALF_H}
-    x2="100"
-    y2={CENTRES[3] + HALF_H}
-    stroke="currentColor"
-    stroke-width="1"
-    stroke-dasharray="2 5"
-    opacity="0.5"
+    x2={CX}
+    y2={CENTRES[3] + HALF_H + DEPTH}
   />
 </svg>
+
+<style>
+  .guide line {
+    stroke: var(--rule-strong);
+    stroke-width: 1;
+    opacity: 0.4;
+  }
+
+  .face {
+    stroke: var(--rule-strong);
+    stroke-width: 1;
+    stroke-linejoin: round;
+  }
+
+  /* The top face is filled with the page colour, which is what lets a slab
+     occlude the one behind it and turns four shapes into a stack. */
+  .face--top {
+    fill: var(--paper);
+  }
+
+  /* Sides sit slightly darker so the light reads as coming from above. */
+  .face--side {
+    fill: var(--paper-sunk);
+  }
+
+  .slab--accent .face {
+    stroke: var(--accent);
+    stroke-width: 1.4;
+  }
+
+  .slab--accent .face--top {
+    fill: var(--accent-wash);
+  }
+
+  .spine {
+    stroke: var(--rule-strong);
+    stroke-width: 1;
+    stroke-dasharray: 2 5;
+    opacity: 0.45;
+  }
+</style>
