@@ -35,11 +35,12 @@
   <!-- Bush, left. Scalloped rather than circular: overlapping circles read as
        overlapping circles, a scalloped outline reads as foliage. -->
   <svg
-    class="absolute bottom-0 left-[7%] h-10 w-auto opacity-[0.2] sm:h-14"
+    class="absolute bottom-0 left-[7%] h-10 w-auto opacity-[0.26] sm:h-14"
     viewBox="0 0 56 44"
     fill="currentColor"
     aria-hidden="true"
   >
+    <ellipse cx="26" cy="42.5" rx="23" ry="2" opacity="0.4" />
     <path d="M6 42Q0 34 6 28Q4 19 13 17Q18 9 27 13Q37 10 41 19Q50 23 46 32Q49 40 40 42Z" />
     <g fill="var(--paper)" opacity="0.28">
       <path d="M18 24q3 4 0 8" />
@@ -49,11 +50,12 @@
 
   <!-- Tree. Tapered trunk with a fork, and a scalloped canopy. -->
   <svg
-    class="absolute bottom-0 left-[33%] h-20 w-auto opacity-[0.16] sm:h-28"
+    class="absolute bottom-0 left-[33%] h-20 w-auto opacity-[0.2] sm:h-28"
     viewBox="0 0 66 96"
     fill="currentColor"
     aria-hidden="true"
   >
+    <ellipse cx="31" cy="94" rx="17" ry="2.2" opacity="0.35" />
     <path d="M30 94Q29.5 74 28 60L25 52h4l2 6q1-5 6-9l2 2q-6 5-6 12 1 14 1 31Z" />
     <path d="M12 52Q2 44 9 34Q6 20 19 17Q26 5 39 11Q54 8 58 22Q68 30 60 42Q63 52 50 55Q33 62 22 55Q13 57 12 52Z" />
     <g fill="var(--paper)" opacity="0.22">
@@ -65,11 +67,12 @@
 
   <!-- Small shrub, mid-right. -->
   <svg
-    class="absolute bottom-0 left-[60%] h-8 w-auto opacity-[0.18] sm:h-10"
+    class="absolute bottom-0 left-[60%] h-8 w-auto opacity-[0.24] sm:h-10"
     viewBox="0 0 44 34"
     fill="currentColor"
     aria-hidden="true"
   >
+    <ellipse cx="22" cy="32.5" rx="19" ry="1.8" opacity="0.4" />
     <path d="M5 32Q0 25 5 20Q4 12 12 11Q17 4 25 8Q34 6 36 14Q43 18 39 25Q41 32 33 32Z" />
     <path d="M16 17q3 4 0 8" fill="none" stroke="var(--paper)" stroke-width="1.4" opacity="0.28" />
   </svg>
@@ -77,11 +80,13 @@
   <!-- The destination. Its measured position is what bounds the cat's walk. -->
   <svg
     id="cathouse"
-    class="absolute bottom-0 right-[5%] h-[4.5rem] w-auto opacity-[0.5] sm:h-24"
+    class="absolute bottom-0 right-[5%] h-[4.5rem] w-auto opacity-[0.58] sm:h-24"
     viewBox="0 0 96 82"
     fill="none"
     aria-hidden="true"
   >
+    <ellipse cx="48" cy="81" rx="44" ry="2.4" opacity="0.35" />
+
     <!-- Roof with an eave overhang either side, plus a ridge cap. -->
     <path d="M2 36 48 4l46 32H82L48 12 14 36Z" fill="currentColor" />
     <path d="M14 34 48 10l34 24v6H14Z" fill="currentColor" />
@@ -120,14 +125,18 @@
 
   <!-- Food bowl beside the house, because an empty doorstep looks unlived-in. -->
   <svg
-    class="absolute bottom-0 right-[calc(5%+7.5rem)] h-4 w-auto opacity-[0.34] sm:right-[calc(5%+10rem)] sm:h-5"
-    viewBox="0 0 30 16"
+    id="bowl"
+    class="absolute bottom-0 right-[calc(5%+7.5rem)] h-5 w-auto opacity-[0.5] sm:right-[calc(5%+10rem)] sm:h-6"
+    viewBox="0 0 32 20"
     fill="currentColor"
     aria-hidden="true"
   >
-    <path d="M3 5h24l-3 9a2 2 0 0 1-2 1.5H8A2 2 0 0 1 6 14Z" />
-    <ellipse cx="15" cy="5" rx="12" ry="3.2" />
-    <ellipse cx="15" cy="5" rx="8" ry="1.9" fill="var(--paper)" opacity="0.5" />
+    <ellipse cx="16" cy="18.5" rx="14" ry="1.6" opacity="0.4" />
+    <path d="M4 7h24l-3 9a2 2 0 0 1-2 1.5H9A2 2 0 0 1 7 16Z" />
+    <ellipse cx="16" cy="7" rx="12" ry="3.2" />
+    <ellipse cx="16" cy="7" rx="8.2" ry="2" fill="var(--paper)" opacity="0.55" />
+    <!-- Ripple, so it reads as water rather than an empty dish. -->
+    <ellipse id="ripple" cx="16" cy="7" rx="3.4" ry="0.9" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.45" />
   </svg>
 
   <!-- The cat. -->
@@ -139,6 +148,8 @@
       fill="none"
       aria-hidden="true"
     >
+      <ellipse id="shadow" cx="32" cy="40.5" rx="17" ry="2" fill="currentColor" opacity="0.18" />
+
       <!-- Tapered tail as a filled curl. A stroke cannot taper, and a
            constant-width tail is most of what made the old one read as a
            diagram rather than an animal. -->
@@ -221,6 +232,7 @@
   const scene = document.getElementById('scene');
   const el = document.getElementById('companion');
   const house = document.getElementById('cathouse');
+  const bowl = document.getElementById('bowl');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (scene && el && !reduced) {
@@ -233,6 +245,8 @@
     const eyes = document.getElementById('eyes');
     const eyesShut = document.getElementById('eyes-shut');
     const zzz = document.getElementById('zzz');
+    const shadow = document.getElementById('shadow');
+    const ripple = document.getElementById('ripple');
 
     /* Diagonal pairs swing together, which is how a cat actually walks. */
     const PHASE = [0, Math.PI, Math.PI, 0];
@@ -251,8 +265,9 @@
     /* A beat at the door before and after the hop, so arrival reads as a
        decision rather than a bounce. */
     const PAUSE_MS = 420;
+    const DRINK_MS = 2800;
 
-    type Mode = 'walk' | 'arrive' | 'jump' | 'leave';
+    type Mode = 'walk' | 'drink' | 'arrive' | 'jump' | 'leave';
 
     let mode: Mode = 'walk';
     let modeStart = performance.now();
@@ -263,6 +278,9 @@
     let pointerX = -9999;
     let pointerY = -9999;
     let last = performance.now();
+    /* One drink per outbound trip, reset when the cat turns around at the far
+       end — otherwise it would re-trigger on every frame at the bowl. */
+    let hasDrunk = false;
 
     document.addEventListener(
       'pointermove',
@@ -278,6 +296,17 @@
       if (!house) return window.innerWidth - catWidth;
       const box = house.getBoundingClientRect();
       return Math.max(0, box.left + box.width * 0.28 - catWidth);
+    };
+
+    /**
+     * Where the cat stands to reach the bowl. Its head sits near the right of
+     * the sprite, so the body must stop short for the muzzle to land in the
+     * bowl rather than past it.
+     */
+    const bowlside = (catWidth: number) => {
+      if (!bowl) return null;
+      const box = bowl.getBoundingClientRect();
+      return box.left + box.width / 2 - catWidth * 0.8;
     };
 
     const setMode = (next: Mode, now: number) => {
@@ -316,14 +345,25 @@
               /* Cadence from distance covered, never from elapsed time. */
               phase += (step / 4.5) * Math.PI;
 
-              if (direction === 1 && x >= rightLimit) {
+              const drinkAt = bowlside(box.width);
+              if (direction === 1 && !hasDrunk && drinkAt !== null && x >= drinkAt) {
+                x = drinkAt;
+                hasDrunk = true;
+                setMode('drink', now);
+              } else if (direction === 1 && x >= rightLimit) {
                 x = rightLimit;
                 setMode('arrive', now);
               } else if (direction === -1 && x <= leftLimit) {
                 x = leftLimit;
                 direction = 1;
+                hasDrunk = false;
               }
             }
+            break;
+          }
+
+          case 'drink': {
+            if (now - modeStart > DRINK_MS) setMode('walk', now);
             break;
           }
 
@@ -360,6 +400,11 @@
 
       const asleep = idle > SLEEP_AFTER && !alert && mode === 'walk';
       const airborne = mode === 'jump';
+      const drinking = mode === 'drink';
+      /* Lapping envelope: eased in and out so the head is not snapping into
+         and out of the bowl. */
+      const drinkT = drinking ? (now - modeStart) / DRINK_MS : 0;
+      const lap = drinking ? Math.min(1, Math.min(drinkT, 1 - drinkT) * 6) : 0;
 
       legs.forEach((leg, i) => {
         if (!leg) return;
@@ -374,7 +419,9 @@
       });
 
       if (tail) {
-        const sway = airborne
+        const sway = drinking
+          ? Math.sin(now / 380) * 5
+          : airborne
           ? -22
           : walking
             ? Math.sin(phase * 0.5) * 14
@@ -384,7 +431,12 @@
 
       /* Head turn is multiplied by direction so the tilt goes the right way
          once the whole sprite has been mirrored. */
-      if (head) {
+      if (head && drinking) {
+        /* Muzzle down into the bowl, with the lapping bob on top. */
+        const bob = Math.sin(now / 90) * 1.2 * lap;
+        head.style.transform =
+          `translate(${2.5 * lap * direction}px, ${5.5 * lap + bob}px) rotate(${30 * lap * direction}deg)`;
+      } else if (head) {
         const bob = walking ? Math.sin(phase) * 1.4 : 0;
         const tilt = airborne
           ? -8 * direction
@@ -402,7 +454,31 @@
         pupils.style.transform = `translate(${px}px, ${py}px)`;
       }
 
-      const shut = asleep || (!walking && !airborne && Math.sin(now / 1500) > 0.987);
+      /* The shadow shrinks and lightens as the cat leaves the ground, which
+         is what actually sells the hop as a hop. */
+      if (shadow) {
+        const lifted = lift / JUMP_HEIGHT;
+        shadow.style.transformOrigin = '32px 40.5px';
+        shadow.style.transform = `scale(${1 - lifted * 0.35})`;
+        shadow.style.opacity = String(0.18 - lifted * 0.1);
+      }
+
+      /* The water answers back while the cat drinks. */
+      if (ripple) {
+        ripple.style.transformOrigin = '16px 7px';
+        ripple.style.transform = drinking
+          ? `scale(${1 + Math.abs(Math.sin(now / 260)) * 0.9})`
+          : 'scale(1)';
+        ripple.style.opacity = drinking
+          ? String(0.5 - Math.abs(Math.sin(now / 260)) * 0.35)
+          : '0.18';
+      }
+
+      const shut =
+        asleep ||
+        /* Cats half-close their eyes while drinking. */
+        (drinking && lap > 0.6) ||
+        (!walking && !airborne && !drinking && Math.sin(now / 1500) > 0.987);
       if (eyes) eyes.style.display = shut ? 'none' : '';
       if (eyesShut) eyesShut.style.display = shut ? '' : 'none';
       if (zzz) zzz.style.display = asleep ? '' : 'none';

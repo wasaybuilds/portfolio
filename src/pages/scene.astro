@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+
+/**
+ * Scene inspector — a development page, not part of the site.
+ *
+ * The companion has been redrawn several times against descriptions rather
+ * than against the artwork, because at 40px on a live page it is hard to say
+ * what specifically is wrong. This shows every element on its own at 6x, so a
+ * problem can be pointed at precisely: proportion, a bad curve, a detail that
+ * disappears at size.
+ *
+ * Reachable at /scene. Delete this file before shipping.
+ */
+const parts = [
+  { name: 'Cat', note: 'body path, tapered tail, head, markings' },
+  { name: 'Cat house', note: 'roof, shingles, walls, door, name plate' },
+  { name: 'Tree', note: 'tapered trunk, scalloped canopy' },
+  { name: 'Bush', note: 'scalloped outline' },
+  { name: 'Bowl', note: 'sits beside the door' },
+];
+---
+
+<Base title="Scene inspector" description="Development view of the companion scene.">
+  <main class="shell py-16">
+    <p class="label label--ticked">Development</p>
+    <h1 class="text-title mt-4">Scene inspector</h1>
+    <p class="mt-4 max-w-xl text-ink-soft">
+      Every element at 6x, then at real size. Tell me which one is wrong and
+      what about it — proportion, a curve, a detail that vanishes at size.
+    </p>
+
+    <ul class="mt-12 divide-y divide-rule border-y border-rule">
+      {parts.map((part) => (
+        <li class="grid gap-3 py-6 sm:grid-cols-[9rem_1fr] sm:gap-8">
+          <div>
+            <p class="label label--rail">{part.name}</p>
+            <p class="mt-2 text-sm text-ink-muted">{part.note}</p>
+          </div>
+          <div
+            class="flex min-h-40 items-end gap-10 overflow-x-auto rounded-lg bg-paper-raised p-6"
+            data-part={part.name}
+          ></div>
+        </li>
+      ))}
+    </ul>
+  </main>
+
+  <script>
+    /* Clone the live scene's SVGs so this page can never drift from the real
+       artwork — it renders exactly what ships, just larger. */
+    const source = document.getElementById('scene');
+    if (source) {
+      const svgs = Array.from(source.querySelectorAll('svg'));
+      const cat = source.querySelector('#companion svg');
+      const map: Record<string, Element | null | undefined> = {
+        Cat: cat,
+        'Cat house': source.querySelector('#cathouse'),
+        Tree: svgs[2],
+        Bush: svgs[1],
+        Bowl: svgs[svgs.length - 1],
+      };
+
+      for (const [name, node] of Object.entries(map)) {
+        const slot = document.querySelector(`[data-part="${name}"]`);
+        if (!slot || !node) continue;
+
+        for (const scale of [6, 1]) {
+          const clone = node.cloneNode(true) as SVGElement;
+          clone.removeAttribute('class');
+          clone.removeAttribute('id');
+          const w = parseFloat(clone.getAttribute('width') ?? '60');
+          const h = parseFloat(clone.getAttribute('height') ?? '44');
+          const vb = (clone.getAttribute('viewBox') ?? '0 0 60 44').split(/\s+/);
+          const ratio = parseFloat(vb[3]) / parseFloat(vb[2]);
+          clone.setAttribute('width', String(w * scale));
+          clone.setAttribute('height', String(w * scale * ratio));
+          clone.style.color = 'var(--ink)';
+          slot.appendChild(clone);
+        }
+      }
+    }
+  </script>
+</Base>
