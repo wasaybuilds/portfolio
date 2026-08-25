@@ -1,0 +1,222 @@
+---
+/**
+ * The graphic half of the Approach section: one system, drawn four times.
+ *
+ * This is the "sticky graphic, stepper text" pattern — the graphic stays put
+ * while the text scrolls past, and it changes state as each step arrives. The
+ * scroll maps onto something the story already has: the life of a service,
+ * from drawing to handover. That binding is the whole point; a pinned panel
+ * whose scroll drives nothing is just a slow page.
+ *
+ * State is set by `data-state` on the root, from 0 to 3, and everything else
+ * is CSS. Nothing here animates on a timer.
+ */
+---
+
+<div class="system-story" data-state="0">
+  <svg viewBox="0 0 340 250" fill="none" aria-hidden="true" class="w-full">
+    <!-- ── Blueprint dimension marks: only while it is being designed ── -->
+    <g class="layer layer--plan" stroke="currentColor" stroke-width="1" opacity="0.5">
+      <path d="M96 52h148" stroke-dasharray="3 4" />
+      <path d="M96 47v10M244 47v10" />
+      <path d="M70 78v70" stroke-dasharray="3 4" />
+      <path d="M65 78h10M65 148h10" />
+    </g>
+
+    <!-- ── The service itself ── -->
+    <rect
+      class="service"
+      x="96"
+      y="78"
+      width="148"
+      height="70"
+      rx="8"
+      stroke="currentColor"
+      stroke-width="1.6"
+    />
+    <text
+      x="170"
+      y="118"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      class="service__label"
+      style="font-family: var(--font-mono), monospace; font-size: 11px;"
+    >service</text>
+
+    <!-- ── Traffic in and out: solid once it is running ── -->
+    <g class="layer layer--flow" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+      <path d="M18 113h72" />
+      <path d="M84 108.5 90 113l-6 4.5" stroke-linejoin="round" />
+      <path d="M250 113h72" />
+      <path d="M316 108.5 322 113l-6 4.5" stroke-linejoin="round" />
+    </g>
+
+    <!-- ── The monitoring trace along the bottom ── -->
+    <g class="layer layer--monitor">
+      <path
+        class="trace trace--flat"
+        d="M18 205h304"
+        stroke="currentColor"
+        stroke-width="1.2"
+        opacity="0.35"
+      />
+      <path
+        class="trace trace--live"
+        d="M18 205h58l10-16 12 32 11-24 9 8h44l10-14 12 28 11-22 9 8h96"
+        stroke="var(--accent)"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        class="trace trace--fault"
+        d="M18 205h96l8-30 9 58 8-28h157"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </g>
+
+    <!-- ── Fault marker ── -->
+    <g class="layer layer--fault">
+      <circle cx="170" cy="60" r="10" stroke="var(--accent)" stroke-width="1.5" />
+      <path d="M170 55v6" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" />
+      <circle cx="170" cy="65.5" r="1" fill="var(--accent)" />
+    </g>
+
+    <!-- ── Handover: the document left behind ── -->
+    <g class="layer layer--handover" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round">
+      <path d="M258 26h34l12 12v42h-46z" />
+      <path d="M292 26v12h12" />
+      <g stroke-width="1.1" opacity="0.7">
+        <path d="M266 48h24M266 56h30M266 64h18" />
+      </g>
+    </g>
+
+    <!-- ── Caption ── -->
+    <text
+      x="170"
+      y="236"
+      text-anchor="middle"
+      class="system-story__caption"
+      style="font-family: var(--font-mono), monospace; font-size: 10px; letter-spacing: 0.08em;"
+    >
+      <tspan class="cap cap--0" x="170">DESIGNED</tspan>
+      <tspan class="cap cap--1" x="170">OBSERVED</tspan>
+      <tspan class="cap cap--2" x="170">DIAGNOSED</tspan>
+      <tspan class="cap cap--3" x="170">HANDED OVER</tspan>
+    </text>
+  </svg>
+</div>
+
+<style>
+  .system-story {
+    color: var(--ink-soft);
+  }
+
+  .layer,
+  .trace,
+  .cap {
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .service {
+    transition:
+      stroke-dasharray 0.55s ease,
+      opacity 0.55s ease;
+  }
+
+  .service__label {
+    fill: var(--ink-faint);
+    transition: fill 0.55s ease;
+  }
+
+  /* Everything off by default; each state switches on what it needs. */
+  .layer--plan,
+  .layer--fault,
+  .layer--handover,
+  .trace--live,
+  .trace--fault,
+  .cap {
+    opacity: 0;
+  }
+
+  /* ── 0 · Before the code: a drawing, not a system ── */
+  [data-state='0'] .service {
+    stroke-dasharray: 5 5;
+  }
+  [data-state='0'] .layer--plan {
+    opacity: 0.5;
+  }
+  [data-state='0'] .layer--flow {
+    opacity: 0.18;
+  }
+  [data-state='0'] .cap--0 {
+    opacity: 1;
+  }
+
+  /* ── 1 · While it runs: traffic flowing, trace alive ── */
+  [data-state='1'] .service {
+    stroke-dasharray: 0 0;
+  }
+  [data-state='1'] .layer--flow {
+    opacity: 1;
+  }
+  [data-state='1'] .trace--live {
+    opacity: 1;
+  }
+  [data-state='1'] .service__label {
+    fill: var(--ink);
+  }
+  [data-state='1'] .cap--1 {
+    opacity: 1;
+  }
+
+  /* ── 2 · When it breaks: one spike, then flat, and an alert ── */
+  [data-state='2'] .service {
+    stroke-dasharray: 0 0;
+  }
+  [data-state='2'] .layer--flow {
+    opacity: 0.3;
+  }
+  [data-state='2'] .trace--fault {
+    opacity: 1;
+  }
+  [data-state='2'] .layer--fault {
+    opacity: 1;
+  }
+  [data-state='2'] .cap--2 {
+    opacity: 1;
+  }
+
+  /* ── 3 · After you leave: running, documented, someone else's now ── */
+  [data-state='3'] .service {
+    stroke-dasharray: 0 0;
+  }
+  [data-state='3'] .layer--flow {
+    opacity: 1;
+  }
+  [data-state='3'] .trace--live {
+    opacity: 0.55;
+  }
+  [data-state='3'] .layer--handover {
+    opacity: 1;
+  }
+  [data-state='3'] .service__label {
+    fill: var(--ink);
+  }
+  [data-state='3'] .cap--3 {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .layer,
+    .trace,
+    .cap,
+    .service,
+    .service__label {
+      transition: none;
+    }
+  }
+</style>

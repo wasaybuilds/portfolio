@@ -1,83 +1,59 @@
 ---
 import Section from './Section.astro';
-import Mark from './Mark.astro';
+import SystemStory from './SystemStory.astro';
 import { about, education, principles, profile } from '../data/site';
 ---
 
 <Section id="approach" label="Approach" title="How I work.">
-  {/* The thesis, before the story that argues for it. */}
-  <p class="text-lede mb-12 max-w-xl text-ink-soft sm:mb-16" data-reveal>
+  <p class="text-lede mb-14 max-w-xl text-ink-soft sm:mb-20" data-reveal>
     {about[0]}
   </p>
 
   {/*
-    Scrollytelling, not a card stack.
+    Sticky graphic, stepper text — the pattern behind most scrollytelling that
+    actually works.
 
-    The previous version pinned each card 3rem below the last so they piled up
-    — which reads as boxes accumulating, not as a story being told. Here the
-    panel holds the viewport and the story advances *through* it: one beat at a
-    time, each crossfading into the next, with a progress rail showing how far
-    in you are.
+    An earlier version pinned everything and crossfaded the text, which meant
+    nothing appeared to move and the scroll drove nothing. Here the text scrolls
+    normally, which is what gives the reader a sense of travel, and only the
+    diagram is pinned. It changes state as each step arrives.
 
-    The track is four screens tall; the panel inside is sticky. Scroll position
-    within the track drives which beat is shown and how far it has moved, so
-    the animation is tied to the reader's scrolling rather than to a timer.
-
-    Progressive enhancement, deliberately in this direction: the markup below
-    is a plain readable list of all four beats. The script adds `is-scrolly`
-    only on a wide viewport with motion allowed, and only that class turns it
-    into a pinned panel. Without JS, on a phone, or with reduce-motion, the
-    reader gets the whole story as ordinary stacked text.
+    The binding matters more than the mechanism: the scrollbar maps onto the
+    life of a service — drawn, running, broken, handed over. Scroll bound to
+    nothing is just a slow page.
   */}
-  <div id="approach-track" class="approach-track">
-    <div class="approach-panel">
-      <!-- Progress rail -->
-      <ol class="approach-rail" aria-hidden="true">
-        {principles.map((principle, i) => (
-          <li class="approach-rail__item" data-rail={i}>
-            <span class="approach-rail__bar"></span>
-            <span class="approach-rail__label">{principle.phase}</span>
-          </li>
-        ))}
-      </ol>
-
-      <div class="approach-beats">
-        {principles.map((principle, i) => (
-          <article class="approach-beat" data-beat={i}>
-            <div class="flex items-center gap-4">
-              <span class="font-mono text-xs text-ink-faint">
-                {String(i + 1).padStart(2, '0')} / {String(principles.length).padStart(2, '0')}
-              </span>
-              <span class="h-px flex-1 bg-rule"></span>
-              <p class="label label--rail">{principle.phase}</p>
-            </div>
-
-            <div class="mt-6 flex items-start gap-5">
-              <Mark name={principle.mark} />
-
-              <div class="min-w-0">
-                <h3 class="text-section">{principle.title}</h3>
-                <p class="mt-4 max-w-lg text-lede text-ink-soft">
-                  {principle.body}
-                </p>
-                <p class="mt-6 flex gap-3 border-t border-rule pt-4 text-sm text-ink-muted">
-                  <span class="text-accent" aria-hidden="true">→</span>
-                  {principle.proof}
-                </p>
-              </div>
-            </div>
-          </article>
-        ))}
+  <div id="approach-steps" class="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+    <!-- The graphic. Pinned on wide screens, inline above the text on narrow. -->
+    <div class="lg:sticky lg:top-28 lg:h-[62vh] lg:self-start">
+      <div class="flex h-full items-center rounded-xl border border-rule p-6">
+        <SystemStory />
       </div>
     </div>
+
+    <!-- The steps. Ordinary flow, generously spaced so each gets its moment. -->
+    <ol class="space-y-[22vh] lg:space-y-[38vh] lg:pb-[18vh] lg:pt-[12vh]">
+      {principles.map((principle, i) => (
+        <li class="step" data-step={i}>
+          <div class="flex items-center gap-4">
+            <span class="font-mono text-xs text-ink-faint">
+              {String(i + 1).padStart(2, '0')} / {String(principles.length).padStart(2, '0')}
+            </span>
+            <span class="h-px flex-1 bg-rule"></span>
+            <p class="label label--rail">{principle.phase}</p>
+          </div>
+
+          <h3 class="text-section mt-5">{principle.title}</h3>
+          <p class="text-lede mt-4 max-w-md text-ink-soft">{principle.body}</p>
+          <p class="mt-6 flex gap-3 border-t border-rule pt-4 text-sm text-ink-muted">
+            <span class="text-accent" aria-hidden="true">→</span>
+            {principle.proof}
+          </p>
+        </li>
+      ))}
+    </ol>
   </div>
 
-  {/*
-    The close. After four beats about how systems should be built, the personal
-    line lands better than it did opening a separate About section — it is the
-    answer to "and who is saying all this".
-  */}
-  <div class="mt-14 border-t border-rule pt-8 sm:mt-20" data-reveal>
+  <div class="mt-16 border-t border-rule pt-8 sm:mt-24" data-reveal>
     <p class="text-lede max-w-xl text-ink">{about[1]}</p>
 
     <dl class="mt-8 grid gap-x-10 gap-y-6 sm:grid-cols-2">
@@ -99,181 +75,58 @@ import { about, education, principles, profile } from '../data/site';
 </Section>
 
 <style>
-  /* ---- Base: a plain, fully readable list. This is what ships without JS. -- */
-  .approach-beats {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
+  /* Steps dim until they are the one being told, so the eye knows where it is.
+     Full opacity by default: without JS every step reads normally. */
+  .step {
+    transition: opacity 0.5s ease;
   }
 
-  .approach-rail {
-    display: none;
+  @media (min-width: 64rem) {
+    :global(.js) .step {
+      opacity: 0.32;
+    }
+    :global(.js) .step.is-current {
+      opacity: 1;
+    }
   }
 
-  /* ---- Enhanced: pinned panel, one beat at a time. --------------------- */
-  .approach-track.is-scrolly {
-    position: relative;
-    /* One screen of scroll per beat, set by script from the beat count. */
-    height: var(--track-height);
-  }
-
-  .is-scrolly .approach-panel {
-    position: sticky;
-    top: 7rem;
-    display: grid;
-    grid-template-columns: 9rem minmax(0, 1fr);
-    gap: 2.5rem;
-    align-items: center;
-    min-height: 24rem;
-  }
-
-  .is-scrolly .approach-beats {
-    position: relative;
-    display: block;
-    min-height: 22rem;
-  }
-
-  .is-scrolly .approach-beat {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transform: translateY(1.75rem);
-    transition:
-      opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
-  }
-
-  .is-scrolly .approach-beat.is-active {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-
-  /* A beat already read leaves upward, so the sequence has a direction. */
-  .is-scrolly .approach-beat.is-past {
-    opacity: 0;
-    transform: translateY(-1.75rem);
-  }
-
-  /* ---- Progress rail --------------------------------------------------- */
-  .is-scrolly .approach-rail {
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-    align-self: center;
-  }
-
-  .approach-rail__item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .approach-rail__bar {
-    display: block;
-    height: 2px;
-    width: 100%;
-    background: var(--rule);
-    border-radius: 999px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .approach-rail__bar::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--accent);
-    transform: scaleX(var(--fill, 0));
-    transform-origin: left;
-    transition: transform 0.25s linear;
-  }
-
-  .approach-rail__label {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.625rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    transition: color 0.3s ease;
-  }
-
-  .approach-rail__item.is-active .approach-rail__label {
-    color: var(--ink);
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .step {
+      opacity: 1;
+    }
   }
 </style>
 
 <script>
-  const track = document.getElementById('approach-track');
+  const root = document.getElementById('approach-steps');
+  const story = root?.querySelector<HTMLElement>('.system-story');
 
-  if (track) {
-    const beats = Array.from(track.querySelectorAll<HTMLElement>('[data-beat]'));
-    const rails = Array.from(track.querySelectorAll<HTMLElement>('[data-rail]'));
+  if (root && story) {
+    const steps = Array.from(root.querySelectorAll<HTMLElement>('[data-step]'));
 
-    const wide = window.matchMedia('(min-width: 64rem)');
-    const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    /* The step nearest the middle of the viewport is the one being told.
+       Reading position, not entry order — scrolling back up works too. */
+    const observer = new IntersectionObserver(
+      () => {
+        const middle = window.innerHeight / 2;
+        let best = 0;
+        let bestDistance = Infinity;
 
-    let ticking = false;
-
-    const render = () => {
-      ticking = false;
-      if (!track.classList.contains('is-scrolly')) return;
-
-      const rect = track.getBoundingClientRect();
-      const distance = track.offsetHeight - window.innerHeight;
-      /* 0 when the track's top reaches the viewport top, 1 at its bottom. */
-      const progress = distance > 0
-        ? Math.min(1, Math.max(0, -rect.top / distance))
-        : 0;
-
-      const exact = progress * beats.length;
-      const active = Math.min(beats.length - 1, Math.floor(exact));
-
-      beats.forEach((beat, i) => {
-        beat.classList.toggle('is-active', i === active);
-        beat.classList.toggle('is-past', i < active);
-        beat.setAttribute('aria-hidden', String(i !== active));
-      });
-
-      rails.forEach((rail, i) => {
-        /* Each bar fills across its own beat, so the rail reads as progress
-           through the story rather than four on/off lights. */
-        const fill = Math.min(1, Math.max(0, exact - i));
-        rail.style.setProperty('--fill', String(fill));
-        rail.classList.toggle('is-active', i === active);
-      });
-    };
-
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(render);
-    };
-
-    const apply = () => {
-      const enable = wide.matches && !still.matches;
-
-      if (enable) {
-        track.style.setProperty('--track-height', `${beats.length * 90}vh`);
-        track.classList.add('is-scrolly');
-        window.addEventListener('scroll', onScroll, { passive: true });
-        render();
-      } else {
-        track.classList.remove('is-scrolly');
-        track.style.removeProperty('--track-height');
-        window.removeEventListener('scroll', onScroll);
-        /* Hand the plain list back exactly as it renders without JS. */
-        beats.forEach((beat) => {
-          beat.classList.remove('is-active', 'is-past');
-          beat.removeAttribute('aria-hidden');
+        steps.forEach((step, i) => {
+          const box = step.getBoundingClientRect();
+          const distance = Math.abs(box.top + box.height / 2 - middle);
+          if (distance < bestDistance) {
+            bestDistance = distance;
+            best = i;
+          }
         });
-      }
-    };
 
-    apply();
-    wide.addEventListener('change', apply);
-    still.addEventListener('change', apply);
-    window.addEventListener('resize', onScroll, { passive: true });
+        story.dataset.state = String(best);
+        steps.forEach((step, i) => step.classList.toggle('is-current', i === best));
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+    );
+
+    steps.forEach((step) => observer.observe(step));
   }
 </script>
